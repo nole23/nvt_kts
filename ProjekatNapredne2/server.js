@@ -2,7 +2,15 @@
 var express = require('express');
 var app  = express();
 var bodyParser = require('body-parser');
-var router = require('./app/app.js');
+var router1 = require('./app/addUserApp.js');
+var router2 = require('./app/aplication.js');
+var router3 = require('./app/app.js');
+var router4 = require('./app/deleteUser.js');
+var router5 = require('./app/exeptionApp.js');
+var router6 = require('./app/index.js');
+var router7 = require('./app/login.js');
+var router8 = require('./app/user.js');
+var router9 = require('./app/users.js');
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/Napredne');
@@ -22,8 +30,16 @@ app.use(session({
 //Port na kome se slusa server
 var port = process.env.PORT || 8080;
 
-app.use('/api', router);
 
+app.use('/api', router1);
+app.use('/api', router2);
+app.use('/api', router3);
+app.use('/api', router4);
+app.use('/api', router5);
+app.use('/api', router6);
+app.use('/api', router7);
+app.use('/api', router8);
+app.use('/api', router9);
 
 app.listen(port);
 console.log('Server se slusa na portu ' + port);

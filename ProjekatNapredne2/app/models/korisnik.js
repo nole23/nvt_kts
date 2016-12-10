@@ -5,7 +5,10 @@ var KorisnikSchema = new Schema({
     ime: String,
     prezime: String,
     sifra: String,
-    mail: String
+    mail: {
+        type: String,
+        unique: true
+    }
 
 });
 

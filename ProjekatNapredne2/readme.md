@@ -17,12 +17,6 @@ Aplikacija je jednostavan REST back end za projekat
 
 
 
-
-* `PUT api/odgovorni/:domen` - Dodavanje novog odgovornog za odredjen domen
-* `GET api/:domen` - prizak svih informacija o apliakciji
-* `GET api/korisnik` - prikaz svih registrovanih korisnika
-
-
 ## Struktura aplikacije
 
 U folderu `app/model` nalaze se modeli - blogEntry i comment.
@@ -33,5 +27,6 @@ U folderu `app/model` nalaze se modeli - blogEntry i comment.
 1. pokrenuti `npm install`
 2. pokrenuti `npm install express`
 3. pokrenuti `npm install mongoose`
-4. pokrenuti MongoDB u lokalu
-5. pokretati aplikacije pomoću `node app.js`
+4. pokrenuti `npm install nodemailer`
+5. pokrenuti MongoDB u lokalu
+6. pokretati aplikacije pomoću `node app.js`

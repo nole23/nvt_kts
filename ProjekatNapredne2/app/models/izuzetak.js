@@ -7,8 +7,11 @@ var IzuzetakSchema = new Schema({
     vreme: String,
     opis: String,
     fragment: String,
-    odgovorni: [String],
-    domen: String
+    domen: String,
+    aplikacija: [{
+        type: Schema.Types.ObjectId, ref: "Aplikacija"
+    }]
+    
 });
 
 module.exports = mongoose.model('Greska', IzuzetakSchema);

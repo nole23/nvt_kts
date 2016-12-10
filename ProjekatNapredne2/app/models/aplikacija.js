@@ -6,15 +6,9 @@ var AplikacijaSchema = new Schema({
     opis: String,
     verzija: String,
     link: String,
-    domen: {
-        type: String,
-        unique: true
-    },
+    domen: String,
     odgovorni: [{
-        idOdgovornog: {
-            type: String,
-            unique: true
-        }
+       type: Schema.Types.ObjectId, ref: "Korisnik"
     }]
 
 });
