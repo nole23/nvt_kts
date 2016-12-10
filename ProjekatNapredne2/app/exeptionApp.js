@@ -40,7 +40,7 @@ router
                     service: 'Gmail',
                     auth: {
                         user: 'nole0223@gmail.com',
-                        pass: 'NoViCaNiKoLiC23'
+                        pass: 'moja sifra'
                     }
                 });
 
