@@ -1,19 +1,9 @@
-package com.konstrukcija.model;
+package com.konstrukcija.dto;
 
-import java.util.HashSet;
-import java.util.Set;
+import com.konstrukcija.model.Lokacija;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+public class LokacijaDTO {
 
-@Entity
-public class Lokacija {
-	@Id
-	@GeneratedValue
 	private Long id;
 	private String drzava;
 	private String grad;
@@ -24,12 +14,32 @@ public class Lokacija {
 	private String geo_duzina;
 	private String geo_sirina;
 	
-	@OneToMany(mappedBy = "lokacija", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<Nekretnina> nekretnina = new HashSet<Nekretnina>();
+	public LokacijaDTO() {}
+	
+	public LokacijaDTO(Lokacija lokacija) {
+		this.id = lokacija.getId();
+		this.drzava = lokacija.getDrzava();
+		this.grad = lokacija.getGrad();
+		this.oblas = lokacija.getOblas();
+		this.ulica = lokacija.getUlica();
+		this.brojPTT = lokacija.getBrojPTT();
+		this.brStana = lokacija.getBrStana();
+		this.geo_duzina = lokacija.getGeo_duzina();
+		this.geo_sirina = lokacija.getGeo_sirina();
+	}
+	
+	public LokacijaDTO(Long id, String drzava, String grad, String oblas, String ulica, int brojPTT, String brStana, String geo_duzina, String geo_sirina) {
+		this.id = id;
+		this.drzava = drzava;
+		this.grad = grad;
+		this.oblas = oblas;
+		this.ulica = ulica;
+		this.brojPTT = brojPTT;
+		this.brStana = brStana;
+		this.geo_duzina = geo_duzina;
+		this.geo_sirina = geo_sirina;
+	}
 
-	public Lokacija() {}
-	
-	
 	public Long getId() {
 		return id;
 	}
@@ -102,11 +112,14 @@ public class Lokacija {
 		this.geo_sirina = geo_sirina;
 	}
 
-	public Set<Nekretnina> getNekretnina() {
-		return nekretnina;
+	@Override
+	public String toString() {
+		return "LokacijaDTO [id=" + id + ", drzava=" + drzava + ", grad="
+				+ grad + ", oblas=" + oblas + ", ulica=" + ulica + ", brojPTT="
+				+ brojPTT + ", brStana=" + brStana + ", geo_duzina="
+				+ geo_duzina + ", geo_sirina=" + geo_sirina + "]";
 	}
-
-	public void setNekretnina(Set<Nekretnina> nekretnina) {
-		this.nekretnina = nekretnina;
-	}
+	
+	
+	
 }
