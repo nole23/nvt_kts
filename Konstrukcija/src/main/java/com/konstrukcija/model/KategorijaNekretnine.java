@@ -1,24 +1,23 @@
 package com.konstrukcija.model;
 
 import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class UserAuthority {
+public class KategorijaNekretnine {
 	@Id
 	@GeneratedValue
 	private Long id;
 	
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	private Kategorija kategorija;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	private Korisnik korisnik;
-	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	private Admin admin;
+	private Nekretnina nekretnina;
 
 	public Long getId() {
 		return id;
@@ -28,21 +27,19 @@ public class UserAuthority {
 		this.id = id;
 	}
 
-	public Korisnik getKorisnik() {
-		return korisnik;
+	public Kategorija getKategorija() {
+		return kategorija;
 	}
 
-	public void setKorisnik(Korisnik korisnik) {
-		this.korisnik = korisnik;
+	public void setKategorija(Kategorija kategorija) {
+		this.kategorija = kategorija;
 	}
 
-	public Admin getAdmin() {
-		return admin;
+	public Nekretnina getNekretnina() {
+		return nekretnina;
 	}
 
-	public void setAdmin(Admin admin) {
-		this.admin = admin;
+	public void setNekretnina(Nekretnina nekretnina) {
+		this.nekretnina = nekretnina;
 	}
-	
-	
 }

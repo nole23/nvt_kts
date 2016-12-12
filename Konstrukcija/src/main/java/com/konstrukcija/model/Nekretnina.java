@@ -1,11 +1,15 @@
 package com.konstrukcija.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Nekretnina {
@@ -24,8 +28,11 @@ public class Nekretnina {
 	private String sprat;
 	private String opis;
 	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	private Kategorija kategorija;
+	@OneToMany(mappedBy = "nekretnina", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	private Set<Objava> objava = new HashSet<Objava>();
+	
+	@OneToMany(mappedBy = "nekretnina", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	private Set<KategorijaNekretnine> kategorijaNekretnine = new HashSet<KategorijaNekretnine>();
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Lokacija lokacija;
@@ -33,8 +40,8 @@ public class Nekretnina {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private TehnickaOpremljenost tehnickaOpremljenost;
 	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	private Korisnik korisnik;
+	@OneToMany(mappedBy = "nekretnina", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	private Set<Oglasi> oglasi = new HashSet<Oglasi>();
 
 	public Integer getId() {
 		return id;
@@ -124,12 +131,21 @@ public class Nekretnina {
 		this.opis = opis;
 	}
 
-	public Kategorija getKategorija() {
-		return kategorija;
+	public Set<Objava> getObjava() {
+		return objava;
 	}
 
-	public void setKategorija(Kategorija kategorija) {
-		this.kategorija = kategorija;
+	public void setObjava(Set<Objava> objava) {
+		this.objava = objava;
+	}
+
+	public Set<KategorijaNekretnine> getKategorijaNekretnine() {
+		return kategorijaNekretnine;
+	}
+
+	public void setKategorijaNekretnine(
+			Set<KategorijaNekretnine> kategorijaNekretnine) {
+		this.kategorijaNekretnine = kategorijaNekretnine;
 	}
 
 	public Lokacija getLokacija() {
@@ -148,15 +164,11 @@ public class Nekretnina {
 		this.tehnickaOpremljenost = tehnickaOpremljenost;
 	}
 
-	public Korisnik getKorisnik() {
-		return korisnik;
+	public Set<Oglasi> getOglasi() {
+		return oglasi;
 	}
 
-	public void setKorisnik(Korisnik korisnik) {
-		this.korisnik = korisnik;
+	public void setOglasi(Set<Oglasi> oglasi) {
+		this.oglasi = oglasi;
 	}
-	
-	
-	
-	
 }

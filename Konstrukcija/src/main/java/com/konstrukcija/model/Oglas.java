@@ -84,6 +84,4 @@ public class Oglas {
 	public void setOcene(Set<Ocene> ocene) {
 		this.ocene = ocene;
 	}
-	
-	
 }

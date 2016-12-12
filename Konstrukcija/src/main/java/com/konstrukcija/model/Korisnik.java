@@ -25,26 +25,10 @@ public class Korisnik {
 	private Set<UserAuthority> userAuthorities = new HashSet<UserAuthority>();
 	
 	@OneToMany(mappedBy = "korisnik", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<Nekretnina> nekretnina = new HashSet<Nekretnina>();
+	private Set<Objava> objava = new HashSet<Objava>();
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Adresa adresa;
-
-	public Adresa getAdresa() {
-		return adresa;
-	}
-
-	public void setAdresa(Adresa adresa) {
-		this.adresa = adresa;
-	}
-
-	public Set<Nekretnina> getNekretnina() {
-		return nekretnina;
-	}
-
-	public void setNekretnina(Set<Nekretnina> nekretnina) {
-		this.nekretnina = nekretnina;
-	}
 
 	public Long getId() {
 		return id;
@@ -93,6 +77,20 @@ public class Korisnik {
 	public void setUserAuthorities(Set<UserAuthority> userAuthorities) {
 		this.userAuthorities = userAuthorities;
 	}
-	
-	
+
+	public Set<Objava> getObjava() {
+		return objava;
+	}
+
+	public void setObjava(Set<Objava> objava) {
+		this.objava = objava;
+	}
+
+	public Adresa getAdresa() {
+		return adresa;
+	}
+
+	public void setAdresa(Adresa adresa) {
+		this.adresa = adresa;
+	}
 }

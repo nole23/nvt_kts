@@ -20,6 +20,7 @@ public class Lokacija {
 	private String oblas;
 	private String ulica;
 	private int brojPTT;
+	private String brStana;
 	private String geo_duzina;
 	private String geo_sirina;
 	
@@ -74,6 +75,14 @@ public class Lokacija {
 		this.brojPTT = brojPTT;
 	}
 
+	public String getBrStana() {
+		return brStana;
+	}
+
+	public void setBrStana(String brStana) {
+		this.brStana = brStana;
+	}
+
 	public String getGeo_duzina() {
 		return geo_duzina;
 	}
@@ -97,7 +106,4 @@ public class Lokacija {
 	public void setNekretnina(Set<Nekretnina> nekretnina) {
 		this.nekretnina = nekretnina;
 	}
-	
-	
-	
 }

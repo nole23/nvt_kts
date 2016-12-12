@@ -1,15 +1,11 @@
 package com.konstrukcija.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Oglasi {
@@ -20,8 +16,8 @@ public class Oglasi {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Oglas oglas;
 	
-	@OneToMany(mappedBy = "korisnik", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<Nekretnina> nekretnina = new HashSet<Nekretnina>();
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	private Nekretnina nekretnina;
 
 	public Long getId() {
 		return id;
@@ -39,11 +35,11 @@ public class Oglasi {
 		this.oglas = oglas;
 	}
 
-	public Set<Nekretnina> getNekretnina() {
+	public Nekretnina getNekretnina() {
 		return nekretnina;
 	}
 
-	public void setNekretnina(Set<Nekretnina> nekretnina) {
+	public void setNekretnina(Nekretnina nekretnina) {
 		this.nekretnina = nekretnina;
 	}
 	
