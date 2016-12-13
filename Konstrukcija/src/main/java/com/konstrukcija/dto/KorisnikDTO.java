@@ -1,5 +1,6 @@
 package com.konstrukcija.dto;
 
+import com.konstrukcija.model.Adresa;
 import com.konstrukcija.model.Korisnik;
 
 public class KorisnikDTO {
@@ -10,10 +11,11 @@ public class KorisnikDTO {
 	private String pass;
 	private String phone_number;
 	private String email;
+	private Adresa adresa;
 	
 	public KorisnikDTO() {}
 	
-	public KorisnikDTO(Long id, String fname, String lname, String pass, String phone_number, String email) {
+	public KorisnikDTO(Long id, String fname, String lname, String pass, String phone_number, String email, Adresa adresa) {
 		super();
 		this.id = id;
 		this.fname = fname;
@@ -21,6 +23,7 @@ public class KorisnikDTO {
 		this.pass = pass;
 		this.phone_number = phone_number;
 		this.email = email;
+		this.adresa = adresa;
 	}
 	
 	public KorisnikDTO(Korisnik korisnik) {
@@ -30,6 +33,7 @@ public class KorisnikDTO {
 		this.pass = korisnik.getPass();
 		this.phone_number = korisnik.getPhone_number();
 		this.email = korisnik.getEmail();
+		this.adresa = korisnik.getAdresa();
 	}
 
 	public Long getId() {
@@ -80,11 +84,19 @@ public class KorisnikDTO {
 		this.email = email;
 	}
 
+	public Adresa getAdresa() {
+		return adresa;
+	}
+
+	public void setAdresa(Adresa adresa) {
+		this.adresa = adresa;
+	}
+
 	@Override
 	public String toString() {
 		return "KorisnikDTO [id=" + id + ", fname=" + fname + ", lname="
 				+ lname + ", pass=" + pass + ", phone_number=" + phone_number
-				+ ", email=" + email + "]";
+				+ ", email=" + email + ", adresa=" + adresa + "]";
 	}
 	
 	
