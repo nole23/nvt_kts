@@ -6,4 +6,5 @@ import com.konstrukcija.model.Korisnik;
 
 public interface KorisnikRepository extends JpaRepository<Korisnik, Long>{
 
+	
 }
