@@ -16,7 +16,7 @@ public class Nekretnina {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	private String naziv_nekretnine;
 	private Double cena;
 	private Double povrsina;
@@ -43,11 +43,11 @@ public class Nekretnina {
 	@OneToMany(mappedBy = "nekretnina", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Set<Oglasi> oglasi = new HashSet<Oglasi>();
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -17,4 +17,8 @@ public class TehnickaOpremljenostService {
 	public List<TehnickaOpremljenost> findAll() {
 		return tehnickaOpremljenostRepository.findAll();
 	}
+	
+	public TehnickaOpremljenost save(TehnickaOpremljenost tehnickaOpremljenost) {
+		return tehnickaOpremljenostRepository.save(tehnickaOpremljenost);
+	}
 }

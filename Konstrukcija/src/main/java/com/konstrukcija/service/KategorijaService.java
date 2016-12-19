@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.konstrukcija.model.Kategorija;
+import com.konstrukcija.model.KategorijaNekretnine;
 import com.konstrukcija.repository.KategorijaRepository;
 
 @Service
@@ -17,4 +18,10 @@ public class KategorijaService {
 	public List<Kategorija> findAll() {
 		return kategorijaRepository.findAll();
 	}
+	
+	public Kategorija findOne(Long id) {
+		return kategorijaRepository.findOne(id);
+	}
+
+
 }

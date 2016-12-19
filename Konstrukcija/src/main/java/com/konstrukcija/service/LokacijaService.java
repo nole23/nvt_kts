@@ -17,4 +17,8 @@ public class LokacijaService {
 	public List<Lokacija> findAll() {
 		return lokacijaRepository.findAll();
 	}
+	
+	public Lokacija save(Lokacija lokacija) {
+		return lokacijaRepository.save(lokacija);
+	}
 }

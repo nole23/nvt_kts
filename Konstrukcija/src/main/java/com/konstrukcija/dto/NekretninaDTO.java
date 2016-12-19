@@ -6,7 +6,7 @@ import com.konstrukcija.model.TehnickaOpremljenost;
 
 public class NekretninaDTO {
 
-	private Integer id;
+	private Long id;
 	private String naziv_nekretnine;
 	private Double cena;
 	private Double povrsina;
@@ -22,7 +22,7 @@ public class NekretninaDTO {
 	
 	public NekretninaDTO() {}
 	
-	public NekretninaDTO(Integer id, String naziv_nekretnine, Double cena, Double povrsina, String sobnost, String stanje_objekta, 
+	public NekretninaDTO(Long id, String naziv_nekretnine, Double cena, Double povrsina, String sobnost, String stanje_objekta, 
 			String grejanje, String spratova, String stanje, String sprat, String opis, Lokacija lokacija, TehnickaOpremljenost tehnickaOpremljenost) {
 		super();
 		this.id = id;
@@ -57,11 +57,11 @@ public class NekretninaDTO {
 		this.tehnickaOpremljenost = nekretnina.getTehnickaOpremljenost();
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
