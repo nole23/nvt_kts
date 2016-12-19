@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Adresa {
@@ -23,6 +24,15 @@ public class Adresa {
 	@OneToMany(mappedBy = "adresa", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Set<Korisnik> korisnik = new HashSet<Korisnik>();
 	
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "adresa", cascade = CascadeType.ALL)
+	private Kompanija kompanija;
+	
+	public Kompanija getKompanija() {
+		return kompanija;
+	}
+	public void setKompanija(Kompanija kompanija) {
+		this.kompanija = kompanija;
+	}
 	public Set<Korisnik> getKorisnik() {
 		return korisnik;
 	}

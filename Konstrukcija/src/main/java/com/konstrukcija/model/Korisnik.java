@@ -4,12 +4,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Korisnik {
@@ -20,7 +22,12 @@ public class Korisnik {
 	private String lname;
 	private String pass;
 	private String phone_number;
+	
+	@Column(unique = true)
 	private String email;
+	
+	@Column(nullable = true)
+	private Boolean verified;
 	
 	@OneToMany(mappedBy = "korisnik", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Set<UserAuthority> userAuthorities = new HashSet<UserAuthority>();
@@ -28,9 +35,27 @@ public class Korisnik {
 	@OneToMany(mappedBy = "korisnik", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Set<Objava> objava = new HashSet<Objava>();
 	
+	@OneToMany(mappedBy = "korisnik", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	private Set<Zaposleni> zaposleni = new HashSet<Zaposleni>();
+	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Adresa adresa;
 	
+	public Boolean getVerified() {
+		return verified;
+	}
+
+	public void setVerified(Boolean verified) {
+		this.verified = verified;
+	}
+
+	public Set<Zaposleni> getZaposleni() {
+		return zaposleni;
+	}
+
+	public void setZaposleni(Set<Zaposleni> zaposleni) {
+		this.zaposleni = zaposleni;
+	}
 
 	public String getEmail() {
 		return email;

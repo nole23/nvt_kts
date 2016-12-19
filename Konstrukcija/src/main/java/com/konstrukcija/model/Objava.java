@@ -17,7 +17,18 @@ public class Objava {
 	private Korisnik korisnik;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	private Kompanija kompanija;
+	
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Nekretnina nekretnina;
+	
+	public Kompanija getKompanija() {
+		return kompanija;
+	}
+
+	public void setKompanija(Kompanija kompanija) {
+		this.kompanija = kompanija;
+	}
 
 	public Long getId() {
 		return id;
