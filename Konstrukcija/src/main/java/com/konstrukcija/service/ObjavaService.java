@@ -17,4 +17,8 @@ public class ObjavaService {
 	public List<Objava> findAll() {
 		return objavaRepository.findAll();
 	}
+	
+	public Objava save(Objava objava) {
+		return objavaRepository.save(objava);
+	}
 }

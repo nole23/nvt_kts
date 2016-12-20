@@ -40,91 +40,46 @@ public class NekretnineController {
 	public ResponseEntity<String> saveNekretnina(@PathVariable String vrsta, @RequestBody NekretninaDTO nekretninaDTO) {
 		Nekretnina nekretnina = new Nekretnina();
 		
-		if(vrsta.equals("kuca") || vrsta.equals("vikendica")) {
-			nekretnina.setNaziv_nekretnine(nekretninaDTO.getNaziv_nekretnine());
-			nekretnina.setCena(nekretninaDTO.getCena());
-			nekretnina.setPovrsina(nekretninaDTO.getPovrsina());
-			nekretnina.setSobnost(nekretninaDTO.getSobnost());
-			nekretnina.setStanje_objekta(nekretninaDTO.getStanje_objekta());
-			nekretnina.setGrejanje(nekretninaDTO.getGrejanje());
-			nekretnina.setSpratova(nekretninaDTO.getSpratova());
-			nekretnina.setSprat(null);
-			nekretnina.setOpis(nekretninaDTO.getOpis());
-			nekretnina.setLokacija(null);
-			nekretnina.setTehnickaOpremljenost(null);
-			
-			nekretnina = nekretninaService.save(nekretnina);
-			
-			
-		} else if(vrsta.equals("Stan")) {
-			nekretnina.setNaziv_nekretnine(nekretninaDTO.getNaziv_nekretnine());
-			nekretnina.setCena(nekretninaDTO.getCena());
-			nekretnina.setPovrsina(nekretninaDTO.getPovrsina());
-			nekretnina.setSobnost(nekretninaDTO.getSobnost());
-			nekretnina.setStanje_objekta(nekretninaDTO.getStanje_objekta());
-			nekretnina.setGrejanje(nekretninaDTO.getGrejanje());
-			nekretnina.setSpratova(null);
-			nekretnina.setSprat(nekretninaDTO.getSprat());
-			nekretnina.setOpis(nekretninaDTO.getOpis());
-			nekretnina.setLokacija(null);
-			nekretnina.setTehnickaOpremljenost(null);
-			
-			nekretnina = nekretninaService.save(nekretnina);
-			
-			
-		} else if(vrsta.equals("garaza")) {
-			nekretnina.setNaziv_nekretnine(nekretninaDTO.getNaziv_nekretnine());
-			nekretnina.setCena(nekretninaDTO.getCena());
-			nekretnina.setPovrsina(nekretninaDTO.getPovrsina());
-			nekretnina.setSobnost(null);
-			nekretnina.setStanje_objekta(nekretninaDTO.getStanje_objekta());
-			nekretnina.setGrejanje(null);
-			nekretnina.setSpratova(null);
-			nekretnina.setSprat(null);
-			nekretnina.setOpis(nekretninaDTO.getOpis());
-			nekretnina.setLokacija(null);
-			nekretnina.setTehnickaOpremljenost(null);
-			
-			nekretnina = nekretninaService.save(nekretnina);
-			
-			
-		} else if(vrsta.equals("plac")) {
-			nekretnina.setNaziv_nekretnine(nekretninaDTO.getNaziv_nekretnine());
-			nekretnina.setCena(nekretninaDTO.getCena());
-			nekretnina.setPovrsina(nekretninaDTO.getPovrsina());
-			nekretnina.setSobnost(null);
-			nekretnina.setStanje_objekta(null);
-			nekretnina.setGrejanje(null);
-			nekretnina.setSpratova(null);
-			nekretnina.setSprat(null);
-			nekretnina.setOpis(nekretninaDTO.getOpis());
-			nekretnina.setLokacija(null);
-			nekretnina.setTehnickaOpremljenost(null);
-			
-			nekretnina = nekretninaService.save(nekretnina);
-			
-		} else if(vrsta.equals("lokal")) {
-			
-			
-			nekretnina.setNaziv_nekretnine(nekretninaDTO.getNaziv_nekretnine());
-			nekretnina.setCena(nekretninaDTO.getCena());
-			nekretnina.setPovrsina(nekretninaDTO.getPovrsina());
-			nekretnina.setSobnost(null);
-			nekretnina.setStanje_objekta(nekretninaDTO.getStanje_objekta());
-			nekretnina.setGrejanje(nekretninaDTO.getGrejanje());
-			nekretnina.setSpratova(null);
-			nekretnina.setSprat(nekretninaDTO.getSprat());
-			nekretnina.setOpis(nekretninaDTO.getOpis());
-			nekretnina.setLokacija(null);
-			nekretnina.setTehnickaOpremljenost(null);
-			
-			nekretnina = nekretninaService.save(nekretnina);
-			
-		}
 		
+		nekretnina.setNaziv_nekretnine(nekretninaDTO.getNaziv_nekretnine());
+		nekretnina.setCena(nekretninaDTO.getCena());
+		nekretnina.setPovrsina(nekretninaDTO.getPovrsina());
+		nekretnina.setSobnost(nekretninaDTO.getSobnost());
+		nekretnina.setStanje_objekta(nekretninaDTO.getStanje_objekta());
+		nekretnina.setGrejanje(nekretninaDTO.getGrejanje());
+		nekretnina.setSpratova(nekretninaDTO.getSpratova());
+		nekretnina.setSprat(nekretninaDTO.getSprat());
+		nekretnina.setOpis(nekretninaDTO.getOpis());
+		nekretnina.setLokacija(null);
+		nekretnina.setTehnickaOpremljenost(null);
+		
+		nekretnina = nekretninaService.save(nekretnina);
 		return new ResponseEntity<>("Uspesno ste dodali "+vrsta, HttpStatus.CREATED);
-		
-		
 	}
-
+	
+	//dodavanje tehnicke opremljenosti nekretnini
+	@RequestMapping(value = "/{idNekretnine}/{idOpremljenosti}", method = RequestMethod.PUT, consumes = "application/json")
+	public ResponseEntity<NekretninaDTO> updateOpremljenost(@RequestBody NekretninaDTO nekretninaDTO) {
+		Nekretnina nekretnina = nekretninaService.findOne(nekretninaDTO.getId());
+		if(nekretnina == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		nekretnina.setTehnickaOpremljenost(nekretninaDTO.getTehnickaOpremljenost());
+		
+		nekretnina = nekretninaService.save(nekretnina);
+		return new ResponseEntity<>(new NekretninaDTO(nekretnina), HttpStatus.OK);
+	}
+	
+	//Azuriranje lokacije
+	@RequestMapping(value = "/{idNekretnine}/{idLokacija}", method = RequestMethod.PUT, consumes = "application/json")
+	public ResponseEntity<NekretninaDTO> updateLokacija(@RequestBody NekretninaDTO nekretninaDTO) {
+		Nekretnina nekretnina = nekretninaService.findOne(nekretninaDTO.getId());
+		if(nekretnina == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		nekretnina.setLokacija(nekretninaDTO.getLokacija());
+		
+		nekretnina = nekretninaService.save(nekretnina);
+		return new ResponseEntity<>(new NekretninaDTO(nekretnina), HttpStatus.OK);
+	}
 }

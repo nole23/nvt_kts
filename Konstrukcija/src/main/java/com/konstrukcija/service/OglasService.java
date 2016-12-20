@@ -14,7 +14,15 @@ public class OglasService {
 	@Autowired
 	OglasRepository oglasRepository;
 	
-	public List<Oglas> findAll() {
+	public List<Oglas> fidnAll() {
 		return oglasRepository.findAll();
+	}
+	
+	public Oglas findOne(Long id) {
+		return oglasRepository.findOne(id);
+	}
+	
+	public Oglas save(Oglas oglas) {
+		return oglasRepository.save(oglas);
 	}
 }
