@@ -1,6 +1,6 @@
 package com.konstrukcija.security;
 
-/*import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -17,8 +17,8 @@ public class TokenUtils {
 
 	@Value("myXAuthSecret")
 	private String secret;
-	
-	@Value("18000") //in seconds (5 hours)
+	//proveriti zasto ovaj long ne da da se tomket kreira
+	//@Value("86400") // 24 hours(in seconds)
 	private Long expiration;
 	
 	public String getUsernameFromToken(String token) {
@@ -75,4 +75,4 @@ public class TokenUtils {
 	}
 
 
-}*/
+}

@@ -1,6 +1,6 @@
 package com.konstrukcija.security;
 
-/*import java.io.IOException;
+import java.io.IOException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 
 public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFilter {
 
-	@Autowired
+	/*@Autowired
 	private TokenUtils tokenUtils;
 
 	@Autowired
@@ -38,7 +38,8 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 			if (tokenUtils.validateToken(authToken, userDetails)) {
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
-				authentication.setDetails(new WebAuthenticationDetailsSource()
+				authentication.setDetails(
+						new WebAuthenticationDetailsSource()
 						.buildDetails(httpRequest));
 				SecurityContextHolder.getContext().setAuthentication(
 						authentication);
@@ -47,5 +48,5 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 
 		chain.doFilter(request, response);
 	}
-
-}*/
+*/
+}

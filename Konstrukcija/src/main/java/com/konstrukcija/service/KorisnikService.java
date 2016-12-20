@@ -30,7 +30,6 @@ public class KorisnikService {
 	}
 
 	public Korisnik findByEmail(String email) {
-		// TODO Auto-generated method stub
 		return korisnikRepository.findByEmail(email);
 	}
 }
