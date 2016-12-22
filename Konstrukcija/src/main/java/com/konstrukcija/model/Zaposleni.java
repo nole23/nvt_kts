@@ -19,5 +19,28 @@ public class Zaposleni {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Kompanija kompanija;
 	
-	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Korisnik getKorisnik() {
+		return korisnik;
+	}
+
+	public void setKorisnik(Korisnik korisnik) {
+		this.korisnik = korisnik;
+	}
+
+	public Kompanija getKompanija() {
+		return kompanija;
+	}
+
+	public void setKompanija(Kompanija kompanija) {
+		this.kompanija = kompanija;
+	}
+
 }

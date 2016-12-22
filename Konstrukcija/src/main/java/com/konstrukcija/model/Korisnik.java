@@ -19,11 +19,14 @@ public class Korisnik {
 	private Long id;
 	private String fname;
 	private String lname;
-	private String pass;
+	private String password;
 	private String phone_number;
 	
 	@Column(unique = true)
 	private String email;
+	
+	@Column(unique = true)
+	private String username;
 	
 	@Column(nullable = true)
 	private Boolean verified;
@@ -40,6 +43,16 @@ public class Korisnik {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Adresa adresa;
 	
+	
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public Boolean getVerified() {
 		return verified;
 	}
@@ -87,13 +100,13 @@ public class Korisnik {
 	public void setLname(String lname) {
 		this.lname = lname;
 	}
-
-	public String getPass() {
-		return pass;
+	
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPass(String pass) {
-		this.pass = pass;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getPhone_number() {

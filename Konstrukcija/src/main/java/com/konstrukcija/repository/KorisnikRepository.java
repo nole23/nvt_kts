@@ -6,9 +6,9 @@ import com.konstrukcija.model.Korisnik;
 
 public interface KorisnikRepository extends JpaRepository<Korisnik, Long>{
 
-	Korisnik findOneByEmailAndPass(String email, String pass);
-
+	Korisnik findOneByUsernameAndPassword(String username, String password);
 	Korisnik findByEmail(String email);
+	Korisnik findByUsername(String username);
 
 	
 }

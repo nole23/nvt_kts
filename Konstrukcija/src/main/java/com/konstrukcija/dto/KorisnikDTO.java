@@ -5,43 +5,43 @@ import com.konstrukcija.model.Korisnik;
 
 public class KorisnikDTO {
 
-	private Long id;
 	private String fname;
 	private String lname;
-	private String pass;
+	private String password;
 	private String phone_number;
 	private String email;
 	private Adresa adresa;
+	private String username;
 	
 	public KorisnikDTO() {}
 	
-	public KorisnikDTO(Long id, String fname, String lname, String pass, String phone_number, String email, Adresa adresa) {
+	public KorisnikDTO(String fname, String lname, String password, String phone_number, String email, Adresa adresa, String username) {
 		super();
-		this.id = id;
 		this.fname = fname;
 		this.lname = lname;
-		this.pass = pass;
+		this.password = password;
 		this.phone_number = phone_number;
 		this.email = email;
 		this.adresa = adresa;
+		this.username = username;
 	}
 	
 	public KorisnikDTO(Korisnik korisnik) {
-		this.id = korisnik.getId();
 		this.fname = korisnik.getFname();
 		this.lname = korisnik.getLname();
-		this.pass = korisnik.getPass();
+		this.password = korisnik.getPassword();
 		this.phone_number = korisnik.getPhone_number();
 		this.email = korisnik.getEmail();
 		this.adresa = korisnik.getAdresa();
+		this.username = korisnik.getUsername();
+	}
+	
+	public String getUsername() {
+		return username;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getFname() {
@@ -60,12 +60,12 @@ public class KorisnikDTO {
 		this.lname = lname;
 	}
 
-	public String getPass() {
-		return pass;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPass(String pass) {
-		this.pass = pass;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getPhone_number() {
@@ -94,8 +94,8 @@ public class KorisnikDTO {
 
 	@Override
 	public String toString() {
-		return "KorisnikDTO [id=" + id + ", fname=" + fname + ", lname="
-				+ lname + ", pass=" + pass + ", phone_number=" + phone_number
+		return "KorisnikDTO [fname=" + fname + ", lname="
+				+ lname + ", pass=" + password + ", phone_number=" + phone_number
 				+ ", email=" + email + ", adresa=" + adresa + "]";
 	}
 	

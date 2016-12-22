@@ -19,7 +19,7 @@ import org.springframework.security.web.csrf.CsrfFilter;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-	/*@Autowired
+	@Autowired
 	private UserDetailsService userDetailsService;
 
 	@Autowired
@@ -60,7 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 			.authorizeRequests()
-				.antMatchers( "/api/users/login").
+				.antMatchers( "/api/users/login", "/api/users/register").
 					permitAll();
 		
 		httpSecurity.addFilterBefore(authenticationTokenFilterBean(),
@@ -68,5 +68,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	} 
 	
 	
-*/
+
 }

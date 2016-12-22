@@ -17,8 +17,8 @@ public class TokenUtils {
 
 	@Value("myXAuthSecret")
 	private String secret;
-	//proveriti zasto ovaj long ne da da se tomket kreira
-	//@Value("86400") // 24 hours(in seconds)
+	
+	@Value("86400") // 24 hours(in seconds)
 	private Long expiration;
 	
 	public String getUsernameFromToken(String token) {

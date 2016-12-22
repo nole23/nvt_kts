@@ -6,17 +6,27 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.KorisnikDTO;
+import com.konstrukcija.dto.LoginDTO;
 import com.konstrukcija.model.Korisnik;
 import com.konstrukcija.model.UserAuthority;
 import com.konstrukcija.repository.AdminRepository;
 import com.konstrukcija.repository.UserAuthorityRepository;
+import com.konstrukcija.security.TokenUtils;
 import com.konstrukcija.service.KorisnikService;
 
 @RestController
@@ -32,6 +42,14 @@ public class KorisnikController {
 	@Autowired
 	private UserAuthorityRepository userAuthoritRepository;
 	
+	@Autowired
+	AuthenticationManager authenticationMenager;
+	
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
+	@Autowired
+	TokenUtils tokenUtils;
 	
 	@RequestMapping(value="/all",method = RequestMethod.GET)
 	public ResponseEntity<List<KorisnikDTO>> getKorisnik() {
@@ -48,34 +66,54 @@ public class KorisnikController {
 	
 	//Registracija novog korisnika
 	//Posle treba dodati jos i registracija ostalih korisnika sajta kao sto su admin, kupac, menadzer, radnik u kompaniji
-	@RequestMapping(value="/registration/{userType}", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<String>  saveKorisnika(@PathVariable String  userType, @RequestBody KorisnikDTO korisnikDTO) {
+	@RequestMapping(value="/registration/{uloga}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<String>  saveKorisnika(@PathVariable String uloga, @RequestBody KorisnikDTO korisnikDTO) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		Korisnik korisnik;
-		UserAuthority uloga = new UserAuthority();
-		if(userType.equalsIgnoreCase("kupac")) {
+		UserAuthority userAuthority = new UserAuthority();
+		if(uloga.equals("korisnik")) {
 			korisnik = new Korisnik();
-			uloga.setAdmin(adminRepository.findByName(("KUPAC")));
-			uloga.setKorisnik(korisnik);
 			
-		} 
-		//treba implementirati i registraciju ostalih korisnika sajta(admin, radni u kompaniji, menadzer ...)
-		else {
-			return new ResponseEntity<>("Nije moguce dodati novog korisnika", HttpStatus.BAD_REQUEST);
-		}
-		korisnik.setFname(korisnikDTO.getFname());
-		korisnik.setLname(korisnikDTO.getFname());
-		korisnik.setEmail(korisnikDTO.getFname());
-		korisnik.setPass(korisnikDTO.getFname());
-		korisnik.setPhone_number(korisnikDTO.getFname());
-		korisnik.setAdresa(korisnikDTO.getAdresa());
-		
-		if(korisnikServer.findByEmail(korisnik.getEmail()) != null) {
-			return new ResponseEntity<>("Ovaj email je zauzet proverite vas email", HttpStatus.BAD_REQUEST);
-		}
-		korisnik = korisnikServer.save(korisnik);
-		userAuthoritRepository.save(uloga);
-		//Treba kreirati slanje email
-		return new ResponseEntity<>("Uspesno ste se registrovali", HttpStatus.CREATED);
+			korisnik.setFname(korisnikDTO.getFname());
+			korisnik.setLname(korisnikDTO.getLname());
+			korisnik.setPassword(encoder.encode(korisnikDTO.getPassword()));
+			korisnik.setPhone_number(korisnikDTO.getPhone_number());
+			korisnik.setEmail(korisnikDTO.getEmail());
+			korisnik.setUsername(korisnikDTO.getUsername());
+			korisnik.setVerified(false);
+			korisnik.setAdresa(null);
+			
+			userAuthority.setAdmin(adminRepository.findByName(("korisnik")));
+			userAuthority.setKorisnik(korisnik);
+			
+			if( korisnikServer.findByUsername(korisnikDTO.getUsername()) != null || korisnikServer.findByEmail(korisnikDTO.getEmail()) != null) {
+				return new ResponseEntity<>("User with that username, or email already exists", HttpStatus.BAD_REQUEST);
+			}
+			
+			korisnik = korisnikServer.save(korisnik);
+			userAuthoritRepository.save(userAuthority);
+			return new ResponseEntity<>("Uspesno ste se registrovali", HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity<>("Cant create that type of user, ony Customer and Advertiser allowed", HttpStatus.BAD_REQUEST);
+		}	
 		
 	}
+	
+	@RequestMapping(value="/login", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<String>  login(@RequestBody LoginDTO loginDTO) {
+		try{
+			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
+			Authentication authentication = authenticationMenager.authenticate(token);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			
+			UserDetails details = userDetailsService.loadUserByUsername(loginDTO.getUsername());
+			
+			return new ResponseEntity<String>(tokenUtils.generateToken(details), HttpStatus.OK);
+		} catch(Exception ex) {
+			return new ResponseEntity<String>("da li ovo radi", HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+	
+
 }

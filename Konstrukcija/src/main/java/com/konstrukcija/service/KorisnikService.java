@@ -20,8 +20,12 @@ public class KorisnikService {
 	}
 	
 	//Logovanje korisnika treba implementirati do kraja
-	public Korisnik findOneByEmailAndPass(String email, String pass) {
-		return korisnikRepository.findOneByEmailAndPass(email, pass);
+	public Korisnik findOneByUsernameAndPassword(String username, String password) {
+		return korisnikRepository.findOneByUsernameAndPassword(username, password);
+	}
+	
+	public Korisnik findByUsername(String username) {
+		return korisnikRepository.findByUsername(username);
 	}
 	
 	//Dodavanje novog korisnika
@@ -31,5 +35,9 @@ public class KorisnikService {
 
 	public Korisnik findByEmail(String email) {
 		return korisnikRepository.findByEmail(email);
+	}
+	
+	public Korisnik findOne(Long id) {
+		return korisnikRepository.findOne(id);
 	}
 }

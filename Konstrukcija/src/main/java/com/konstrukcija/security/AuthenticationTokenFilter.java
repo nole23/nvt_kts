@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 
 public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFilter {
 
-	/*@Autowired
+	@Autowired
 	private TokenUtils tokenUtils;
 
 	@Autowired
@@ -48,5 +48,5 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 
 		chain.doFilter(request, response);
 	}
-*/
+
 }
