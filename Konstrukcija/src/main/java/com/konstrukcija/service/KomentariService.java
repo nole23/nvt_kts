@@ -10,20 +10,20 @@ import com.konstrukcija.repository.KomentarRepository;
 
 @Service
 public class KomentariService {
-
+	
 	@Autowired
-	KomentarRepository komentarRepository;
+	KomentarRepository komentariRepository;
 	
-	public List<Komentari> findALl() {
-		return komentarRepository.findAll();
-	}
-	
-	
-	public List<Komentari> findAllByOglas(String oglas) {
-		return komentarRepository.findByOglas(oglas);
+	public List<Komentari> findAll() {
+		return komentariRepository.findAll();
 	}
 	
 	public Komentari save(Komentari komentari) {
-		return komentarRepository.save(komentari);
+		return komentariRepository.save(komentari);
 	}
+	
+	public Komentari findOne(Long id) {
+		return komentariRepository.findOne(id);
+	}
+	
 }
