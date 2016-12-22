@@ -17,4 +17,8 @@ public class AdresaService {
 	public List<Adresa> findAll() {
 		return adresaRepository.findAll();
 	}
+	
+	public Adresa save(Adresa adresa) {
+		return adresaRepository.save(adresa);
+	}
 }
