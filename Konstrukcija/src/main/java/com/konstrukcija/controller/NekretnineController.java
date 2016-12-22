@@ -13,16 +13,40 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.NekretninaDTO;
+import com.konstrukcija.model.Kategorija;
+import com.konstrukcija.model.KategorijaNekretnina;
 import com.konstrukcija.model.Nekretnina;
+import com.konstrukcija.model.Objava;
+import com.konstrukcija.repository.KategorijaNekretninaRepository;
+import com.konstrukcija.repository.KategorijaRepository;
+import com.konstrukcija.repository.KomentarRepository;
+import com.konstrukcija.repository.KompanijaRepository;
+import com.konstrukcija.repository.KorisnikRepository;
+import com.konstrukcija.repository.ObjavaRepository;
 import com.konstrukcija.service.NekretnineService;
 
 @RestController
-@RequestMapping(value = "api/estate")
+@RequestMapping(value = "api/nekretnineee")
 public class NekretnineController {
 	
 	@Autowired
 	private NekretnineService nekretninaService;
+
+	@Autowired
+	private ObjavaRepository objavioRepository;
 	
+	@Autowired
+	private KategorijaNekretninaRepository kategorijaNekretnineRepository;
+	
+	@Autowired
+	private KategorijaRepository kategorijaRepository;
+	
+	@Autowired
+	private KorisnikRepository korisnikRepository;
+	
+	@Autowired
+	private KompanijaRepository kompanijaRepository;
+
 	//Ispis svih nekretnina
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<NekretninaDTO>> getAllNekretnina() {
@@ -35,51 +59,153 @@ public class NekretnineController {
 		return new ResponseEntity<>(nekretnineDTO, HttpStatus.OK);
 	}
 	
-	//Cuvanje nove nekretnine
-	@RequestMapping(value = "/{vrsta}", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<String> saveNekretnina(@PathVariable String vrsta, @RequestBody NekretninaDTO nekretninaDTO) {
-		Nekretnina nekretnina = new Nekretnina();
-		
-		
-		nekretnina.setNaziv_nekretnine(nekretninaDTO.getNaziv_nekretnine());
-		nekretnina.setCena(nekretninaDTO.getCena());
-		nekretnina.setPovrsina(nekretninaDTO.getPovrsina());
-		nekretnina.setSobnost(nekretninaDTO.getSobnost());
-		nekretnina.setStanje_objekta(nekretninaDTO.getStanje_objekta());
-		nekretnina.setGrejanje(nekretninaDTO.getGrejanje());
-		nekretnina.setSpratova(nekretninaDTO.getSpratova());
-		nekretnina.setSprat(nekretninaDTO.getSprat());
-		nekretnina.setOpis(nekretninaDTO.getOpis());
-		nekretnina.setLokacija(null);
-		nekretnina.setTehnickaOpremljenost(null);
-		
-		nekretnina = nekretninaService.save(nekretnina);
-		return new ResponseEntity<>("Uspesno ste dodali "+vrsta, HttpStatus.CREATED);
-	}
-	
-	//dodavanje tehnicke opremljenosti nekretnini
-	@RequestMapping(value = "/{idNekretnine}/{idOpremljenosti}", method = RequestMethod.PUT, consumes = "application/json")
-	public ResponseEntity<NekretninaDTO> updateOpremljenost(@RequestBody NekretninaDTO nekretninaDTO) {
-		Nekretnina nekretnina = nekretninaService.findOne(nekretninaDTO.getId());
-		if(nekretnina == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+	//DOdavanje nove nekretnine
+	@RequestMapping(value = "/{nazivKat}/{idKorisnik}/{idKompanija}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<String> saveNekretnine(@PathVariable String nazivKat, @PathVariable String idKompanija, @PathVariable String idKorisnik, @RequestBody NekretninaDTO nekretninaDTO) {
+		if(idKompanija.equals("null")){
+			
+			Long id = Long.parseLong(idKorisnik);
+			
+			if(nazivKat.equals("prodaja")) {
+				
+				Nekretnina nekretnina;
+				KategorijaNekretnina katNekretnina = new KategorijaNekretnina();
+				Objava objavio = new Objava();
+				
+				
+				nekretnina = new Nekretnina();
+				
+				nekretnina.setNaziv_nekretnine(nekretninaDTO.getNaziv_nekretnine());
+				nekretnina.setCena(nekretninaDTO.getCena());
+				nekretnina.setPovrsina(nekretninaDTO.getPovrsina());
+				nekretnina.setSobnost(nekretninaDTO.getSobnost());
+				nekretnina.setStanje_objekta(nekretninaDTO.getStanje_objekta());
+				nekretnina.setGrejanje(nekretninaDTO.getGrejanje());
+				nekretnina.setSpratova(nekretninaDTO.getSpratova());
+				nekretnina.setStanje(nekretninaDTO.getStanje());
+				nekretnina.setSprat(nekretninaDTO.getSprat());
+				nekretnina.setOpis(nekretninaDTO.getOpis());
+				
+				katNekretnina.setKategorija(kategorijaRepository.findByName(("prodaja")));
+				katNekretnina.setNekretnina(nekretnina);
+				
+				objavio.setKompanija(null);
+				objavio.setKorisnik(korisnikRepository.findOne(id));
+				objavio.setNekretnina(nekretnina);
+				
+				nekretnina = nekretninaService.save(nekretnina);
+				kategorijaNekretnineRepository.save(katNekretnina);
+				objavioRepository.save(objavio);
+				
+				return new ResponseEntity<>("korisnik "+id,HttpStatus.OK);
+			
+			} else {
+				Nekretnina nekretnina;
+				KategorijaNekretnina katNekretnina = new KategorijaNekretnina();
+				Objava objavio = new Objava();
+				
+				
+				nekretnina = new Nekretnina();
+				
+				nekretnina.setNaziv_nekretnine(nekretninaDTO.getNaziv_nekretnine());
+				nekretnina.setCena(nekretninaDTO.getCena());
+				nekretnina.setPovrsina(nekretninaDTO.getPovrsina());
+				nekretnina.setSobnost(nekretninaDTO.getSobnost());
+				nekretnina.setStanje_objekta(nekretninaDTO.getStanje_objekta());
+				nekretnina.setGrejanje(nekretninaDTO.getGrejanje());
+				nekretnina.setSpratova(nekretninaDTO.getSpratova());
+				nekretnina.setStanje(nekretninaDTO.getStanje());
+				nekretnina.setSprat(nekretninaDTO.getSprat());
+				nekretnina.setOpis(nekretninaDTO.getOpis());
+				
+				katNekretnina.setKategorija(kategorijaRepository.findByName(("izdavanje")));
+				katNekretnina.setNekretnina(nekretnina);
+				
+				objavio.setKompanija(null);
+				objavio.setKorisnik(korisnikRepository.findOne(id));
+				objavio.setNekretnina(nekretnina);
+				
+				nekretnina = nekretninaService.save(nekretnina);
+				kategorijaNekretnineRepository.save(katNekretnina);
+				objavioRepository.save(objavio);
+				
+				return new ResponseEntity<>("korisnik "+id,HttpStatus.OK);
+			}
+		} else if(idKorisnik.equals("null")) {
+			
+			Long id = Long.parseLong(idKompanija);
+			
+			if(nazivKat.equals("prodaja")) {
+				
+				Nekretnina nekretnina;
+				KategorijaNekretnina katNekretnina = new KategorijaNekretnina();
+				Objava objavio = new Objava();
+				
+				
+				nekretnina = new Nekretnina();
+				
+				nekretnina.setNaziv_nekretnine(nekretninaDTO.getNaziv_nekretnine());
+				nekretnina.setCena(nekretninaDTO.getCena());
+				nekretnina.setPovrsina(nekretninaDTO.getPovrsina());
+				nekretnina.setSobnost(nekretninaDTO.getSobnost());
+				nekretnina.setStanje_objekta(nekretninaDTO.getStanje_objekta());
+				nekretnina.setGrejanje(nekretninaDTO.getGrejanje());
+				nekretnina.setSpratova(nekretninaDTO.getSpratova());
+				nekretnina.setStanje(nekretninaDTO.getStanje());
+				nekretnina.setSprat(nekretninaDTO.getSprat());
+				nekretnina.setOpis(nekretninaDTO.getOpis());
+				
+				katNekretnina.setKategorija(kategorijaRepository.findByName(("prodaja")));
+				katNekretnina.setNekretnina(nekretnina);
+				
+				objavio.setKompanija(kompanijaRepository.findOne(id));
+				objavio.setKorisnik(null);
+				objavio.setNekretnina(nekretnina);
+				
+				nekretnina = nekretninaService.save(nekretnina);
+				kategorijaNekretnineRepository.save(katNekretnina);
+				objavioRepository.save(objavio);
+				
+				return new ResponseEntity<>("korisnik "+id,HttpStatus.OK);
+			
+			} else {
+				Nekretnina nekretnina;
+				KategorijaNekretnina katNekretnina = new KategorijaNekretnina();
+				Objava objavio = new Objava();
+				
+				
+				nekretnina = new Nekretnina();
+				
+				nekretnina.setNaziv_nekretnine(nekretninaDTO.getNaziv_nekretnine());
+				nekretnina.setCena(nekretninaDTO.getCena());
+				nekretnina.setPovrsina(nekretninaDTO.getPovrsina());
+				nekretnina.setSobnost(nekretninaDTO.getSobnost());
+				nekretnina.setStanje_objekta(nekretninaDTO.getStanje_objekta());
+				nekretnina.setGrejanje(nekretninaDTO.getGrejanje());
+				nekretnina.setSpratova(nekretninaDTO.getSpratova());
+				nekretnina.setStanje(nekretninaDTO.getStanje());
+				nekretnina.setSprat(nekretninaDTO.getSprat());
+				nekretnina.setOpis(nekretninaDTO.getOpis());
+				
+				katNekretnina.setKategorija(kategorijaRepository.findByName(("izdavanje")));
+				katNekretnina.setNekretnina(nekretnina);
+				
+				objavio.setKompanija(kompanijaRepository.findOne(id));
+				objavio.setKorisnik(null);
+				objavio.setNekretnina(nekretnina);
+				
+				nekretnina = nekretninaService.save(nekretnina);
+				kategorijaNekretnineRepository.save(katNekretnina);
+				objavioRepository.save(objavio);
+				
+				return new ResponseEntity<>("korisnik "+id,HttpStatus.OK);
+			}
+			
+		} else  {
+			return new ResponseEntity<String>("Lose",HttpStatus.BAD_REQUEST);
 		}
-		nekretnina.setTehnickaOpremljenost(nekretninaDTO.getTehnickaOpremljenost());
 		
-		nekretnina = nekretninaService.save(nekretnina);
-		return new ResponseEntity<>(new NekretninaDTO(nekretnina), HttpStatus.OK);
-	}
-	
-	//Azuriranje lokacije
-	@RequestMapping(value = "/{idNekretnine}/{idLokacija}", method = RequestMethod.PUT, consumes = "application/json")
-	public ResponseEntity<NekretninaDTO> updateLokacija(@RequestBody NekretninaDTO nekretninaDTO) {
-		Nekretnina nekretnina = nekretninaService.findOne(nekretninaDTO.getId());
-		if(nekretnina == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		nekretnina.setLokacija(nekretninaDTO.getLokacija());
 		
-		nekretnina = nekretninaService.save(nekretnina);
-		return new ResponseEntity<>(new NekretninaDTO(nekretnina), HttpStatus.OK);
 	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.LokacijaDTO;
 import com.konstrukcija.model.Lokacija;
+import com.konstrukcija.model.Nekretnina;
 import com.konstrukcija.service.LokacijaService;
+import com.konstrukcija.service.NekretnineService;
 
 @RestController
 @RequestMapping(value="api/lokacija")
@@ -22,20 +25,18 @@ public class LokacijaController {
 	@Autowired
 	private LokacijaService lokacijaService;
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<LokacijaDTO>> getLokacija() {
-		List<Lokacija> lokacija = lokacijaService.findAll();
-		
-		List<LokacijaDTO> lokacijaDTO = new ArrayList<>();
-		for(Lokacija l : lokacija) {
-			lokacijaDTO.add(new LokacijaDTO(l));
-		}
-		return new ResponseEntity<>(lokacijaDTO, HttpStatus.OK);
-	}
+	@Autowired
+	private NekretnineService nekretninaService;
 	
 	//Dodavanje lokacije
-	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<String> saveLokacija(@RequestBody LokacijaDTO lokacijaDTO) {
+	@RequestMapping(value = "/{idNekretnina}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<String> saveLokacija(@PathVariable Long idNekretnina, @RequestBody LokacijaDTO lokacijaDTO) {
+		
+		Nekretnina nekretnina = nekretninaService.findOne(idNekretnina);
+		if(nekretnina == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 		Lokacija lokacija = new Lokacija();
 		
 		lokacija.setDrzava(lokacijaDTO.getDrzava());
@@ -47,7 +48,11 @@ public class LokacijaController {
 		lokacija.setGeo_duzina(lokacijaDTO.getGeo_duzina());
 		lokacija.setGeo_sirina(lokacijaDTO.getGeo_sirina());
 		
+		nekretnina.setLokacija(lokacija);
+		
 		lokacija = lokacijaService.save(lokacija);
+		nekretnina = nekretninaService.save(nekretnina);
+		
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 }

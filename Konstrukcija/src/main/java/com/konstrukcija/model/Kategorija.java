@@ -16,11 +16,10 @@ public class Kategorija {
 	@GeneratedValue
 	private Long id;
 	
-	private String kategorija;//da li se prodaje ili iznajmljuje 
-	private String vrsta_nekretnine;//da li je stan ili kuca
+	String name;
 	
 	@OneToMany(mappedBy = "kategorija", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<KategorijaNekretnine> kategorijaNekretnine = new HashSet<KategorijaNekretnine>();
+	private Set<KategorijaNekretnina> kategorijaNekretnina = new HashSet<KategorijaNekretnina>();
 
 	public Long getId() {
 		return id;
@@ -30,30 +29,23 @@ public class Kategorija {
 		this.id = id;
 	}
 
-	public String getKategorija() {
-		return kategorija;
+	public String getName() {
+		return name;
 	}
 
-	public void setKategorija(String kategorija) {
-		this.kategorija = kategorija;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getVrsta_nekretnine() {
-		return vrsta_nekretnine;
+	public Set<KategorijaNekretnina> getKategorijaNekretnina() {
+		return kategorijaNekretnina;
 	}
 
-	public void setVrsta_nekretnine(String vrsta_nekretnine) {
-		this.vrsta_nekretnine = vrsta_nekretnine;
+	public void setKategorijaNekretnina(
+			Set<KategorijaNekretnina> kategorijaNekretnina) {
+		this.kategorijaNekretnina = kategorijaNekretnina;
 	}
-
-	public Set<KategorijaNekretnine> getKategorijaNekretnine() {
-		return kategorijaNekretnine;
-	}
-
-	public void setKategorijaNekretnine(
-			Set<KategorijaNekretnine> kategorijaNekretnine) {
-		this.kategorijaNekretnine = kategorijaNekretnine;
-	}
+	
 	
 	
 }

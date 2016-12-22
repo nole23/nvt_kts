@@ -6,4 +6,5 @@ import com.konstrukcija.model.Kategorija;
 
 public interface KategorijaRepository extends JpaRepository<Kategorija, Long> {
 
+	Kategorija findByName(String name);
 }

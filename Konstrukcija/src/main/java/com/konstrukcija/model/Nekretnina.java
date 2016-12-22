@@ -32,7 +32,7 @@ public class Nekretnina {
 	private Set<Objava> objava = new HashSet<Objava>();
 	
 	@OneToMany(mappedBy = "nekretnina", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<KategorijaNekretnine> kategorijaNekretnine = new HashSet<KategorijaNekretnine>();
+	private Set<KategorijaNekretnina> kategorijaNekretnina = new HashSet<KategorijaNekretnina>();
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Lokacija lokacija;
@@ -42,6 +42,15 @@ public class Nekretnina {
 	
 	@OneToMany(mappedBy = "nekretnina", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Set<Oglasi> oglasi = new HashSet<Oglasi>();
+	
+	public Set<KategorijaNekretnina> getKategorijaNekretnina() {
+		return kategorijaNekretnina;
+	}
+
+	public void setKategorijaNekretnina(
+			Set<KategorijaNekretnina> kategorijaNekretnina) {
+		this.kategorijaNekretnina = kategorijaNekretnina;
+	}
 
 	public Long getId() {
 		return id;
@@ -137,15 +146,6 @@ public class Nekretnina {
 
 	public void setObjava(Set<Objava> objava) {
 		this.objava = objava;
-	}
-
-	public Set<KategorijaNekretnine> getKategorijaNekretnine() {
-		return kategorijaNekretnine;
-	}
-
-	public void setKategorijaNekretnine(
-			Set<KategorijaNekretnine> kategorijaNekretnine) {
-		this.kategorijaNekretnine = kategorijaNekretnine;
 	}
 
 	public Lokacija getLokacija() {
