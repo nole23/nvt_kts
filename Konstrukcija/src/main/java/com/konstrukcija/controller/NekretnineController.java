@@ -67,7 +67,15 @@ public class NekretnineController {
 	}
 	
 
-	//DOdavanje nove nekretnine
+	/**
+	 * 
+	 * @param nazivKat
+	 * @param idKompanija
+	 * @param idKorisnik
+	 * @param nekretninaDTO
+	 * @return saveNekretnina na osnovu ulaznih parametara i ispitivanje da li je korisnik ili kompanija
+	 * 	objavio oglas
+	 */
 	@RequestMapping(value = "/{nazivKat}/{idKorisnik}/{idKompanija}", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<String> saveNekretnine(@PathVariable String nazivKat, @PathVariable String idKompanija, @PathVariable String idKorisnik, @RequestBody NekretninaDTO nekretninaDTO) {
 		if(idKompanija.equals("null")){

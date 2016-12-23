@@ -38,6 +38,14 @@ public class ObjavaController {
 		return new ResponseEntity<>(objavaDTO, HttpStatus.OK);
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @param idNekretnine
+	 * @param idKompanije
+	 * @param objavaDTO
+	 * @return saveObjava na osnovu ulaznih parametara
+	 */
 	@RequestMapping(value = "/{id}/{idNekretnine}/{idKompanije}", method = RequestMethod.GET)
 	public ResponseEntity<String> createObjava(@PathVariable String id, @PathVariable String idNekretnine, @PathVariable String idKompanije, @RequestBody ObjavaDTO objavaDTO) {
 		Objava objava = new Objava();

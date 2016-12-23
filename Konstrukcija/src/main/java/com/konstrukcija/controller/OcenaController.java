@@ -27,6 +27,13 @@ public class OcenaController {
 	@Autowired
 	private OglasService oglasService;
 	
+	/**
+	 * 
+	 * @param idOglas
+	 * @param ocenaDTO
+	 * @return dodavanje ocene za dati oglas @param idOglas
+	 */
+	
 	@RequestMapping(value = "/add/{idOglas}", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<OcenaDTO> saveOcene(@PathVariable Long idOglas, @RequestBody OcenaDTO ocenaDTO) {
 		

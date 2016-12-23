@@ -105,7 +105,7 @@ public class KorisnikController {
 			userAuthoritRepository.save(userAuthority);
 			return new ResponseEntity<>("Uspesno ste se registrovali", HttpStatus.CREATED);
 		} else {
-			return new ResponseEntity<>("Cant create that type of user, ony Customer and Advertiser allowed", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Registration invalid", HttpStatus.BAD_REQUEST);
 		}	
 		
 	}
@@ -121,7 +121,7 @@ public class KorisnikController {
 			
 			return new ResponseEntity<String>(tokenUtils.generateToken(details), HttpStatus.OK);
 		} catch(Exception ex) {
-			return new ResponseEntity<String>("da li ovo radi", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("da li ovo radi "+loginDTO.getUsername(), HttpStatus.BAD_REQUEST);
 		}
 		
 	}

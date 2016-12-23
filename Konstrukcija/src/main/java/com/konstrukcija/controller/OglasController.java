@@ -28,7 +28,15 @@ import com.konstrukcija.repository.NekretninaRepository;
 import com.konstrukcija.repository.OglasiRepository;
 import com.konstrukcija.service.NekretnineService;
 import com.konstrukcija.service.OglasService;
-
+/**
+ * 
+ * @author X
+ *	Dodavanje novog oglasa na osnovu idNekretnine, poslo objave oglas ce biti vidljiv za sve posjetioce sajta
+ *
+ *	U slucaju da je neki oglas prijavljen admin sistema moze da pogodi funkciju deleteOglas kojom brise dati oglas
+ *	
+ *	Dodavanje novog komentara i ocene za dati oglas
+ */
 @RestController
 @RequestMapping(value = "api/oglas")
 public class OglasController {
@@ -119,5 +127,16 @@ public class OglasController {
 		}
 		
 		return new ResponseEntity<>(oceneDTO, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/delete/{idNekretnina}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> deleteOglas(@PathVariable Long idNekretnina) {
+		Oglas oglas = oglasService.findOne(idNekretnina);
+		if(oglas != null) {
+			oglasService.remove(idNekretnina);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 }

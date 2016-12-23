@@ -43,8 +43,17 @@ public class Korisnik {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Adresa adresa;
 	
+	@OneToMany(mappedBy = "korisnik", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	private Set<PrijavljeniOglas> prijavljeniOglas = new HashSet<PrijavljeniOglas>();
 	
-	
+	public Set<PrijavljeniOglas> getPrijavljeniOglas() {
+		return prijavljeniOglas;
+	}
+
+	public void setPrijavljeniOglas(Set<PrijavljeniOglas> prijavljeniOglas) {
+		this.prijavljeniOglas = prijavljeniOglas;
+	}
+
 	public String getUsername() {
 		return username;
 	}

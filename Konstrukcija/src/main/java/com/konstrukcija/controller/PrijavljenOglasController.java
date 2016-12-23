@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.KomentarDTO;
 import com.konstrukcija.dto.PrijavljeniOglasDTO;
+import com.konstrukcija.model.Korisnik;
 import com.konstrukcija.model.Oglas;
 import com.konstrukcija.model.PrijavljeniOglas;
+import com.konstrukcija.repository.KorisnikRepository;
 import com.konstrukcija.repository.OglasRepository;
 import com.konstrukcija.repository.PrijavljenOglasRepository;
 import com.konstrukcija.service.OglasService;
@@ -26,16 +28,26 @@ public class PrijavljenOglasController {
 	//private PrijavljenOglasService prijavljenOglasService;
 	@Autowired
 	private PrijavljenOglasRepository prijavljenOglasRepo;
+	
 	@Autowired
 	private OglasRepository oglasRepository;
 	
-	@RequestMapping(value = "/add/{idOglas}", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<PrijavljeniOglasDTO> savePrijava(@PathVariable Long idOglas, @RequestBody PrijavljeniOglasDTO prijavljenOglasDTO) {
-		
+	@Autowired
+	private KorisnikRepository korisnikRepository;
+	/**
+	 * 
+	 * @param idOglas
+	 * @param idKorisnik
+	 * @param prijavljenOglasDTO
+	 * @return novi oglas je prijavljen na osnovu idOglasa i idKorisnika
+	 */
+	@RequestMapping(value = "/add/{idOglas}/{idKorisnik}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<PrijavljeniOglasDTO> savePrijava(@PathVariable Long idOglas, @PathVariable Long idKorisnik, @RequestBody PrijavljeniOglasDTO prijavljenOglasDTO) {
 		
 		PrijavljeniOglas prijavljen = new PrijavljeniOglas();
 		prijavljen.setOpis(prijavljenOglasDTO.getOpis());
 		prijavljen.setOglas(oglasRepository.findOne(idOglas));
+		prijavljen.setKorisnik(korisnikRepository.findOne(idKorisnik));
 		
 		prijavljenOglasRepo.save(prijavljen);
 		

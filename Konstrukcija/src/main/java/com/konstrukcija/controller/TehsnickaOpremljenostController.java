@@ -29,6 +29,7 @@ public class TehsnickaOpremljenostController {
 	@Autowired
 	private NekretnineService nekretninaService;
 	
+	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<TehnickaOpremljenostDTO>> getAllOpremljenost() {
 		List<TehnickaOpremljenost> tehnickaOpremljenost = tehnickaOpremljenostService.findAll();
@@ -40,6 +41,12 @@ public class TehsnickaOpremljenostController {
 		return new ResponseEntity<>(tehnickaOpremljenostDTO, HttpStatus.OK);
 	}
 	
+	/**
+	 * 
+	 * @param idNekretnina
+	 * @param tehnickaOpremljenostDTO
+	 * @return azuziranje tehnicke opremljenosti za datu nekretninu
+	 */
 	@RequestMapping(value = "/{idNekretnina}", method = RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<String> saveOpremljenist(@PathVariable Long idNekretnina, @RequestBody TehnickaOpremljenostDTO tehnickaOpremljenostDTO) {
 		

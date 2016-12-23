@@ -25,4 +25,8 @@ public class OglasService {
 	public Oglas save(Oglas oglas) {
 		return oglasRepository.save(oglas);
 	}
+	
+	public void remove(Long id) {
+		oglasRepository.delete(id);
+	}
 }

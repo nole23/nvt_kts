@@ -34,7 +34,12 @@ public class LokacijaController {
 	@Autowired
 	private NekretnineService nekretninaService;
 	
-	//Dodavanje lokacije
+	/**
+	 * 
+	 * @param idNekretnina
+	 * @param lokacijaDTO
+	 * @return saveLokacije i cuvanje te lokacije za datu nekretninu
+	 */
 	@RequestMapping(value = "/{idNekretnina}", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<String> saveLokacija(@PathVariable Long idNekretnina, @RequestBody LokacijaDTO lokacijaDTO) {
 		
