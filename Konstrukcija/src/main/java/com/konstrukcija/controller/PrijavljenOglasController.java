@@ -13,6 +13,8 @@ import com.konstrukcija.dto.KomentarDTO;
 import com.konstrukcija.dto.PrijavljeniOglasDTO;
 import com.konstrukcija.model.Oglas;
 import com.konstrukcija.model.PrijavljeniOglas;
+import com.konstrukcija.repository.OglasRepository;
+import com.konstrukcija.repository.PrijavljenOglasRepository;
 import com.konstrukcija.service.OglasService;
 import com.konstrukcija.service.PrijavljenOglasService;
 
@@ -20,23 +22,23 @@ import com.konstrukcija.service.PrijavljenOglasService;
 @RequestMapping(value = "api/prijava")
 public class PrijavljenOglasController {
 
+	//@Autowired
+	//private PrijavljenOglasService prijavljenOglasService;
 	@Autowired
-	private PrijavljenOglasService prijavljenOglasService;
-	
+	private PrijavljenOglasRepository prijavljenOglasRepo;
 	@Autowired
-	private OglasService oglasService;
+	private OglasRepository oglasRepository;
 	
 	@RequestMapping(value = "/add/{idOglas}", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<PrijavljeniOglasDTO> savePrijava(@PathVariable Long idOglas, @RequestBody PrijavljeniOglasDTO prijavljenOglasDTO) {
 		
-		Oglas oglas = oglasService.findOne(idOglas);
 		
 		PrijavljeniOglas prijavljen = new PrijavljeniOglas();
 		prijavljen.setOpis(prijavljenOglasDTO.getOpis());
-		prijavljen.setOglas(oglasService.findOne(idOglas));
+		prijavljen.setOglas(oglasRepository.findOne(idOglas));
 		
-		prijavljen = prijavljenOglasService.save(prijavljen);
+		prijavljenOglasRepo.save(prijavljen);
 		
-		return new ResponseEntity<>(new PrijavljeniOglasDTO(prijavljen), HttpStatus.CREATED);
+		return new ResponseEntity<>(new PrijavljeniOglasDTO(), HttpStatus.CREATED);
 	}
 }

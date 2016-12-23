@@ -3,18 +3,26 @@ package com.konstrukcija.test.controllers;
 import java.nio.charset.Charset;
 
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+
+
+
+
 
 
 import static org.hamcrest.Matchers.hasItem;
@@ -25,6 +33,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.konstrukcija.App;
+import com.konstrukcija.TestUtil;
+import com.konstrukcija.model.Korisnik;
+import com.konstrukcija.test.konstante.KorisnikKonstante;
 
 @SuppressWarnings("deprecation")
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -59,6 +70,22 @@ public class KorisnikControllerTest {
 			.andExpect(jsonPath("$.[*].fname").value(hasItem("Novica")))
 			.andExpect(jsonPath("$.[*].lname").value(hasItem("Nikolic")))
 			.andExpect(jsonPath("$.[*].email").value(hasItem("nole0223@gmail.com")));
+	}
+	
+	@Test
+	@Transactional
+	@Rollback(false)
+	public void testSaveKorisnik() throws Exception {
+		Korisnik korisnik = new Korisnik();
+		korisnik.setFname(KorisnikKonstante.F_NAME);
+		korisnik.setLname(KorisnikKonstante.L_NAME);
+		korisnik.setEmail(KorisnikKonstante.EMAIL);
+		korisnik.setPassword(KorisnikKonstante.PASSWORD);
+		korisnik.setUsername(KorisnikKonstante.USERNAME);
+		
+		String json = TestUtil.json(korisnik);
+		mockMvc.perform(post(URL_PREFIX+"/registration/korisnik").contentType(contentType).content(json)).andExpect(status().isCreated());
+		
 	}
 
 }

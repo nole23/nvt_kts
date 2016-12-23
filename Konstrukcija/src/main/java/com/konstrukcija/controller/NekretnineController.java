@@ -25,6 +25,13 @@ import com.konstrukcija.repository.KorisnikRepository;
 import com.konstrukcija.repository.ObjavaRepository;
 import com.konstrukcija.service.NekretnineService;
 
+/**
+ * 
+ * @author X
+ * Dodavanje nove nekretnine
+ * @param vrstaNekretnine, idKorisnik, idKopanija
+ * @return sacuvan u bazi nova nekretnina u zavisnosti ko ju je kreirao.
+ */
 @RestController
 @RequestMapping(value = "api/nekretnineee")
 public class NekretnineController {

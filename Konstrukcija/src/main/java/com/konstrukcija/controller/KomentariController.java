@@ -17,6 +17,15 @@ import com.konstrukcija.repository.OglasRepository;
 import com.konstrukcija.service.KomentariService;
 import com.konstrukcija.service.OglasService;
 
+/**
+ * 
+ * @author Novica Nikolic
+ * 
+ * Kreiranje novog komentara za dati oglas
+ * @param ulazni parametri su idOdlasa i dati komentar
+ * @return sacuvan oglas u bazi
+ *
+ */
 @RestController
 @RequestMapping(value = "api/komentari")
 public class KomentariController {

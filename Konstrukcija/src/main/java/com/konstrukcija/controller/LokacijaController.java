@@ -18,6 +18,12 @@ import com.konstrukcija.model.Nekretnina;
 import com.konstrukcija.service.LokacijaService;
 import com.konstrukcija.service.NekretnineService;
 
+/**
+ * 
+ * @author X
+ * 
+ * Dodavanje lokacije kao i gps pozicije za datu nekretninu
+ */
 @RestController
 @RequestMapping(value="api/lokacija")
 public class LokacijaController {

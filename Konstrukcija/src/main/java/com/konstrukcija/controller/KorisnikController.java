@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.KorisnikDTO;
@@ -28,6 +27,17 @@ import com.konstrukcija.repository.AdminRepository;
 import com.konstrukcija.repository.UserAuthorityRepository;
 import com.konstrukcija.security.TokenUtils;
 import com.konstrukcija.service.KorisnikService;
+
+/**
+ * 
+ * @author Novica Nikolic
+ * 
+ * Ovaj kontroler sluzi za registraciju novog korisnika kao i logovanje korisnika
+ * Ulazni parametri su osnovni podaci o korisniku a izlazni su ili dodat novi korisnik 
+ * ili uspesno logovanje
+ *
+ */
+
 
 @RestController
 @RequestMapping(value="api/users")
@@ -50,6 +60,7 @@ public class KorisnikController {
 	
 	@Autowired
 	TokenUtils tokenUtils;
+	
 	
 	@RequestMapping(value="/all",method = RequestMethod.GET)
 	public ResponseEntity<List<KorisnikDTO>> getKorisnik() {

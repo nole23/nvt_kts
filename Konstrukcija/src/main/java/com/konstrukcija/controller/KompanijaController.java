@@ -16,6 +16,14 @@ import com.konstrukcija.repository.KompanijaRepository;
 import com.konstrukcija.repository.KorisnikRepository;
 import com.konstrukcija.repository.ZaposleniRepository;
 
+/**
+ * 
+ * @author X
+ *	
+ * Registracija nove kompanije. Kompaniju moze dodati registrovani korisnik i samim tim postaje 
+ * zaposlen u toj kompaniji. On moze da dodaje nove zaposlene
+ *
+ */
 @RestController
 @RequestMapping(value = "api/kompanija")
 public class KompanijaController {

@@ -10,7 +10,7 @@ import com.konstrukcija.repository.PrijavljenOglasRepository;
 public class PrijavljenOglasService {
 
 	@Autowired
-	PrijavljenOglasRepository prijavljenOglasRepository;
+	private PrijavljenOglasRepository prijavljenOglasRepository;
 	
 	public PrijavljeniOglas save(PrijavljeniOglas prijavljen) {
 		return prijavljenOglasRepository.save(prijavljen);

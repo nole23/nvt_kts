@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.konstrukcija.dto.ObjavaDTO;
 import com.konstrukcija.model.Objava;
 import com.konstrukcija.service.ObjavaService;
-
+/**
+ * 
+ * @author X
+ * 
+ */
 @RestController
 @RequestMapping(value = "api/objave")
 public class ObjavaController {
