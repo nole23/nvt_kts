@@ -27,5 +27,8 @@ public class OcenaService {
 	public Page<Ocene> findAll(Pageable page) {
 		return ocenaRepository.findAll(page);
 	}
-
+	
+	public Ocene findOne(Long id) {
+		return ocenaRepository.findOne(id);
+	}
 }

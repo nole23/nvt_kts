@@ -1,17 +1,16 @@
 package com.konstrukcija.dto;
 
 import com.konstrukcija.model.Komentari;
-import com.konstrukcija.model.Oglas;
 
 public class KomentarDTO {
 	
 	private Long id;
 	private String komentar;
-	private Oglas oglas;
+	private OglasDTO oglas;
 	
 	public KomentarDTO() {}
 	
-	public KomentarDTO(Long id, String komentar, Oglas oglas) {
+	public KomentarDTO(Long id, String komentar, OglasDTO oglas) {
 		super();
 		this.id = id; 
 		this.komentar = komentar;
@@ -21,7 +20,7 @@ public class KomentarDTO {
 	public KomentarDTO(Komentari komentar) {
 		this.id = komentar.getId();
 		this.komentar = komentar.getKomentar();
-		this.oglas = komentar.getOglas();
+		this.oglas = new OglasDTO(komentar.getOglas());
 	}
 
 	public Long getId() {
@@ -40,11 +39,11 @@ public class KomentarDTO {
 		this.komentar = komentar;
 	}
 
-	public Oglas getOglas() {
+	public OglasDTO getOglas() {
 		return oglas;
 	}
 
-	public void setOglas(Oglas oglas) {
+	public void setOglas(OglasDTO oglas) {
 		this.oglas = oglas;
 	}
 }
