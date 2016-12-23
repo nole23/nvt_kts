@@ -28,6 +28,17 @@ public class Oglas {
 	
 	@OneToMany(mappedBy = "oglas", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Set<Ocene> ocene = new HashSet<Ocene>();
+	
+	@OneToMany(mappedBy = "oglas", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	private Set<PrijavljeniOglas> prijavljeniOglas = new HashSet<PrijavljeniOglas>();
+	
+	public Set<PrijavljeniOglas> getPrijavljeniOglas() {
+		return prijavljeniOglas;
+	}
+
+	public void setPrijavljeniOglas(Set<PrijavljeniOglas> prijavljeniOglas) {
+		this.prijavljeniOglas = prijavljeniOglas;
+	}
 
 	public Long getId() {
 		return id;
