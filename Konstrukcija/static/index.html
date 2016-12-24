@@ -1,33 +1,71 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<meta name="description" content="">
-    	<meta name="viewport" content="width=device-width">
-		<title>Vase nekretnine</title>
-	</head>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="styles/main.css">
 	
-	
-	<body ng-app="nekretninaClientApp">
-		<p>Test prvi </p>
-		
-		
-		
-		
-		<script src="bower_components/jquery/dist/jquery.js"></script>
-	    <script src="bower_components/angular/angular.js"></script>
-	    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
-	    <script src="bower_components/angular-resource/angular-resource.js"></script>
-	    <script src="bower_components/angular-route/angular-route.js"></script>
-	    <script src="bower_components/lodash/lodash.js"></script>
-	    <script src="bower_components/restangular/dist/restangular.js"></script>
-	    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-	    <script src="bower_components/angular-lodash-module/angular-lodash-module.js"></script>
-	    
-	    
-	    <!-- Moje skripte angular.js -->
-	    <script src="scripts/app.js"></script>
-	    
-	    <!-- kraj mojih skripti -->
-	</body>
+  </head>
+  <body ng-app="nekretnineClientApp">
+
+    <div class="header">
+      <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand" href="#/"><span style="color: #0000;">N</span>asiOglasi</a>
+          </div>
+
+          <div class="collapse navbar-collapse" id="js-navbar-collapse">
+
+            <ul class="nav navbar-nav">
+              <li><a ng-href="#/login">Ulogij se</a></li>
+              <li><a ng-href="#/registration">Registruj se</a></li>
+              <li><a ng-href="#/estate">DODAJ OGLAS</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+    <div ng-view=""></div>
+    </div>
+
+
+	<div class="footer">
+      <div class="container">
+        <p>University project <span class="glyphicon glyphicon-copyright-mark">2016-2017.</span></p>
+      </div>
+    </div>
+    
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/restangular/dist/restangular.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-lodash-module/angular-lodash-module.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <script src="scripts/app.js"></script>
+        <script src="scripts/oglasi/oglasi-ctrl.js"></script>
+        <script src="scripts/oglasi/oglasi-resource.js"></script>
+        <script src="scripts/oglasi/registracija-ctrl.js"></script>
+        <script src="scripts/oglasi/registracija-resource.js"></script>
+        
+        <!-- endbuild -->
+</body>
 </html>
