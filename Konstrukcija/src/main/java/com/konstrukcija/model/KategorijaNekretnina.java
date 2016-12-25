@@ -43,6 +43,6 @@ public class KategorijaNekretnina {
 	public void setNekretnina(Nekretnina nekretnina) {
 		this.nekretnina = nekretnina;
 	}
-	
+
 	
 }

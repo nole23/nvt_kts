@@ -12,11 +12,12 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Kategorija {
+
 	@Id
 	@GeneratedValue
 	private Long id;
-	
-	String name;
+	private String naziv;
+	private String tip;
 	
 	@OneToMany(mappedBy = "kategorija", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Set<KategorijaNekretnina> kategorijaNekretnina = new HashSet<KategorijaNekretnina>();
@@ -29,12 +30,20 @@ public class Kategorija {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getNaziv() {
+		return naziv;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
+
+	public String getTip() {
+		return tip;
+	}
+
+	public void setTip(String tip) {
+		this.tip = tip;
 	}
 
 	public Set<KategorijaNekretnina> getKategorijaNekretnina() {
@@ -45,7 +54,6 @@ public class Kategorija {
 			Set<KategorijaNekretnina> kategorijaNekretnina) {
 		this.kategorijaNekretnina = kategorijaNekretnina;
 	}
-	
 	
 	
 }

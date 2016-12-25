@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.NekretninaDTO;
-import com.konstrukcija.model.Kategorija;
 import com.konstrukcija.model.KategorijaNekretnina;
 import com.konstrukcija.model.Nekretnina;
 import com.konstrukcija.model.Objava;
 import com.konstrukcija.repository.KategorijaNekretninaRepository;
-import com.konstrukcija.repository.KategorijaRepository;
+//import com.konstrukcija.repository.KategorijaRepository;
 import com.konstrukcija.repository.KomentarRepository;
 import com.konstrukcija.repository.KompanijaRepository;
 import com.konstrukcija.repository.KorisnikRepository;
@@ -45,8 +44,8 @@ public class NekretnineController {
 	@Autowired
 	private KategorijaNekretninaRepository kategorijaNekretnineRepository;
 	
-	@Autowired
-	private KategorijaRepository kategorijaRepository;
+	//@Autowired
+	//private KategorijaRepository kategorijaRepository;
 	
 	@Autowired
 	private KorisnikRepository korisnikRepository;
@@ -102,7 +101,7 @@ public class NekretnineController {
 				nekretnina.setSprat(nekretninaDTO.getSprat());
 				nekretnina.setOpis(nekretninaDTO.getOpis());
 				
-				katNekretnina.setKategorija(kategorijaRepository.findByName(("prodaja")));
+				//katNekretnina.setKategorija(kategorijaRepository.findByName(("prodaja")));
 				katNekretnina.setNekretnina(nekretnina);
 				
 				objavio.setKompanija(null);
@@ -134,7 +133,7 @@ public class NekretnineController {
 				nekretnina.setSprat(nekretninaDTO.getSprat());
 				nekretnina.setOpis(nekretninaDTO.getOpis());
 				
-				katNekretnina.setKategorija(kategorijaRepository.findByName(("izdavanje")));
+				//katNekretnina.setKategorija(kategorijaRepository.findByName(("izdavanje")));
 				katNekretnina.setNekretnina(nekretnina);
 				
 				objavio.setKompanija(null);
@@ -171,7 +170,7 @@ public class NekretnineController {
 				nekretnina.setSprat(nekretninaDTO.getSprat());
 				nekretnina.setOpis(nekretninaDTO.getOpis());
 				
-				katNekretnina.setKategorija(kategorijaRepository.findByName(("prodaja")));
+				//katNekretnina.setKategorija(kategorijaRepository.findByName(("prodaja")));
 				katNekretnina.setNekretnina(nekretnina);
 				
 				objavio.setKompanija(kompanijaRepository.findOne(id));
@@ -203,7 +202,7 @@ public class NekretnineController {
 				nekretnina.setSprat(nekretninaDTO.getSprat());
 				nekretnina.setOpis(nekretninaDTO.getOpis());
 				
-				katNekretnina.setKategorija(kategorijaRepository.findByName(("izdavanje")));
+				//katNekretnina.setKategorija(kategorijaRepository.findByName(("izdavanje")));
 				katNekretnina.setNekretnina(nekretnina);
 				
 				objavio.setKompanija(kompanijaRepository.findOne(id));

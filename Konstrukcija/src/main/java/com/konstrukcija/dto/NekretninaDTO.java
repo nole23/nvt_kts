@@ -171,6 +171,8 @@ public class NekretninaDTO {
 				+ ", opis=" + opis + ", lokacija=" + lokacija
 				+ ", tehnickaOpremljenost=" + tehnickaOpremljenost + "]";
 	}
+
+	
 	
 	
 }
