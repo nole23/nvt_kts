@@ -19,7 +19,9 @@ angular
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: 'views/main.html'
+                templateUrl: 'views/main.html',
+                controller: 'KategorijeCtrl',
+                controllerAs: 'kategorije'
             })
             .when('/registration', {
                 templateUrl: 'views/registracija.html',

@@ -1,3 +1,60 @@
-<div>
-	<p>Pocetna strana/Nekretnine</p>
+<div class="estate">
+	<div class="estate-left">
+
+		<!-- Ovde se otvara novi dijalog u kom upismemo odredjeni
+			 kriterijum kako bi mogli da izvrsimo pretragu -->
+		<div class="estate-left-conainer">
+			<div class="estate-left-container-header">
+				<button class="btn">Suzavanje pretrage</button>
+			</div>
+			<button class="btn">Lokacija</button>
+			<button class="btn">Cena</button>
+		</div>
+	</div>
+
+	<div class="estate-right">
+		<!-- Ovde izvuceno iz baze sve objavljene oglase i napisemo 
+			 broj tih oglasa -->
+		<div class="estate-right-header">
+			<h1>Nekretnine oglasi</h1>
+			<div class="estate-right-counter">
+				<h3>84506 oglasa</h3> 
+			</div>
+		</div>
+		
+		<!-- Ovde izvlacimo iz baze sve kategorije i ako je moguce za
+			 odredjenu kategoriju napisemo koliko ima oglasa 
+			 Takodje pomocu for petlje izvlacimo Prodaju i Izdavanje
+			 kako bi smanjili kod, a podkategorije na osnovu njuh -->
+		<div class="estate-right-left-container">
+			<h3>Kategorije</h3>
+			
+			<div class="estate-container-right" >
+				<div class="estate-container-right-header">
+					<a class="btnMain" href="">Prodaja (212652164)</a>
+				</div>
+				
+				<div ng-repeat="kategorija in kategorije">
+					<div ng-if="kategorija.naziv == 'prodaja'">
+						<a class="btnMain1" href="">{{kategorija.tip}}</a></br>
+					</div>
+				</div>
+				
+			</div>
+			
+			<!-- Ovaj dio ce se sam preslikavata pomocu for petlje -->
+			<div class="estate-container-right">
+				<div class="estate-container-right-header">
+					<a class="btnMain" href="">Izdavanje (212652164)</a>
+				</div>
+				<div ng-repeat="kategorija in kategorije">
+					<div ng-if="kategorija.naziv == 'izdavanje'">
+						<a class="btnMain1" href="">{{kategorija.tip}}</a></br>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
 </div>

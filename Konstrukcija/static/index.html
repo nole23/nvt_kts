@@ -10,42 +10,33 @@
   </head>
   <body ng-app="nekretnineClientApp">
 
-    <div class="header">
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
 
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
+	
+	<div id="header">
+		<div id="header-e1">
+			<a class="btnLogo" href="#"><span style="color: #ff1919">Oglas</span><span style="color: #195aff">Nekretnina</span></a>
+		</div>
+		
+		<div id="header-e2">
+			<div class="login">
+				<a class="btnAddOglas" href="">Dodaj oglas</a>
+			</div>
+		</div>
+		
+		<div id="header-e3">
+			<div class="registration">
+				<a class="btnLogin" href="">Ulogij se</a>   <span style="border-left: 2px  solid #808080; margin: 10px"></span> <a class="btnLogin" href="">Registruj se</a>
+			</div>
+		</div>
+	</div>
 
-            <a class="navbar-brand" href="#/"><span style="color: #0000;">N</span>asiOglasi</a>
-          </div>
-
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-            <ul class="nav navbar-nav">
-              <li><a ng-href="#/login">Ulogij se</a></li>
-              <li><a ng-href="#/registration">Registruj se</a></li>
-              <li><a ng-href="#/estate">DODAJ OGLAS</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
+    <div id="container">
     <div ng-view=""></div>
     </div>
 
 
-	<div class="footer">
-      <div class="container">
-        <p>University project <span class="glyphicon glyphicon-copyright-mark">2016-2017.</span></p>
-      </div>
+	<div id="footer">
+        <p>University project 2016-2017.</span></p>
     </div>
     
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -63,8 +54,8 @@
         <script src="scripts/app.js"></script>
         <script src="scripts/oglasi/oglasi-ctrl.js"></script>
         <script src="scripts/oglasi/oglasi-resource.js"></script>
-        <script src="scripts/oglasi/registracija-ctrl.js"></script>
-        <script src="scripts/oglasi/registracija-resource.js"></script>
+        <script src="scripts/kategorije/kategorija-ctrl.js"></script>
+        <script src="scripts/kategorije/kategorija-resource.js"></script>
         
         <!-- endbuild -->
 </body>
