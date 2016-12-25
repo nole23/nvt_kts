@@ -12,4 +12,5 @@ angular.module('nekretnineClientApp')
 		OglasiResource.getOglasi().then(function(items) {
 			$scope.oglasi = items;
 		});
+		
 	}]);

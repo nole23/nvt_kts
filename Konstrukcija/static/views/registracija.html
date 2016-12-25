@@ -1,6 +1,62 @@
+<style>
+.proba {
+    width: 85%;
+    padding: 12px 20px;
+    margin: 8px 0 0 5%;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.proba1 {
+	float: left;
+    width: 40%;
+    padding: 12px 20px;
+    margin: 8px 0 0 5%;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
 
-<div>
+input[type=submit] {
+    font-size: 16px;
+    background-color: #e55a00;
+    color: white;
+    padding: 14px 15px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
-
+input[type=submit]:hover {
+    background-color: #195aff;
+}
+</style>
+<div class="registration-ctrl">
+	<div class="registration-header">
+	
+		<h2>Da bi ste postavili oglas, treba da se prijavite ili registrujete na sistem. Hvala</h2>
+		<p> {{ registrovani.length }} registrovanih korisnika, {{nekretnine.length}} postavljenih oglasa</p>
+		
+		
+	</div>
+	
+	<div class="registration-container">
+		<p>Novi korisnik</p>
+		<div class="registration-container-data">
+			<input class="proba" type="text" placeholder="E-mail"/>
+			<input class="proba1" type="text" placeholder="Ime"/>
+			<input class="proba1" type="text" placeholder="Prezime"/>
+			<input class="proba" type="text" placeholder="Telefon"/>
+			<input class="proba" type="text" placeholder="Korisniko ime"/>
+			<input class="proba1" type="password" placeholder="Sifra"/>
+			<input class="proba1" type="password" placeholder="Ponovite sifra"/>
+		</div>
+		<div class="registration-container-button">
+			<input class="buttonView" type="submit" value="Registruj se">
+		</div>
+	</div>
 
 </div>

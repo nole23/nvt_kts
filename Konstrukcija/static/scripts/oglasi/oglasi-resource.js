@@ -8,6 +8,7 @@ angular.module('nekretnineClientApp')
 		'use stict';
 		
 		var oglasi = [];
+		var nekretnine = [];
 		var retVal = {};
 		
 		retVal.getOglasi = function() {
@@ -16,6 +17,7 @@ angular.module('nekretnineClientApp')
 				return oglasi;
 			});
 		};
+		
 		
 		return retVal;
 		

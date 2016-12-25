@@ -21,12 +21,14 @@ angular
             .when('/', {
                 templateUrl: 'views/main.html',
                 controller: 'KategorijeCtrl',
-                controllerAs: 'kategorije'
+                controllerAs: 'kategorije',
+                controllerAS3: 'nekretnine'
             })
             .when('/registration', {
                 templateUrl: 'views/registracija.html',
                     controller: 'KorisnikCtrl',
-                    controllerAs: 'registracija'
+                    controllerAs1: 'registrovani',
+                    controllerAs: 'nekretnine'
             })
             .otherwise({
                 redirectTo: '/'

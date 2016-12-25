@@ -18,7 +18,7 @@
 		<div class="estate-right-header">
 			<h1>Nekretnine oglasi</h1>
 			<div class="estate-right-counter">
-				<h3>84506 oglasa</h3> 
+				<h3>{{nekretnine.length}} objavljenih oglasa</h3> 
 			</div>
 		</div>
 		
@@ -31,12 +31,12 @@
 			
 			<div class="estate-container-right" >
 				<div class="estate-container-right-header">
-					<a class="btnMain" href="">Prodaja (212652164)</a>
+					<a class="btnMain" href="">Prodaja</a>
 				</div>
 				
 				<div ng-repeat="kategorija in kategorije">
 					<div ng-if="kategorija.naziv == 'prodaja'">
-						<a class="btnMain1" href="">{{kategorija.tip}}</a></br>
+						<a class="btnMain1" href="#/nekretnine/{{kategorija.id}}">{{kategorija.tip}}</a></br>
 					</div>
 				</div>
 				
@@ -45,7 +45,7 @@
 			<!-- Ovaj dio ce se sam preslikavata pomocu for petlje -->
 			<div class="estate-container-right">
 				<div class="estate-container-right-header">
-					<a class="btnMain" href="">Izdavanje (212652164)</a>
+					<a class="btnMain" href="">Izdavanje</a>
 				</div>
 				<div ng-repeat="kategorija in kategorije">
 					<div ng-if="kategorija.naziv == 'izdavanje'">
