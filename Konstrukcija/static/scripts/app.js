@@ -30,6 +30,11 @@ angular
                     controllerAs1: 'registrovani',
                     controllerAs: 'nekretnine'
             })
+            .when('/nekretnine/prodaja/:tip', {
+                templateUrl: 'views/nekretnine.html',
+                controller: 'NekretnineCtrl',
+                controllerAs: 'objave'
+            })
             .otherwise({
                 redirectTo: '/'
             });

@@ -4,7 +4,7 @@
 
 angular.module('nekretnineClientApp')
 	.factory('KorisniciResource', ['Restangular', '_', function(Restangular, _) {
-		'use stict';
+		'use strict';
 		
 		var registrovani = [];
 		var nekretnine = [];

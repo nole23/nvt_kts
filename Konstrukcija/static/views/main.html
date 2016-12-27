@@ -26,7 +26,7 @@
 			 odredjenu kategoriju napisemo koliko ima oglasa 
 			 Takodje pomocu for petlje izvlacimo Prodaju i Izdavanje
 			 kako bi smanjili kod, a podkategorije na osnovu njuh -->
-		<div class="estate-right-left-container">
+		<div ng-app='app' ng-controller='NekretnineCtrl' class="estate-right-left-container">
 			<h3>Kategorije</h3>
 			
 			<div class="estate-container-right" >
@@ -36,7 +36,7 @@
 				
 				<div ng-repeat="kategorija in kategorije">
 					<div ng-if="kategorija.naziv == 'prodaja'">
-						<a class="btnMain1" href="#/nekretnine/{{kategorija.id}}">{{kategorija.tip}}</a></br>
+						<a class="btnMain1" href="#/nekretnine/prodaja/{{kategorija.tip}}" ng-click=getIn(kategorija.id)>{{kategorija.tip}} </a></br>
 					</div>
 				</div>
 				

@@ -46,16 +46,19 @@ input[type=submit]:hover {
 	<div class="registration-container">
 		<p>Novi korisnik</p>
 		<div class="registration-container-data">
-			<input class="proba" type="text" placeholder="E-mail"/>
-			<input class="proba1" type="text" placeholder="Ime"/>
-			<input class="proba1" type="text" placeholder="Prezime"/>
-			<input class="proba" type="text" placeholder="Telefon"/>
-			<input class="proba" type="text" placeholder="Korisniko ime"/>
-			<input class="proba1" type="password" placeholder="Sifra"/>
-			<input class="proba1" type="password" placeholder="Ponovite sifra"/>
+			<form>
+				<input class="proba" type="text" placeholder="E-mail" id="email" ng-model="korisnik.email"/>
+				<input class="proba1" type="text" placeholder="Ime" id="fname" ng-model="korisnik.fname"/>
+				<input class="proba1" type="text" placeholder="Prezime" id="lname" ng-model="korisnik.lname"/>
+				<input class="proba" type="text" placeholder="Telefon" id="phone_number" ng-model="korisnik.phone_number"/>
+				<input class="proba" type="text" placeholder="Korisniko ime" id="username" ng-model="korisnik.username"/>
+				<input class="proba1" type="password" placeholder="Sifra" id="password" ng-model="korisnik.password"/>
+				<input class="proba1" type="password" placeholder="Ponovite sifra" />
+			</form>
 		</div>
 		<div class="registration-container-button">
-			<input class="buttonView" type="submit" value="Registruj se">
+			<input class="buttonView" type="submit" ng-click="ok()" value="Registruj se">
+			<button class="btn btn-default" type="button" ng-click="ok()">OK</button>
 		</div>
 	</div>
 
