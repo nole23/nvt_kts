@@ -46,7 +46,7 @@ input[type=submit]:hover {
 	<div class="registration-container">
 		<p>Novi korisnik</p>
 		<div class="registration-container-data">
-			<form>
+			<form ng-submit="registration()">
 				<input class="proba" type="text" placeholder="E-mail" id="email" ng-model="korisnik.email"/>
 				<input class="proba1" type="text" placeholder="Ime" id="fname" ng-model="korisnik.fname"/>
 				<input class="proba1" type="text" placeholder="Prezime" id="lname" ng-model="korisnik.lname"/>
@@ -54,12 +54,13 @@ input[type=submit]:hover {
 				<input class="proba" type="text" placeholder="Korisniko ime" id="username" ng-model="korisnik.username"/>
 				<input class="proba1" type="password" placeholder="Sifra" id="password" ng-model="korisnik.password"/>
 				<input class="proba1" type="password" placeholder="Ponovite sifra" />
+				
+				<div class="registration-container-button">
+					<input class="buttonView" type="submit" value="Registruj se">
+				</div>
 			</form>
 		</div>
-		<div class="registration-container-button">
-			<input class="buttonView" type="submit" ng-click="ok()" value="Registruj se">
-			<button class="btn btn-default" type="button" ng-click="ok()">OK</button>
-		</div>
+		
 	</div>
 
 </div>

@@ -25,7 +25,7 @@
 		
 		<div id="header-e3">
 			<div class="registration">
-				<a class="btnLogin" href="#/login">Ulogij se</a>   <span style="border-left: 2px  solid #808080; margin: 10px"></span> <a class="btnLogin" href="#/registration">Registruj se</a>
+				<a class="btnLogin" href="#/login" ng-if="!isLoggedIn()&&getCurrentState()!=='login'" ui-sref="login">Ulogij se</a>   <span style="border-left: 2px  solid #808080; margin: 10px"></span> <a class="btnLogin" href="#/registration">Registruj se</a>
 			</div>
 		</div>
 	</div>
@@ -52,6 +52,8 @@
     <!-- endbuild -->
 
         <script src="scripts/app.js"></script>
+        <script src="scripts/korisnici/login.js"></script>
+        <script src="scripts/korisnici/authentication.js"></script>
         <script src="scripts/oglasi/oglasi-ctrl.js"></script>
         <script src="scripts/oglasi/oglasi-resource.js"></script>
         <script src="scripts/kategorije/kategorija-ctrl.js"></script>

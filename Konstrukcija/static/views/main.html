@@ -31,12 +31,12 @@
 			
 			<div class="estate-container-right" >
 				<div class="estate-container-right-header">
-					<a class="btnMain" href="">Prodaja</a>
+					<a class="btnMain" href="#/prodaja">Prodaja</a>
 				</div>
 				
 				<div ng-repeat="kategorija in kategorije">
 					<div ng-if="kategorija.naziv == 'prodaja'">
-						<a class="btnMain1" href="#/nekretnine/prodaja/{{kategorija.tip}}" ng-click=getIn(kategorija.id)>{{kategorija.tip}} </a></br>
+						<a class="btnMain1" href="" ng-click=getIn(kategorija.id)>{{kategorija.tip}} </a></br>
 					</div>
 				</div>
 				
@@ -45,7 +45,7 @@
 			<!-- Ovaj dio ce se sam preslikavata pomocu for petlje -->
 			<div class="estate-container-right">
 				<div class="estate-container-right-header">
-					<a class="btnMain" href="">Izdavanje</a>
+					<a class="btnMain" href="#/izdavanje">Izdavanje</a>
 				</div>
 				<div ng-repeat="kategorija in kategorije">
 					<div ng-if="kategorija.naziv == 'izdavanje'">

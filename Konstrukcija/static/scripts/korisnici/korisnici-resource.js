@@ -7,6 +7,7 @@ angular.module('nekretnineClientApp')
 		'use strict';
 		
 		var registrovani = [];
+		var korisnici = [];
 		var nekretnine = [];
 		var retVal = {};
 		
@@ -23,6 +24,12 @@ angular.module('nekretnineClientApp')
 				return nekretnine;
 			});
 		};
+		
+		retVal.saveNewKorisnik = function(korisnik) {
+			return Restangular.all('users/registration/korisnik').post(korisnik).then(function(data) {
+				korisnici.push(data);
+			})
+		}
 		
 		return retVal;
 		

@@ -160,6 +160,12 @@
 	font-size: 20px;
 
 }
+.btnMain:hover {
+	color: #993d00;
+}
+.btnMain1:hover {
+	color: #993d00;
+}
 .btnMain1{
 	text-decoration:none;
 	color: #e55a00;
@@ -234,4 +240,93 @@
 .registration-container-button {
 	float: left;
 	margin: 2% 0 0 74.7%
+}
+/*******************Prodaja******************************/
+.sale {
+	float: left;
+	width: 80%;
+	margin: 0 10% 0 10%;
+}
+.sale-container {
+	float:left;
+	margin: 2% 3% 2% 2%;
+	width: 28%;
+	text-align: center;
+	
+}
+.sale-right-container {
+	width: 95%;
+	float: left;
+	margin: 0 1% 1% 1%;
+	-webkit-border-radius: 5;
+    -moz-border-radius: 5;
+    border-radius: 5px;
+}
+.sale-right-container-filter {
+	width: 100%;
+	border: 1px solid #333;
+}
+.sale-right-container-estate {
+	float: left;
+	margin: 2% 0 0 0;
+	width: 100%;
+	height-min: 50px;
+	height: 170px;
+}
+
+.image-data {
+	width: 180px;
+	height: 170px;
+	float: left;
+}
+.sale-estate-image {
+	float: left;
+	width: 180px;
+	height: 150px;
+	margin: 0 1% 0 0;
+}
+.data-publicit {
+	float: left;
+	font-size: 12px;
+}
+.sale-estate-info {
+	float: left;
+	width: 400px;
+	height: 45%;
+	margin: 0 0 0 2%;
+}
+.estate-info-name{
+	margin: 0 0 3% 0;
+}
+.estate-info {
+	width: 100%;
+	float: left;
+	margin: 0 0 3% 0;
+	
+}
+.estate-info-left {
+	float: left;
+	width: 49.5%;
+}
+.estate-info-left p{
+	margin: 0;
+	font-size: 14px;
+}
+.estate-info-down p{
+	margin: 1% 0 0 0;
+	font-size: 14px;
+}
+.sale-estate-price {
+	float: right;
+	height: 100%;
+}
+.estate-price h2{
+	color: #003311;
+	margin: 0;
+	font-size: 22px;
+}
+.estate-price h3{
+	margin: 2% 0 0 0;
+	font-size: 16px;
+	float: right;
 }

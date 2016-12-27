@@ -30,10 +30,26 @@ angular
                     controllerAs1: 'registrovani',
                     controllerAs: 'nekretnine'
             })
+            //pitati u petak asistenta kako ovo uraditi
             .when('/nekretnine/prodaja/:tip', {
                 templateUrl: 'views/nekretnine.html',
                 controller: 'NekretnineCtrl',
                 controllerAs: 'objave'
+            })
+            .when('/prodaja', {
+                templateUrl: 'views/prodaja.html',
+                controller: 'NekretnineCtrl',
+                controllerAs: 'prodaja'
+            })
+            .when('/izdavanje', {
+            	
+                templateUrl: 'views/izdavanje.html',
+                controller: 'NekretnineCtrl',
+                controllerAs: 'izdavanje'
+            })
+            .when('/login', {
+                templateUrl: 'views/login.html',
+                
             })
             .otherwise({
                 redirectTo: '/'

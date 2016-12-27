@@ -8,14 +8,15 @@ angular.module('nekretnineClientApp')
 
 	var objave = [];
 	var retVal = {};
-
+	
 	retVal.getObjave = function() {
 		return Restangular.all("kategorija/all").getList().then(function(entries) {
 			objave = entries;
+			console.log('proba1111 '+objave.length);
 			return objave;
 		});
 	};
-	/*
+	
 	retVal.getSveNekretnine = function(id) {
 		console.log('proba dva '+id);
 		return Restangular.all("kategorija/nekretnina/"+id).getList().then(function(entries) {
@@ -25,6 +26,6 @@ angular.module('nekretnineClientApp')
 		});
 		return null;
 	}
-	*/
+	
 	return retVal;
     }]);
