@@ -19,11 +19,13 @@ public class NekretninaDTO {
 	private String opis;
 	private Lokacija lokacija;
 	private TehnickaOpremljenost tehnickaOpremljenost;
+	private KategorijaDTO kategorijaDTO;
 	
 	public NekretninaDTO() {}
 	
 	public NekretninaDTO(Long id, String naziv_nekretnine, Double cena, Double povrsina, String sobnost, String stanje_objekta, 
-			String grejanje, String spratova, String stanje, String sprat, String opis, Lokacija lokacija, TehnickaOpremljenost tehnickaOpremljenost) {
+			String grejanje, String spratova, String stanje, String sprat, String opis, Lokacija lokacija, TehnickaOpremljenost tehnickaOpremljenost,
+			KategorijaDTO kategorijaDTO) {
 		super();
 		this.id = id;
 		this.naziv_nekretnine = naziv_nekretnine;
@@ -38,6 +40,7 @@ public class NekretninaDTO {
 		this.opis = opis;
 		this.lokacija = lokacija;
 		this.tehnickaOpremljenost = tehnickaOpremljenost;
+		this.kategorijaDTO = kategorijaDTO;
 	}
 	
 	public NekretninaDTO(Nekretnina nekretnina) {
@@ -54,7 +57,15 @@ public class NekretninaDTO {
 		this.sprat = nekretnina.getSprat();
 		this.opis = nekretnina.getOpis();
 		this.lokacija = nekretnina.getLokacija();
-		this.tehnickaOpremljenost = nekretnina.getTehnickaOpremljenost();
+		this.kategorijaDTO = new KategorijaDTO(nekretnina.getKategorija());
+	}
+
+	public KategorijaDTO getKategorijaDTO() {
+		return kategorijaDTO;
+	}
+
+	public void setKategorijaDTO(KategorijaDTO kategorijaDTO) {
+		this.kategorijaDTO = kategorijaDTO;
 	}
 
 	public Long getId() {

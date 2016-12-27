@@ -13,12 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.NekretninaDTO;
-import com.konstrukcija.model.KategorijaNekretnina;
 import com.konstrukcija.model.Nekretnina;
 import com.konstrukcija.model.Objava;
-import com.konstrukcija.repository.KategorijaNekretninaRepository;
-//import com.konstrukcija.repository.KategorijaRepository;
-import com.konstrukcija.repository.KomentarRepository;
 import com.konstrukcija.repository.KompanijaRepository;
 import com.konstrukcija.repository.KorisnikRepository;
 import com.konstrukcija.repository.ObjavaRepository;
@@ -41,8 +37,6 @@ public class NekretnineController {
 	@Autowired
 	private ObjavaRepository objavioRepository;
 	
-	@Autowired
-	private KategorijaNekretninaRepository kategorijaNekretnineRepository;
 	
 	//@Autowired
 	//private KategorijaRepository kategorijaRepository;
@@ -84,7 +78,7 @@ public class NekretnineController {
 			if(nazivKat.equals("prodaja")) {
 				
 				Nekretnina nekretnina;
-				KategorijaNekretnina katNekretnina = new KategorijaNekretnina();
+				//KategorijaNekretnina katNekretnina = new KategorijaNekretnina();
 				Objava objavio = new Objava();
 				
 				
@@ -102,21 +96,21 @@ public class NekretnineController {
 				nekretnina.setOpis(nekretninaDTO.getOpis());
 				
 				//katNekretnina.setKategorija(kategorijaRepository.findByName(("prodaja")));
-				katNekretnina.setNekretnina(nekretnina);
+				//katNekretnina.setNekretnina(nekretnina);
 				
 				objavio.setKompanija(null);
 				objavio.setKorisnik(korisnikRepository.findOne(id));
 				objavio.setNekretnina(nekretnina);
 				
 				nekretnina = nekretninaService.save(nekretnina);
-				kategorijaNekretnineRepository.save(katNekretnina);
+				//kategorijaNekretnineRepository.save(katNekretnina);
 				objavioRepository.save(objavio);
 				
 				return new ResponseEntity<>("korisnik "+id,HttpStatus.OK);
 			
 			} else {
 				Nekretnina nekretnina;
-				KategorijaNekretnina katNekretnina = new KategorijaNekretnina();
+				//KategorijaNekretnina katNekretnina = new KategorijaNekretnina();
 				Objava objavio = new Objava();
 				
 				
@@ -134,14 +128,14 @@ public class NekretnineController {
 				nekretnina.setOpis(nekretninaDTO.getOpis());
 				
 				//katNekretnina.setKategorija(kategorijaRepository.findByName(("izdavanje")));
-				katNekretnina.setNekretnina(nekretnina);
+				//katNekretnina.setNekretnina(nekretnina);
 				
 				objavio.setKompanija(null);
 				objavio.setKorisnik(korisnikRepository.findOne(id));
 				objavio.setNekretnina(nekretnina);
 				
 				nekretnina = nekretninaService.save(nekretnina);
-				kategorijaNekretnineRepository.save(katNekretnina);
+				//kategorijaNekretnineRepository.save(katNekretnina);
 				objavioRepository.save(objavio);
 				
 				return new ResponseEntity<>("korisnik "+id,HttpStatus.OK);
@@ -153,7 +147,7 @@ public class NekretnineController {
 			if(nazivKat.equals("prodaja")) {
 				
 				Nekretnina nekretnina;
-				KategorijaNekretnina katNekretnina = new KategorijaNekretnina();
+				//KategorijaNekretnina katNekretnina = new KategorijaNekretnina();
 				Objava objavio = new Objava();
 				
 				
@@ -171,21 +165,21 @@ public class NekretnineController {
 				nekretnina.setOpis(nekretninaDTO.getOpis());
 				
 				//katNekretnina.setKategorija(kategorijaRepository.findByName(("prodaja")));
-				katNekretnina.setNekretnina(nekretnina);
+				//katNekretnina.setNekretnina(nekretnina);
 				
 				objavio.setKompanija(kompanijaRepository.findOne(id));
 				objavio.setKorisnik(null);
 				objavio.setNekretnina(nekretnina);
 				
 				nekretnina = nekretninaService.save(nekretnina);
-				kategorijaNekretnineRepository.save(katNekretnina);
+				//kategorijaNekretnineRepository.save(katNekretnina);
 				objavioRepository.save(objavio);
 				
 				return new ResponseEntity<>("korisnik "+id,HttpStatus.OK);
 			
 			} else {
 				Nekretnina nekretnina;
-				KategorijaNekretnina katNekretnina = new KategorijaNekretnina();
+				//KategorijaNekretnina katNekretnina = new KategorijaNekretnina();
 				Objava objavio = new Objava();
 				
 				
@@ -203,14 +197,14 @@ public class NekretnineController {
 				nekretnina.setOpis(nekretninaDTO.getOpis());
 				
 				//katNekretnina.setKategorija(kategorijaRepository.findByName(("izdavanje")));
-				katNekretnina.setNekretnina(nekretnina);
+				//katNekretnina.setNekretnina(nekretnina);
 				
 				objavio.setKompanija(kompanijaRepository.findOne(id));
 				objavio.setKorisnik(null);
 				objavio.setNekretnina(nekretnina);
 				
 				nekretnina = nekretninaService.save(nekretnina);
-				kategorijaNekretnineRepository.save(katNekretnina);
+				//kategorijaNekretnineRepository.save(katNekretnina);
 				objavioRepository.save(objavio);
 				
 				return new ResponseEntity<>("korisnik "+id,HttpStatus.OK);
