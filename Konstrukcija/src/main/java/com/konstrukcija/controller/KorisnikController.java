@@ -80,7 +80,14 @@ public class KorisnikController {
 	}
 	
 
-	
+	/**
+	 * 
+	 * Registracija korisnika
+	 * @param uloga, uloga je uvek korisnik
+	 * @param korisnikDTO
+	 * @return moguce je registrovati samo korisika, kasnije ako je potrebmo mozemo korisnika kreirati kao admina
+	 * ili zaposlenog
+	 */
 	@RequestMapping(value="/registration/{uloga}", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<String>  saveKorisnika(@PathVariable String uloga, @RequestBody KorisnikDTO korisnikDTO) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -98,12 +105,12 @@ public class KorisnikController {
 			
 			
 			if( korisnikServer.findByUsername(korisnikDTO.getUsername()) != null || korisnikServer.findByEmail(korisnikDTO.getEmail()) != null) {
-				return new ResponseEntity<>("User with that username, or email already exists", HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<>("Ovaj email ili korisnicko ime je vec zauzeto", HttpStatus.BAD_REQUEST);
 			}
 			
 			korisnik = korisnikServer.save(korisnik);
 			userAuthoritRepository.save(userAuthority);
-			//mailSender.sendMail(korisnik.getEmail(), "Registration", "Click her to finish registration: <a href='http://localhost:8080/api/users/verify/"+korisnik.getVerifyCode()+"'>Click</a>");
+			mailSender.sendMail(korisnik.getEmail(), "Registration", "Click her to finish registration: <a href='http://localhost:8080/api/users/verify/"+korisnik.getVerifyCode()+"'>Click</a>");
 			return new ResponseEntity<>("Uspesno ste se registrovali", HttpStatus.CREATED);
 		} else {
 			return new ResponseEntity<String>("Cant create that type of user, ony Customer and Advertiser allowed",HttpStatus.BAD_REQUEST);
