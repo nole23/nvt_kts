@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import antlr.collections.List;
+
 import com.konstrukcija.dto.KomentarDTO;
 import com.konstrukcija.dto.OcenaDTO;
 import com.konstrukcija.dto.OglasDTO;
+import com.konstrukcija.model.Kategorija;
 import com.konstrukcija.model.Komentar;
 import com.konstrukcija.model.Korisnik;
 import com.konstrukcija.model.Nekretnina;
@@ -24,8 +27,10 @@ import com.konstrukcija.model.Objavio;
 import com.konstrukcija.model.Ocena;
 import com.konstrukcija.model.Oglas;
 import com.konstrukcija.model.PrijavaOglasa;
+import com.konstrukcija.repository.KategorijaRepository;
 import com.konstrukcija.repository.OglasRepository;
 import com.konstrukcija.repository.PrijavaOglasaRepository;
+import com.konstrukcija.service.KategorijaService;
 import com.konstrukcija.service.KomentarService;
 import com.konstrukcija.service.KorisnikService;
 import com.konstrukcija.service.NekretnineService;
@@ -58,6 +63,9 @@ public class OglasController {
 	
 	@Autowired
 	private PrijavaOglasaRepository prijavaOglasaRepository;
+	
+	@Autowired
+	private KategorijaRepository kategorijaRepository;
 	
 	/**
 	 * Objava oglasa kako bi bila dostupa svim posjetiocima sajta
@@ -169,4 +177,5 @@ public class OglasController {
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
 }
