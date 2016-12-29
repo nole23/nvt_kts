@@ -25,4 +25,8 @@ public class ObjavioService {
 	public Objavio findOne(Long id) {
 		return objavaRepository.findOne(id);
 	}
+	
+	public void remove(Long id) {
+		objavaRepository.delete(id);
+	}
 }

@@ -79,7 +79,10 @@ public class NekretnineController {
 		
 		List<NekretninaDTO> nekretnineDTO = new ArrayList<>();
 		for (Nekretnina n : nekrenine) {
-			nekretnineDTO.add(new NekretninaDTO(n));
+			if(n.getLokacija()!= null || n.getTehnickaOpremljenost() != null)  
+				if(n.getLokacija() != null)
+					if(n.getTehnickaOpremljenost() != null)
+						nekretnineDTO.add(new NekretninaDTO(n));
 		}
 		return new ResponseEntity<>(nekretnineDTO, HttpStatus.OK);
 	}

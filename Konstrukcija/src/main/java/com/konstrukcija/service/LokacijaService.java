@@ -25,4 +25,8 @@ public class LokacijaService {
 	public Lokacija findOne(Long id) {
 		return lokacijaRepository.findOne(id);
 	}
+	
+	public void remove(Long id) {
+		lokacijaRepository.delete(id);
+	}
 }

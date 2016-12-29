@@ -25,4 +25,8 @@ public class TehnickaOpremljenostService {
 	public TehnickaOpremljenost findOne(Long id) {
 		return tehnickaOpremljenostRepository.findOne(id);
 	}
+	
+	public void remove(Long id) {
+		tehnickaOpremljenostRepository.delete(id);
+	}
 }
