@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.KategorijaDTO;
+import com.konstrukcija.dto.KorisnikDTO;
 import com.konstrukcija.model.Kategorija;
 import com.konstrukcija.model.Lokacija;
 import com.konstrukcija.model.Nekretnina;
@@ -26,7 +27,6 @@ import com.konstrukcija.repository.OglasRepository;
 import com.konstrukcija.service.LokacijaService;
 import com.konstrukcija.service.NekretnineService;
 import com.konstrukcija.service.ObjavioService;
-import com.konstrukcija.service.OglasService;
 import com.konstrukcija.service.TehnickaOpremljenostService;
 
 @RestController
@@ -74,6 +74,11 @@ public class AdminController {
 		return new ResponseEntity<>(new KategorijaDTO(kategorija),HttpStatus.OK);
 	}
 	
+	/**
+	 * Pregled svih prijavljenih oglasa
+	 * @param principal
+	 * @return
+	 */
 	@RequestMapping(value = "/prijavljena/nekretnina", method = RequestMethod.GET)
 	public ResponseEntity<List<KategorijaDTO>> getPrijavljenaNekretnina(Principal principal) {
 		
@@ -87,6 +92,13 @@ public class AdminController {
 		return new ResponseEntity<>(kategorijaDTO,HttpStatus.OK);
 	}
 	
+	/**
+	 * Metoda koja brise datu nekretninu
+	 * @param principal
+	 * @param idNekretnina nekretnina koju trebamo da obrisemo
+	 * @return pre nego se izbirse nekretnina treba izbrisati podatke iz zavisnih tabela kao sto su
+	 * lokacija, tehnickaOpremljenost, objavio i oglas
+	 */
 	@RequestMapping(value = "/delete/nekretnina/{idNekretnina}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteNekretnina(Principal principal, @PathVariable Long idNekretnina) {
 		
@@ -94,7 +106,7 @@ public class AdminController {
 		TehnickaOpremljenost tehnicka = nekretnina.getTehnickaOpremljenost();
 		Lokacija lok = nekretnina.getLokacija();
 		Objavio objavio = objavioRepository.findByNekretnina(nekretnina);
-		//Oglas oglas = oglasService.findByNekretnina(nekretnina);
+		Oglas oglas = oglasService.findByNekretnina(nekretnina);
 			
 		if(tehnicka != null) {
 			Long idTehnicka = tehnicka.getId();
@@ -107,9 +119,11 @@ public class AdminController {
 				nekretnina.setLokacija(null);
 				nekretnina = nekretninaService.save(nekretnina);
 				lokacijaService.remove(idLokacija);
-			} /*if(oglas != null) {
+			} if(oglas != null) {
 				Long idOglas = oglas.getId();
-				oglasService.remove(idOglas);
+				oglasService.delete(idOglas);
+				objavio.setOglas(null);
+				objavioService.save(objavio);
 				if(objavio != null) {
 					Long idObjavio = objavio.getId();
 					objavioService.remove(idObjavio);
@@ -117,16 +131,10 @@ public class AdminController {
 						nekretninaService.remove(idNekretnina);
 						return new ResponseEntity<>(HttpStatus.OK);
 					}
-					
 				}
-			}*/
+			}
 		}
-		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		
-	
-		
-	
-			
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
 	}
 	
 }
