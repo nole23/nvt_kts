@@ -1,5 +1,6 @@
 package com.konstrukcija.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,12 +14,12 @@ public class Zaposleni {
 	@GeneratedValue
 	private Long id;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Korisnik korisnik;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Kompanija kompanija;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -43,4 +44,9 @@ public class Zaposleni {
 		this.kompanija = kompanija;
 	}
 
+	@Override
+	public String toString() {
+		return "Zaposleni [id=" + id + ", korisnik=" + korisnik
+				+ ", kompanija=" + kompanija + "]";
+	}
 }

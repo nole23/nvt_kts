@@ -1,11 +1,9 @@
 package com.konstrukcija.controller;
 
+import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,126 +15,112 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.KomentarDTO;
+import com.konstrukcija.dto.LokacijaDTO;
 import com.konstrukcija.dto.OcenaDTO;
 import com.konstrukcija.dto.OglasDTO;
-import com.konstrukcija.model.Komentari;
+import com.konstrukcija.model.Komentar;
+import com.konstrukcija.model.Korisnik;
+import com.konstrukcija.model.Lokacija;
 import com.konstrukcija.model.Nekretnina;
-import com.konstrukcija.model.Ocene;
+import com.konstrukcija.model.Objavio;
+import com.konstrukcija.model.Ocena;
 import com.konstrukcija.model.Oglas;
-import com.konstrukcija.model.Oglasi;
-import com.konstrukcija.repository.NekretninaRepository;
-import com.konstrukcija.repository.OglasiRepository;
+import com.konstrukcija.repository.KorisnikRepository;
+import com.konstrukcija.repository.OglasRepository;
+import com.konstrukcija.service.KomentarService;
+import com.konstrukcija.service.KorisnikService;
 import com.konstrukcija.service.NekretnineService;
-import com.konstrukcija.service.OglasService;
-/**
- * 
- * @author X
- *	Dodavanje novog oglasa na osnovu idNekretnine, poslo objave oglas ce biti vidljiv za sve posjetioce sajta
- *
- *	U slucaju da je neki oglas prijavljen admin sistema moze da pogodi funkciju deleteOglas kojom brise dati oglas
- *	
- *	Dodavanje novog komentara i ocene za dati oglas
- */
+import com.konstrukcija.service.ObjavioService;
+import com.konstrukcija.service.OcenaService;
+
 @RestController
-@RequestMapping(value = "api/oglas")
+@RequestMapping(value ="api/oglas")
 public class OglasController {
 
+	//@Autowired
+	//private OglasService oglasService;
 	@Autowired
-	private OglasService oglasService;
+	private OglasRepository oglasRepository;
 	
 	@Autowired
 	private NekretnineService nekretninaService;
 	
 	@Autowired
-	private OglasiRepository oglasiRepository;
+	private ObjavioService objavioService;
 	
 	@Autowired
-	private NekretninaRepository nekretninaRepository;
+	private OcenaService ocenaService;
 	
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public ResponseEntity<List<OglasDTO>> getAllOglas() {
-		List<Oglas> oglas = oglasService.fidnAll();
+	@Autowired
+	private KorisnikService korisnikService;
+	
+	@Autowired
+	private KomentarService komentarService;
+	
+	/**
+	 * Objava oglasa kako bi bila dostupa svim posjetiocima sajta
+	 * @param idNekretnina, id nekretnine koju objavljujemo
+	 * @param idObjavi, id onog ko je kreirao oglas radi laksis pretraga
+	 * @param oglasDTO, podatak do kada vazi objava
+	 * @return nekretnina je objavljena i vidljiva svim korisnicima sata
+	 */
+	@RequestMapping(value = "/{idNekretnina}/{idObjavi}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<String> getObjavaNekretnine(Principal principal, @PathVariable Long idNekretnina, @PathVariable Long idObjavi, @RequestBody OglasDTO oglasDTO) {
 		
-		List<OglasDTO> oglasDTO = new ArrayList<>();
-		for(Oglas o : oglas) {
-			oglasDTO.add(new OglasDTO(o));
+		Nekretnina nekretnina = nekretninaService.findOne(idNekretnina);
+		Oglas oglasPostoji = oglasRepository.findByNekretnina(nekretnina);
+		
+		if(oglasPostoji != null) {
+			return new ResponseEntity<>("ne moze vec postoji ",HttpStatus.OK);
 		}
+		
+		Objavio objavio = objavioService.findOne(idObjavi);
+		Oglas oglas = new Oglas();
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		Date date = new Date();
+		
+		oglas.setDatum_objave(dateFormat.format(date));
+		oglas.setDatum_azuriranja(dateFormat.format(date));
+		oglas.setDatum_isteka(oglasDTO.getDatum_isteka());
+		oglas.setNekretnina(nekretnina);
+		oglas.setObjavio(objavio);
+		
+		oglasRepository.save(oglas);
+		
+		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	//Dodati novi oglas
-	@RequestMapping(value = "/add/{idNekretnina}", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<OglasDTO> saveOglas(@PathVariable Long idNekretnina, @RequestBody OglasDTO oglasDTO) {
+	/**
+	 * Dodavanje ocene za dati oglas
+	 * @param idOglas
+	 * @param ocenaDTO
+	 * @return 
+	 */
+	@RequestMapping(value = "/{idOglas}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<String> getOcenaOglas(@PathVariable Long idOglas, @RequestBody OcenaDTO ocenaDTO) {
 		
-		Nekretnina nekretnina = nekretninaService.findOne(idNekretnina);
-		if(nekretnina == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		Oglas oglas = new Oglas();
-		Oglasi oglasi = new Oglasi();
+		Ocena ocena = new Ocena();
+		ocena.setOcena(ocenaDTO.getOcena());
+		ocena.setOglas(oglasRepository.findOne(idOglas));
 		
+		ocena = ocenaService.save(ocena);
 		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
-		//System.out.println(dateFormat.format(date));
-		
-		
-		oglas.setDatum_objave(dateFormat.format(date));
-		oglas.setDatum_azuriranja(oglasDTO.getDatum_azuriranja());
-		oglas.setDatum_isteka(oglasDTO.getDatum_isteka());
-		
-		oglasi.setNekretnina(nekretninaRepository.findOne(idNekretnina));
-		oglasi.setOglas(oglas);
-		
-		oglas = oglasService.save(oglas);
-		oglasiRepository.save(oglasi);
-		
-		return new ResponseEntity<>(new OglasDTO(oglas), HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/komentari/{idOglas}", method = RequestMethod.GET)
-	public ResponseEntity<List<KomentarDTO>> getKomentarOglasa(@PathVariable Long idOglas) {
+	@RequestMapping(value = "/komentar/{idOglas}/{idKorisnik}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<String> getKomentarOglas(@PathVariable Long idOglas,@PathVariable Long idKorisnik, @RequestBody KomentarDTO komentarDTO) {
 		
-		Oglas oglas = oglasService.findOne(idOglas);
+		Korisnik korisnik = korisnikService.findOne(idKorisnik);
+		Komentar komentar = new Komentar();
+		komentar.setKomentar(komentarDTO.getKomentar());
+		komentar.setKorisnik(korisnik);
+		komentar.setOglas(oglasRepository.findOne(idOglas));
 		
-		Set<Komentari> komentari = oglas.getKomentari();
-		List<KomentarDTO> komentariDTO = new ArrayList<>();
-		for(Komentari k: komentari) {
-			KomentarDTO komentarDTO = new KomentarDTO();
-			
-			komentarDTO.setKomentar(k.getKomentar());
-			
-			komentariDTO.add(komentarDTO);
-		}
-		return new ResponseEntity<>(komentariDTO, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/ocene/{idOglas}", method = RequestMethod.GET)
-	public ResponseEntity<List<OcenaDTO>> getOceneOglasa(@PathVariable Long idOglas) {
+		komentar = komentarService.save(komentar);
 		
-		Oglas oglas = oglasService.findOne(idOglas);
-		
-		Set<Ocene> ocene = oglas.getOcene();
-		List<OcenaDTO> oceneDTO = new ArrayList<>();
-		for(Ocene o: ocene) {
-			OcenaDTO ocenaDTO = new OcenaDTO();
-			
-			ocenaDTO.setOcena(o.getOcena());
-			
-			oceneDTO.add(ocenaDTO);
-		}
-		
-		return new ResponseEntity<>(oceneDTO, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/delete/{idNekretnina}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteOglas(@PathVariable Long idNekretnina) {
-		Oglas oglas = oglasService.findOne(idNekretnina);
-		if(oglas != null) {
-			oglasService.remove(idNekretnina);
-			return new ResponseEntity<>(HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

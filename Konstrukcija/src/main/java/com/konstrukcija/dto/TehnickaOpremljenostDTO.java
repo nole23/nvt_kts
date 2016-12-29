@@ -213,19 +213,4 @@ public class TehnickaOpremljenostDTO {
 	public void setGas(Boolean gas) {
 		this.gas = gas;
 	}
-
-	@Override
-	public String toString() {
-		return "TehnickaOpremljenostDTO [id=" + id + ", tarasa=" + tarasa
-				+ ", telefon=" + telefon + ", garaua=" + garaua
-				+ ", kablovska=" + kablovska + ", pogled_na_grad="
-				+ pogled_na_grad + ", podrum=" + podrum + ", kamin=" + kamin
-				+ ", bazen=" + bazen + ", internet=" + internet + ", tavan="
-				+ tavan + ", klima=" + klima + ", pogled_na_more="
-				+ pogled_na_more + ", lift=" + lift + ", strija=" + strija
-				+ ", voda=" + voda + ", kanalizacija=" + kanalizacija
-				+ ", gas=" + gas + "]";
-	}
-	
-	
 }

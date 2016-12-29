@@ -5,14 +5,19 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Ocene {
+public class Komentar {
+
 	@Id
 	@GeneratedValue
 	private Long id;
-	private int ocena;
+	private String komentar;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Korisnik korisnik;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Oglas oglas;
@@ -25,12 +30,20 @@ public class Ocene {
 		this.id = id;
 	}
 
-	public int getOcena() {
-		return ocena;
+	public String getKomentar() {
+		return komentar;
 	}
 
-	public void setOcena(int ocena) {
-		this.ocena = ocena;
+	public void setKomentar(String komentar) {
+		this.komentar = komentar;
+	}
+
+	public Korisnik getKorisnik() {
+		return korisnik;
+	}
+
+	public void setKorisnik(Korisnik korisnik) {
+		this.korisnik = korisnik;
 	}
 
 	public Oglas getOglas() {

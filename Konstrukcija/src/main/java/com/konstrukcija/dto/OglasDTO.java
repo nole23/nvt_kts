@@ -8,15 +8,20 @@ public class OglasDTO {
 	private String datum_objave;
 	private String datum_azuriranja;
 	private String datum_isteka;
+	private NekretninaDTO nekretninaDTO;
+	private ObjavioDTO objavioDTO;
 	
 	public OglasDTO() {}
 	
-	public OglasDTO(Long id, String datum_objave, String datum_azuriranja, String datum_isteka) {
+	public OglasDTO(Long id, String datum_objave, String datum_azuriranja,
+			String datum_isteka, NekretninaDTO nekretninaDTO, ObjavioDTO objavaDTO) {
 		super();
 		this.id = id;
 		this.datum_objave = datum_objave;
 		this.datum_azuriranja = datum_azuriranja;
 		this.datum_isteka = datum_isteka;
+		this.nekretninaDTO = nekretninaDTO;
+		this.objavioDTO = objavaDTO;
 	}
 	
 	public OglasDTO(Oglas oglas) {
@@ -24,6 +29,8 @@ public class OglasDTO {
 		this.datum_objave = oglas.getDatum_objave();
 		this.datum_azuriranja = oglas.getDatum_azuriranja();
 		this.datum_isteka = oglas.getDatum_isteka();
+		this.nekretninaDTO = new NekretninaDTO(oglas.getNekretnina());
+		this.objavioDTO = new ObjavioDTO(oglas.getObjavio());
 	}
 
 	public Long getId() {
@@ -58,12 +65,27 @@ public class OglasDTO {
 		this.datum_isteka = datum_isteka;
 	}
 
+	public NekretninaDTO getNekretninaDTO() {
+		return nekretninaDTO;
+	}
+
+	public void setNekretninaDTO(NekretninaDTO nekretninaDTO) {
+		this.nekretninaDTO = nekretninaDTO;
+	}
+
+	public ObjavioDTO getObjavioDTO() {
+		return objavioDTO;
+	}
+
+	public void setObjavioDTO(ObjavioDTO objavioDTO) {
+		this.objavioDTO = objavioDTO;
+	}
+
 	@Override
 	public String toString() {
 		return "OglasDTO [id=" + id + ", datum_objave=" + datum_objave
 				+ ", datum_azuriranja=" + datum_azuriranja + ", datum_isteka="
-				+ datum_isteka + "]";
+				+ datum_isteka + ", nekretninaDTO=" + nekretninaDTO
+				+ ", objavioDTO=" + objavioDTO + "]";
 	}
-	
-	
 }

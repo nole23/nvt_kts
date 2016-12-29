@@ -5,21 +5,21 @@ import com.konstrukcija.model.Kategorija;
 public class KategorijaDTO {
 
 	private Long id;
-	private String naziv;
+	private String name;
 	private String tip;
 	
 	public KategorijaDTO() {}
 	
-	public KategorijaDTO(Long id, String naziv, String tip) {
+	public KategorijaDTO(Long id, String name, String tip) {
 		super();
 		this.id = id;
-		this.naziv = naziv;
+		this.name = name;
 		this.tip = tip;
 	}
 	
 	public KategorijaDTO(Kategorija kategorija) {
 		this.id = kategorija.getId();
-		this.naziv = kategorija.getNaziv();
+		this.name = kategorija.getName();
 		this.tip = kategorija.getTip();
 	}
 
@@ -31,12 +31,12 @@ public class KategorijaDTO {
 		this.id = id;
 	}
 
-	public String getNaziv() {
-		return naziv;
+	public String getName() {
+		return name;
 	}
 
-	public void setNaziv(String naziv) {
-		this.naziv = naziv;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getTip() {
@@ -49,7 +49,7 @@ public class KategorijaDTO {
 
 	@Override
 	public String toString() {
-		return "KategorijaDTO [id=" + id + ", naziv=" + naziv + ", tip=" + tip
+		return "KategorijaDTO [id=" + id + ", naziv=" + name + ", tip=" + tip
 				+ "]";
 	}
 }

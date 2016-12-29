@@ -5,30 +5,22 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class PrijavljeniOglas {
+public class PrijavaOglasa {
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	private String opis;
+	private boolean prijava;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Korisnik korisnik;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Oglas oglas;
-	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	private Korisnik korisnik;
-
-
-	public Korisnik getKorisnik() {
-		return korisnik;
-	}
-
-	public void setKorisnik(Korisnik korisnik) {
-		this.korisnik = korisnik;
-	}
 
 	public Long getId() {
 		return id;
@@ -38,12 +30,20 @@ public class PrijavljeniOglas {
 		this.id = id;
 	}
 
-	public String getOpis() {
-		return opis;
+	public boolean isPrijava() {
+		return prijava;
 	}
 
-	public void setOpis(String opis) {
-		this.opis = opis;
+	public void setPrijava(boolean prijava) {
+		this.prijava = prijava;
+	}
+
+	public Korisnik getKorisnik() {
+		return korisnik;
+	}
+
+	public void setKorisnik(Korisnik korisnik) {
+		this.korisnik = korisnik;
 	}
 
 	public Oglas getOglas() {
@@ -53,7 +53,4 @@ public class PrijavljeniOglas {
 	public void setOglas(Oglas oglas) {
 		this.oglas = oglas;
 	}
-	
-	
-	
 }

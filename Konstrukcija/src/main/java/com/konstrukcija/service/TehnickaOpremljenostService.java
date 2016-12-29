@@ -21,4 +21,8 @@ public class TehnickaOpremljenostService {
 	public TehnickaOpremljenost save(TehnickaOpremljenost tehnickaOpremljenost) {
 		return tehnickaOpremljenostRepository.save(tehnickaOpremljenost);
 	}
+	
+	public TehnickaOpremljenost findOne(Long id) {
+		return tehnickaOpremljenostRepository.findOne(id);
+	}
 }

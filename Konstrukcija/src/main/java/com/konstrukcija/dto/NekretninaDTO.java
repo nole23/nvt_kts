@@ -1,8 +1,6 @@
 package com.konstrukcija.dto;
 
-import com.konstrukcija.model.Lokacija;
 import com.konstrukcija.model.Nekretnina;
-import com.konstrukcija.model.TehnickaOpremljenost;
 
 public class NekretninaDTO {
 
@@ -17,14 +15,14 @@ public class NekretninaDTO {
 	private String stanje;
 	private String sprat;
 	private String opis;
-	private Lokacija lokacija;
-	private TehnickaOpremljenost tehnickaOpremljenost;
 	private KategorijaDTO kategorijaDTO;
+	private LokacijaDTO lokacijaDTO;
+	private TehnickaOpremljenostDTO tehnickaOpremljenostDTO;
 	
-	public NekretninaDTO() {}
+public NekretninaDTO() {}
 	
 	public NekretninaDTO(Long id, String naziv_nekretnine, Double cena, Double povrsina, String sobnost, String stanje_objekta, 
-			String grejanje, String spratova, String stanje, String sprat, String opis, Lokacija lokacija, TehnickaOpremljenost tehnickaOpremljenost,
+			String grejanje, String spratova, String stanje, String sprat, String opis, LokacijaDTO lokacijaDTO, TehnickaOpremljenostDTO tehnickaOpremljenostDTO,
 			KategorijaDTO kategorijaDTO) {
 		super();
 		this.id = id;
@@ -38,8 +36,8 @@ public class NekretninaDTO {
 		this.stanje = stanje;
 		this.sprat = sprat;
 		this.opis = opis;
-		this.lokacija = lokacija;
-		this.tehnickaOpremljenost = tehnickaOpremljenost;
+		this.lokacijaDTO = lokacijaDTO;
+		this.tehnickaOpremljenostDTO = tehnickaOpremljenostDTO;
 		this.kategorijaDTO = kategorijaDTO;
 	}
 	
@@ -56,16 +54,9 @@ public class NekretninaDTO {
 		this.stanje = nekretnina.getStanje();
 		this.sprat = nekretnina.getSprat();
 		this.opis = nekretnina.getOpis();
-		this.lokacija = nekretnina.getLokacija();
+		this.lokacijaDTO = new LokacijaDTO(nekretnina.getLokacija());
+		this.tehnickaOpremljenostDTO = new TehnickaOpremljenostDTO(nekretnina.getTehnickaOpremljenost());
 		this.kategorijaDTO = new KategorijaDTO(nekretnina.getKategorija());
-	}
-
-	public KategorijaDTO getKategorijaDTO() {
-		return kategorijaDTO;
-	}
-
-	public void setKategorijaDTO(KategorijaDTO kategorijaDTO) {
-		this.kategorijaDTO = kategorijaDTO;
 	}
 
 	public Long getId() {
@@ -156,20 +147,29 @@ public class NekretninaDTO {
 		this.opis = opis;
 	}
 
-	public Lokacija getLokacija() {
-		return lokacija;
+	public KategorijaDTO getKategorijaDTO() {
+		return kategorijaDTO;
 	}
 
-	public void setLokacija(Lokacija lokacija) {
-		this.lokacija = lokacija;
+	public void setKategorijaDTO(KategorijaDTO kategorijaDTO) {
+		this.kategorijaDTO = kategorijaDTO;
 	}
 
-	public TehnickaOpremljenost getTehnickaOpremljenost() {
-		return tehnickaOpremljenost;
+	public LokacijaDTO getLokacijaDTO() {
+		return lokacijaDTO;
 	}
 
-	public void setTehnickaOpremljenost(TehnickaOpremljenost tehnickaOpremljenost) {
-		this.tehnickaOpremljenost = tehnickaOpremljenost;
+	public void setLokacijaDTO(LokacijaDTO lokacijaDTO) {
+		this.lokacijaDTO = lokacijaDTO;
+	}
+
+	public TehnickaOpremljenostDTO getTehnickaOpremljenostDTO() {
+		return tehnickaOpremljenostDTO;
+	}
+
+	public void setTehnickaOpremljenostDTO(
+			TehnickaOpremljenostDTO tehnickaOpremljenostDTO) {
+		this.tehnickaOpremljenostDTO = tehnickaOpremljenostDTO;
 	}
 
 	@Override
@@ -179,11 +179,8 @@ public class NekretninaDTO {
 				+ povrsina + ", sobnost=" + sobnost + ", stanje_objekta="
 				+ stanje_objekta + ", grejanje=" + grejanje + ", spratova="
 				+ spratova + ", stanje=" + stanje + ", sprat=" + sprat
-				+ ", opis=" + opis + ", lokacija=" + lokacija
-				+ ", tehnickaOpremljenost=" + tehnickaOpremljenost + "]";
+				+ ", opis=" + opis + ", kategorijaDTO="
+				+ kategorijaDTO + ", lokacijaDTO=" + lokacijaDTO
+				+ ", tehnickaOpremljenostDTO=" + tehnickaOpremljenostDTO + "]";
 	}
-
-	
-	
-	
 }

@@ -28,9 +28,6 @@ public class Nekretnina {
 	private String sprat;
 	private String opis;
 	
-	@OneToMany(mappedBy = "nekretnina", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<Objava> objava = new HashSet<Objava>();
-	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Kategorija kategorija;
 	
@@ -41,7 +38,10 @@ public class Nekretnina {
 	private TehnickaOpremljenost tehnickaOpremljenost;
 	
 	@OneToMany(mappedBy = "nekretnina", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<Oglasi> oglasi = new HashSet<Oglasi>();
+	private Set<Objavio> objavio = new HashSet<Objavio>();
+	
+	@OneToMany(mappedBy = "nekretnina", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	private Set<Oglas> oglas = new HashSet<Oglas>();
 
 	public Long getId() {
 		return id;
@@ -131,14 +131,6 @@ public class Nekretnina {
 		this.opis = opis;
 	}
 
-	public Set<Objava> getObjava() {
-		return objava;
-	}
-
-	public void setObjava(Set<Objava> objava) {
-		this.objava = objava;
-	}
-
 	public Kategorija getKategorija() {
 		return kategorija;
 	}
@@ -163,13 +155,19 @@ public class Nekretnina {
 		this.tehnickaOpremljenost = tehnickaOpremljenost;
 	}
 
-	public Set<Oglasi> getOglasi() {
-		return oglasi;
+	public Set<Objavio> getObjavio() {
+		return objavio;
 	}
 
-	public void setOglasi(Set<Oglasi> oglasi) {
-		this.oglasi = oglasi;
+	public void setObjavio(Set<Objavio> objavio) {
+		this.objavio = objavio;
 	}
-	
-	
+
+	public Set<Oglas> getOglas() {
+		return oglas;
+	}
+
+	public void setOglas(Set<Oglas> oglas) {
+		this.oglas = oglas;
+	}
 }

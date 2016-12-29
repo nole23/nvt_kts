@@ -1,5 +1,6 @@
 package com.konstrukcija.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +13,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.konstrukcija.dto.LokacijaDTO;
 import com.konstrukcija.dto.NekretninaDTO;
+import com.konstrukcija.dto.TehnickaOpremljenostDTO;
+import com.konstrukcija.model.Kategorija;
+import com.konstrukcija.model.Korisnik;
+import com.konstrukcija.model.Lokacija;
 import com.konstrukcija.model.Nekretnina;
-import com.konstrukcija.model.Objava;
+import com.konstrukcija.model.Objavio;
+import com.konstrukcija.model.TehnickaOpremljenost;
+import com.konstrukcija.repository.KategorijaRepository;
 import com.konstrukcija.repository.KompanijaRepository;
 import com.konstrukcija.repository.KorisnikRepository;
-import com.konstrukcija.repository.ObjavaRepository;
+import com.konstrukcija.repository.LokacijaRepository;
+import com.konstrukcija.repository.ObjavioRepository;
+import com.konstrukcija.service.KorisnikService;
+import com.konstrukcija.service.LokacijaService;
 import com.konstrukcija.service.NekretnineService;
+import com.konstrukcija.service.TehnickaOpremljenostService;
 
 /**
  * 
@@ -33,23 +45,36 @@ public class NekretnineController {
 	
 	@Autowired
 	private NekretnineService nekretninaService;
-
+	
 	@Autowired
-	private ObjavaRepository objavioRepository;
-	
-	
-	//@Autowired
-	//private KategorijaRepository kategorijaRepository;
+	private KategorijaRepository kategorijaRepository;
 	
 	@Autowired
 	private KorisnikRepository korisnikRepository;
 	
 	@Autowired
 	private KompanijaRepository kompanijaRepository;
+	
+	@Autowired
+	private ObjavioRepository objavioRepository;
+	
+	@Autowired
+	private KorisnikService korisnikService;
+	
+	@Autowired
+	private LokacijaService lokacijaService;
+	
+	@Autowired
+	private LokacijaRepository lokacijaRepository;
+	
+	@Autowired
+	private TehnickaOpremljenostService tehnickaOpremljenostService;
 
 	//Ispis svih nekretnina
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<NekretninaDTO>> getAllNekretnina() {
+		
+
 		List<Nekretnina> nekrenine = nekretninaService.findAll();
 		
 		List<NekretninaDTO> nekretnineDTO = new ArrayList<>();
@@ -59,27 +84,49 @@ public class NekretnineController {
 		return new ResponseEntity<>(nekretnineDTO, HttpStatus.OK);
 	}
 	
+	
+	/**
+	 * Test slucaj proveriti sa asistentom
+	 * @param principal
+	 * @return
+	 */
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ResponseEntity<Korisnik> gethahah(Principal principal) {
+		Korisnik k = korisnikService.findByUsername(principal.getName());
+
+		return new ResponseEntity<>(k, HttpStatus.OK);
+	}
+	
+	
 
 	/**
 	 * 
-	 * @param nazivKat
-	 * @param idKompanija
-	 * @param idKorisnik
-	 * @param nekretninaDTO
-	 * @return saveNekretnina na osnovu ulaznih parametara i ispitivanje da li je korisnik ili kompanija
-	 * 	objavio oglas
+	 * Ova metoda treba da proveri da li je korisnik ili kompanija dodaje nekretninu, takodje proverava da li je se nekretnina izdaje ili prodaje
+	 * 
+	 * @param nazivKat, kategorija oglasa (prodaja, izdavanje)
+	 * @param idKompanija, id kompanije 
+	 * @param idKorisnik, id korisnika 
+	 * 
+	 * NAPOMENA: idKompanija i idKorisnik ne mogu zajedno moraju eksplicitno idKorisnika ili idKompanije da se proslede
+	 * 
+	 * @param nekretninaDTO, podaci nekretnine
+	 * @return saveNekretnina 
 	 */
-	@RequestMapping(value = "/{nazivKat}/{idKorisnik}/{idKompanija}", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<String> saveNekretnine(@PathVariable String nazivKat, @PathVariable String idKompanija, @PathVariable String idKorisnik, @RequestBody NekretninaDTO nekretninaDTO) {
+	@RequestMapping(value = "/add/{idKategorija}/{idKorisnik}/{idKompanija}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<String> saveNekretnine(@PathVariable Long idKategorija, @PathVariable String idKompanija, @PathVariable String idKorisnik, @RequestBody NekretninaDTO nekretninaDTO) {
+		Kategorija kat = kategorijaRepository.findOne(idKategorija);
+		String nazivKat = kat.getTip();
+		
 		if(idKompanija.equals("null")){
 			
 			Long id = Long.parseLong(idKorisnik);
 			
+			
+			
 			if(nazivKat.equals("prodaja")) {
 				
-				Nekretnina nekretnina;
-				//KategorijaNekretnina katNekretnina = new KategorijaNekretnina();
-				Objava objavio = new Objava();
+				Nekretnina nekretnina;			
+				Objavio objavio = new Objavio();
 				
 				
 				nekretnina = new Nekretnina();
@@ -94,24 +141,20 @@ public class NekretnineController {
 				nekretnina.setStanje(nekretninaDTO.getStanje());
 				nekretnina.setSprat(nekretninaDTO.getSprat());
 				nekretnina.setOpis(nekretninaDTO.getOpis());
+				nekretnina.setKategorija(kategorijaRepository.findOne(idKategorija));
 				
-				//katNekretnina.setKategorija(kategorijaRepository.findByName(("prodaja")));
-				//katNekretnina.setNekretnina(nekretnina);
-				
-				objavio.setKompanija(null);
 				objavio.setKorisnik(korisnikRepository.findOne(id));
+				objavio.setKompanija(null);
 				objavio.setNekretnina(nekretnina);
 				
 				nekretnina = nekretninaService.save(nekretnina);
-				//kategorijaNekretnineRepository.save(katNekretnina);
 				objavioRepository.save(objavio);
 				
 				return new ResponseEntity<>("korisnik "+id,HttpStatus.OK);
 			
 			} else {
 				Nekretnina nekretnina;
-				//KategorijaNekretnina katNekretnina = new KategorijaNekretnina();
-				Objava objavio = new Objava();
+				Objavio objavio = new Objavio();
 				
 				
 				nekretnina = new Nekretnina();
@@ -126,16 +169,13 @@ public class NekretnineController {
 				nekretnina.setStanje(nekretninaDTO.getStanje());
 				nekretnina.setSprat(nekretninaDTO.getSprat());
 				nekretnina.setOpis(nekretninaDTO.getOpis());
+				nekretnina.setKategorija(kategorijaRepository.findOne(idKategorija));
 				
-				//katNekretnina.setKategorija(kategorijaRepository.findByName(("izdavanje")));
-				//katNekretnina.setNekretnina(nekretnina);
-				
-				objavio.setKompanija(null);
 				objavio.setKorisnik(korisnikRepository.findOne(id));
+				objavio.setKompanija(null);
 				objavio.setNekretnina(nekretnina);
 				
 				nekretnina = nekretninaService.save(nekretnina);
-				//kategorijaNekretnineRepository.save(katNekretnina);
 				objavioRepository.save(objavio);
 				
 				return new ResponseEntity<>("korisnik "+id,HttpStatus.OK);
@@ -147,8 +187,7 @@ public class NekretnineController {
 			if(nazivKat.equals("prodaja")) {
 				
 				Nekretnina nekretnina;
-				//KategorijaNekretnina katNekretnina = new KategorijaNekretnina();
-				Objava objavio = new Objava();
+				Objavio objavio = new Objavio();
 				
 				
 				nekretnina = new Nekretnina();
@@ -163,24 +202,20 @@ public class NekretnineController {
 				nekretnina.setStanje(nekretninaDTO.getStanje());
 				nekretnina.setSprat(nekretninaDTO.getSprat());
 				nekretnina.setOpis(nekretninaDTO.getOpis());
-				
-				//katNekretnina.setKategorija(kategorijaRepository.findByName(("prodaja")));
-				//katNekretnina.setNekretnina(nekretnina);
+				nekretnina.setKategorija(kategorijaRepository.findOne(idKategorija));
 				
 				objavio.setKompanija(kompanijaRepository.findOne(id));
 				objavio.setKorisnik(null);
 				objavio.setNekretnina(nekretnina);
 				
 				nekretnina = nekretninaService.save(nekretnina);
-				//kategorijaNekretnineRepository.save(katNekretnina);
 				objavioRepository.save(objavio);
 				
 				return new ResponseEntity<>("korisnik "+id,HttpStatus.OK);
 			
 			} else {
 				Nekretnina nekretnina;
-				//KategorijaNekretnina katNekretnina = new KategorijaNekretnina();
-				Objava objavio = new Objava();
+				Objavio objavio = new Objavio();
 				
 				
 				nekretnina = new Nekretnina();
@@ -195,16 +230,13 @@ public class NekretnineController {
 				nekretnina.setStanje(nekretninaDTO.getStanje());
 				nekretnina.setSprat(nekretninaDTO.getSprat());
 				nekretnina.setOpis(nekretninaDTO.getOpis());
-				
-				//katNekretnina.setKategorija(kategorijaRepository.findByName(("izdavanje")));
-				//katNekretnina.setNekretnina(nekretnina);
+				nekretnina.setKategorija(kategorijaRepository.findOne(idKategorija));
 				
 				objavio.setKompanija(kompanijaRepository.findOne(id));
 				objavio.setKorisnik(null);
 				objavio.setNekretnina(nekretnina);
 				
 				nekretnina = nekretninaService.save(nekretnina);
-				//kategorijaNekretnineRepository.save(katNekretnina);
 				objavioRepository.save(objavio);
 				
 				return new ResponseEntity<>("korisnik "+id,HttpStatus.OK);
@@ -213,7 +245,72 @@ public class NekretnineController {
 		} else  {
 			return new ResponseEntity<String>("Lose",HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	/**
+	 * Dodavanje lokacije datoj nekretnini
+	 * @param idNekretnina, id nekeretnine koju zelimo da azuriramo
+	 * @param lokacijaDTO, podaci o lokaciji gde se nalazi i slicno
+	 * @return sacuvana u bazi nova lokacija i azurirana nekretnina
+	 */
+	@RequestMapping(value = "/lokacija/{idNekretnina}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<String> getLokacijaNekretnine(@PathVariable Long idNekretnina, @RequestBody LokacijaDTO lokacijaDTO) {
+		
+		Nekretnina nekretnina = nekretninaService.findOne(idNekretnina);
+		Lokacija lokacija = new Lokacija();
+		
+		lokacija.setDrzava(lokacijaDTO.getDrzava());
+		lokacija.setGrad(lokacijaDTO.getGrad());
+		lokacija.setOblas(lokacijaDTO.getOblas());
+		lokacija.setUlica(lokacijaDTO.getUlica());
+		lokacija.setBroj_ulice(lokacijaDTO.getBroj_ulice());
+		lokacija.setBroj_zgrade(lokacijaDTO.getBroj_zgrade());
+		lokacija.setBroj_stana(lokacijaDTO.getBroj_stana());
+		
+		nekretnina.setLokacija(lokacija);
+		
+		lokacija = lokacijaService.save(lokacija);
+		nekretninaService.save(nekretnina);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	/**
+	 * Dodavanje nekih boolean vrednosti o nekretnini (npr. Sta poseduje sve nekretnina)
+	 * @param idNekretnina, id nekretnine koji azuriramo
+	 * @param tehnickaOpremljenostDTO, podaci o koji se cuvaju u bazu
+	 * @return na osnovu idNekretnine odredjenoj nekrtnini dodajemo tehnicku opreljenost
+	 */
+	@RequestMapping(value = "/tehnicka/opremljenost/{idNekretnina}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<String> getTehnickaNekretnine(@PathVariable Long idNekretnina, @RequestBody TehnickaOpremljenostDTO tehnickaOpremljenostDTO) {
+		
+		Nekretnina nekretnina = nekretninaService.findOne(idNekretnina);
+		TehnickaOpremljenost tehnickaOpremljenost = new TehnickaOpremljenost();
+		
+		tehnickaOpremljenost.setTarasa(tehnickaOpremljenostDTO.getTarasa());
+		tehnickaOpremljenost.setTelefon(tehnickaOpremljenostDTO.getTelefon());
+		tehnickaOpremljenost.setGaraua(tehnickaOpremljenostDTO.getGaraua());
+		tehnickaOpremljenost.setKablovska(tehnickaOpremljenostDTO.getKablovska());
+		tehnickaOpremljenost.setPogled_na_grad(tehnickaOpremljenostDTO.getPogled_na_grad());
+		tehnickaOpremljenost.setPodrum(tehnickaOpremljenostDTO.getPodrum());
+		tehnickaOpremljenost.setKamin(tehnickaOpremljenostDTO.getKamin());
+		tehnickaOpremljenost.setBazen(tehnickaOpremljenostDTO.getBazen());
+		tehnickaOpremljenost.setInternet(tehnickaOpremljenostDTO.getInternet());
+		tehnickaOpremljenost.setTavan(tehnickaOpremljenostDTO.getTavan());
+		tehnickaOpremljenost.setKlima(tehnickaOpremljenostDTO.getKlima());
+		tehnickaOpremljenost.setPogled_na_more(tehnickaOpremljenostDTO.getPogled_na_more());
+		tehnickaOpremljenost.setLift(tehnickaOpremljenostDTO.getLift());
+		tehnickaOpremljenost.setStrija(tehnickaOpremljenostDTO.getStrija());
+		tehnickaOpremljenost.setVoda(tehnickaOpremljenostDTO.getVoda());
+		tehnickaOpremljenost.setKanalizacija(tehnickaOpremljenostDTO.getKanalizacija());
+		tehnickaOpremljenost.setGas(tehnickaOpremljenostDTO.getGas());
 		
 		
+		nekretnina.setTehnickaOpremljenost(tehnickaOpremljenost);
+		
+		tehnickaOpremljenost = tehnickaOpremljenostService.save(tehnickaOpremljenost);
+		nekretninaService.save(nekretnina);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

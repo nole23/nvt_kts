@@ -8,17 +8,22 @@ public class AdresaDTO {
 	private String drzava;
 	private String grad;
 	private String ulica;
-	private int broj;
+	private int broj_ulice;
+	private String broj_zgrade;
+	private int broj_stama;
 	
 	public AdresaDTO() {}
 	
-	public AdresaDTO(Long id, String drzava, String grad, String ulica, int broj) {
+	public AdresaDTO(Long id, String drzava, String grad, String ulica, 
+			int broj_ulice, String broj_zgrade, int broj_stama) {
 		super();
 		this.id = id;
 		this.drzava = drzava;
 		this.grad = grad;
 		this.ulica = ulica;
-		this.broj = broj;
+		this.broj_ulice = broj_ulice;
+		this.broj_zgrade = broj_zgrade;
+		this.broj_stama = broj_stama;
 	}
 	
 	public AdresaDTO(Adresa adresa) {
@@ -26,7 +31,9 @@ public class AdresaDTO {
 		this.drzava = adresa.getDrzava();
 		this.grad = adresa.getGrad();
 		this.ulica = adresa.getUlica();
-		this.broj = adresa.getBroj();
+		this.broj_ulice = adresa.getBroj_ulice();
+		this.broj_zgrade = adresa.getBroj_zgrade();
+		this.broj_stama = adresa.getBroj_stama();
 	}
 
 	public Long getId() {
@@ -61,19 +68,35 @@ public class AdresaDTO {
 		this.ulica = ulica;
 	}
 
-	public int getBroj() {
-		return broj;
+	public int getBroj_ulice() {
+		return broj_ulice;
 	}
 
-	public void setBroj(int broj) {
-		this.broj = broj;
+	public void setBroj_ulice(int broj_ulice) {
+		this.broj_ulice = broj_ulice;
+	}
+
+	public String getBroj_zgrade() {
+		return broj_zgrade;
+	}
+
+	public void setBroj_zgrade(String broj_zgrade) {
+		this.broj_zgrade = broj_zgrade;
+	}
+
+	public int getBroj_stama() {
+		return broj_stama;
+	}
+
+	public void setBroj_stama(int broj_stama) {
+		this.broj_stama = broj_stama;
 	}
 
 	@Override
 	public String toString() {
 		return "AdresaDTO [id=" + id + ", drzava=" + drzava + ", grad=" + grad
-				+ ", ulica=" + ulica + ", broj=" + broj + "]";
+				+ ", ulica=" + ulica + ", broj_ulice=" + broj_ulice
+				+ ", broj_zgrade=" + broj_zgrade + ", broj_stama=" + broj_stama
+				+ "]";
 	}
-	
-	
 }

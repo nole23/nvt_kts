@@ -6,5 +6,4 @@ import com.konstrukcija.model.Kompanija;
 
 public interface KompanijaRepository extends JpaRepository<Kompanija, Long> {
 
-	Kompanija findOne(Long id);
 }

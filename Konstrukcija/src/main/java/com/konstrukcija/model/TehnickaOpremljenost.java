@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class TehnickaOpremljenost {
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -187,6 +188,17 @@ public class TehnickaOpremljenost {
 	public void setNekretnina(Set<Nekretnina> nekretnina) {
 		this.nekretnina = nekretnina;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "TehnickaOpremljenost [id=" + id + ", tarasa=" + tarasa
+				+ ", telefon=" + telefon + ", garaua=" + garaua
+				+ ", kablovska=" + kablovska + ", pogled_na_grad="
+				+ pogled_na_grad + ", podrum=" + podrum + ", kamin=" + kamin
+				+ ", bazen=" + bazen + ", internet=" + internet + ", tavan="
+				+ tavan + ", klima=" + klima + ", pogled_na_more="
+				+ pogled_na_more + ", lift=" + lift + ", strija=" + strija
+				+ ", voda=" + voda + ", kanalizacija=" + kanalizacija
+				+ ", gas=" + gas + ", nekretnina=" + nekretnina + "]";
+	}
 }

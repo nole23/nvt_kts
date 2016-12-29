@@ -1,6 +1,6 @@
 package com.konstrukcija.dto;
 
-import com.konstrukcija.model.Ocene;
+import com.konstrukcija.model.Ocena;
 import com.konstrukcija.model.Oglas;
 
 public class OcenaDTO {
@@ -19,7 +19,7 @@ public class OcenaDTO {
 	}
 	
 
-	public OcenaDTO(Ocene ocena) {
+	public OcenaDTO(Ocena ocena) {
 		this.id = ocena.getId();
 		this.ocena = ocena.getOcena();
 		this.oglas = ocena.getOglas();
@@ -54,6 +54,4 @@ public class OcenaDTO {
 		return "OcenaDTO [id=" + id + ", ocena=" + ocena + ", oglas=" + oglas
 				+ "]";
 	}
-	
-	
 }

@@ -8,16 +8,15 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Oglasi {
+public class Ocena {
+
 	@Id
 	@GeneratedValue
 	private Long id;
+	private int ocena;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Oglas oglas;
-	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	private Nekretnina nekretnina;
 
 	public Long getId() {
 		return id;
@@ -27,6 +26,14 @@ public class Oglasi {
 		this.id = id;
 	}
 
+	public int getOcena() {
+		return ocena;
+	}
+
+	public void setOcena(int ocena) {
+		this.ocena = ocena;
+	}
+
 	public Oglas getOglas() {
 		return oglas;
 	}
@@ -34,14 +41,4 @@ public class Oglasi {
 	public void setOglas(Oglas oglas) {
 		this.oglas = oglas;
 	}
-
-	public Nekretnina getNekretnina() {
-		return nekretnina;
-	}
-
-	public void setNekretnina(Nekretnina nekretnina) {
-		this.nekretnina = nekretnina;
-	}
-	
-	
 }

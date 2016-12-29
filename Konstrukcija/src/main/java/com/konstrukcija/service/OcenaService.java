@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.konstrukcija.model.Ocene;
+import com.konstrukcija.model.Ocena;
 import com.konstrukcija.repository.OcenaRepository;
 
 @Service
@@ -16,19 +16,19 @@ public class OcenaService {
 	@Autowired
 	OcenaRepository ocenaRepository;
 	
-	public List<Ocene> findAll() {
+	public List<Ocena> findAll() {
 		return ocenaRepository.findAll();
 	}
 	
-	public Ocene save(Ocene ocene) {
-		return ocenaRepository.save(ocene);
+	public Ocena save(Ocena ocena) {
+		return ocenaRepository.save(ocena);
 	}
 	
-	public Page<Ocene> findAll(Pageable page) {
+	public Page<Ocena> findAll(Pageable page) {
 		return ocenaRepository.findAll(page);
 	}
 	
-	public Ocene findOne(Long id) {
+	public Ocena findOne(Long id) {
 		return ocenaRepository.findOne(id);
 	}
 }

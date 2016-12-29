@@ -8,11 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
 
 @Entity
 public class Oglas {
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -20,25 +21,20 @@ public class Oglas {
 	private String datum_azuriranja;
 	private String datum_isteka;
 	
-	@OneToMany(mappedBy = "oglas", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<Oglasi> oglasi = new HashSet<Oglasi>();
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	private Nekretnina nekretnina;
+	
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	private Objavio objavio;
 	
 	@OneToMany(mappedBy = "oglas", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<Komentari> komentari = new HashSet<Komentari>();
+	private Set<Ocena> ocena = new HashSet<Ocena>();
 	
 	@OneToMany(mappedBy = "oglas", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<Ocene> ocene = new HashSet<Ocene>();
+	private Set<Komentar> komentar = new HashSet<Komentar>();
 	
 	@OneToMany(mappedBy = "oglas", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<PrijavljeniOglas> prijavljeniOglas = new HashSet<PrijavljeniOglas>();
-	
-	public Set<PrijavljeniOglas> getPrijavljeniOglas() {
-		return prijavljeniOglas;
-	}
-
-	public void setPrijavljeniOglas(Set<PrijavljeniOglas> prijavljeniOglas) {
-		this.prijavljeniOglas = prijavljeniOglas;
-	}
+	private Set<PrijavaOglasa> prijavaOglasa = new HashSet<PrijavaOglasa>();
 
 	public Long getId() {
 		return id;
@@ -72,27 +68,43 @@ public class Oglas {
 		this.datum_isteka = datum_isteka;
 	}
 
-	public Set<Oglasi> getOglasi() {
-		return oglasi;
+	public Nekretnina getNekretnina() {
+		return nekretnina;
 	}
 
-	public void setOglasi(Set<Oglasi> oglasi) {
-		this.oglasi = oglasi;
+	public void setNekretnina(Nekretnina nekretnina) {
+		this.nekretnina = nekretnina;
 	}
 
-	public Set<Komentari> getKomentari() {
-		return komentari;
+	public Objavio getObjavio() {
+		return objavio;
 	}
 
-	public void setKomentari(Set<Komentari> komentari) {
-		this.komentari = komentari;
+	public void setObjavio(Objavio objavio) {
+		this.objavio = objavio;
 	}
 
-	public Set<Ocene> getOcene() {
-		return ocene;
+	public Set<Ocena> getOcena() {
+		return ocena;
 	}
 
-	public void setOcene(Set<Ocene> ocene) {
-		this.ocene = ocene;
+	public void setOcena(Set<Ocena> ocena) {
+		this.ocena = ocena;
+	}
+
+	public Set<Komentar> getKomentar() {
+		return komentar;
+	}
+
+	public void setKomentar(Set<Komentar> komentar) {
+		this.komentar = komentar;
+	}
+
+	public Set<PrijavaOglasa> getPrijavaOglasa() {
+		return prijavaOglasa;
+	}
+
+	public void setPrijavaOglasa(Set<PrijavaOglasa> prijavaOglasa) {
+		this.prijavaOglasa = prijavaOglasa;
 	}
 }

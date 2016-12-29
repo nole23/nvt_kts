@@ -1,26 +1,26 @@
 package com.konstrukcija.dto;
 
-import com.konstrukcija.model.Komentari;
+import com.konstrukcija.model.Komentar;
 
 public class KomentarDTO {
-	
+
 	private Long id;
 	private String komentar;
-	private OglasDTO oglas;
+	private OglasDTO oglasDTO;
 	
-	public KomentarDTO() {}
+public KomentarDTO() {}
 	
-	public KomentarDTO(Long id, String komentar, OglasDTO oglas) {
+	public KomentarDTO(Long id, String komentar, OglasDTO oglasDTO) {
 		super();
 		this.id = id; 
 		this.komentar = komentar;
-		this.oglas = oglas;
+		this.oglasDTO = oglasDTO;
 	}
 	
-	public KomentarDTO(Komentari komentar) {
+	public KomentarDTO(Komentar komentar) {
 		this.id = komentar.getId();
 		this.komentar = komentar.getKomentar();
-		this.oglas = new OglasDTO(komentar.getOglas());
+		this.oglasDTO = new OglasDTO(komentar.getOglas());
 	}
 
 	public Long getId() {
@@ -39,11 +39,17 @@ public class KomentarDTO {
 		this.komentar = komentar;
 	}
 
-	public OglasDTO getOglas() {
-		return oglas;
+	public OglasDTO getOglasDTO() {
+		return oglasDTO;
 	}
 
-	public void setOglas(OglasDTO oglas) {
-		this.oglas = oglas;
+	public void setOglasDTO(OglasDTO oglasDTO) {
+		this.oglasDTO = oglasDTO;
+	}
+
+	@Override
+	public String toString() {
+		return "KomentarDTO [id=" + id + ", komentar=" + komentar
+				+ ", oglasDTO=" + oglasDTO + "]";
 	}
 }

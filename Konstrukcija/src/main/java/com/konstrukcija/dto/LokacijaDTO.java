@@ -9,12 +9,13 @@ public class LokacijaDTO {
 	private String grad;
 	private String oblas;
 	private String ulica;
-	private int brojPTT;
-	private String brStana;
+	private int broj_ulice;
+	private String broj_zgrade;
+	private String broj_stana;
 	private String geo_duzina;
 	private String geo_sirina;
 	
-	public LokacijaDTO() {}
+public LokacijaDTO() {}
 	
 	public LokacijaDTO(Lokacija lokacija) {
 		this.id = lokacija.getId();
@@ -22,20 +23,24 @@ public class LokacijaDTO {
 		this.grad = lokacija.getGrad();
 		this.oblas = lokacija.getOblas();
 		this.ulica = lokacija.getUlica();
-		this.brojPTT = lokacija.getBrojPTT();
-		this.brStana = lokacija.getBrStana();
+		this.broj_ulice = lokacija.getBroj_ulice();
+		this.broj_zgrade = lokacija.getBroj_zgrade();
+		this.broj_stana = lokacija.getBroj_stana();
 		this.geo_duzina = lokacija.getGeo_duzina();
 		this.geo_sirina = lokacija.getGeo_sirina();
 	}
 	
-	public LokacijaDTO(Long id, String drzava, String grad, String oblas, String ulica, int brojPTT, String brStana, String geo_duzina, String geo_sirina) {
+	public LokacijaDTO(Long id, String drzava, String grad, 
+			String oblas, String ulica, int broj_ulice, String broj_zgrade,
+			String broj_stana, String geo_duzina, String geo_sirina) {
 		this.id = id;
 		this.drzava = drzava;
 		this.grad = grad;
 		this.oblas = oblas;
 		this.ulica = ulica;
-		this.brojPTT = brojPTT;
-		this.brStana = brStana;
+		this.broj_ulice = broj_ulice;
+		this.broj_zgrade = broj_zgrade;
+		this.broj_stana = broj_stana;
 		this.geo_duzina = geo_duzina;
 		this.geo_sirina = geo_sirina;
 	}
@@ -80,20 +85,28 @@ public class LokacijaDTO {
 		this.ulica = ulica;
 	}
 
-	public int getBrojPTT() {
-		return brojPTT;
+	public int getBroj_ulice() {
+		return broj_ulice;
 	}
 
-	public void setBrojPTT(int brojPTT) {
-		this.brojPTT = brojPTT;
+	public void setBroj_ulice(int broj_ulice) {
+		this.broj_ulice = broj_ulice;
 	}
 
-	public String getBrStana() {
-		return brStana;
+	public String getBroj_zgrade() {
+		return broj_zgrade;
 	}
 
-	public void setBrStana(String brStana) {
-		this.brStana = brStana;
+	public void setBroj_zgrade(String broj_zgrade) {
+		this.broj_zgrade = broj_zgrade;
+	}
+
+	public String getBroj_stana() {
+		return broj_stana;
+	}
+
+	public void setBroj_stana(String broj_stana) {
+		this.broj_stana = broj_stana;
 	}
 
 	public String getGeo_duzina() {
@@ -115,11 +128,9 @@ public class LokacijaDTO {
 	@Override
 	public String toString() {
 		return "LokacijaDTO [id=" + id + ", drzava=" + drzava + ", grad="
-				+ grad + ", oblas=" + oblas + ", ulica=" + ulica + ", brojPTT="
-				+ brojPTT + ", brStana=" + brStana + ", geo_duzina="
-				+ geo_duzina + ", geo_sirina=" + geo_sirina + "]";
+				+ grad + ", oblas=" + oblas + ", ulica=" + ulica
+				+ ", broj_ulice=" + broj_ulice + ", broj_zgrade=" + broj_zgrade
+				+ ", broj_stana=" + broj_stana + ", geo_duzina=" + geo_duzina
+				+ ", geo_sirina=" + geo_sirina + "]";
 	}
-	
-	
-	
 }

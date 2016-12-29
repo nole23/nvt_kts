@@ -16,7 +16,7 @@ public class Kategorija {
 	@Id
 	@GeneratedValue
 	private Long id;
-	private String naziv;
+	private String name;//naziv kategorije
 	private String tip;
 	
 	@OneToMany(mappedBy = "kategorija", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
@@ -30,12 +30,12 @@ public class Kategorija {
 		this.id = id;
 	}
 
-	public String getNaziv() {
-		return naziv;
+	public String getName() {
+		return name;
 	}
 
-	public void setNaziv(String naziv) {
-		this.naziv = naziv;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getTip() {
@@ -54,5 +54,4 @@ public class Kategorija {
 		this.nekretnina = nekretnina;
 	}
 
-	
 }

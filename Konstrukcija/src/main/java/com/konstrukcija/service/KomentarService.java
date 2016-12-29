@@ -5,24 +5,24 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.konstrukcija.model.Komentari;
+import com.konstrukcija.model.Komentar;
 import com.konstrukcija.repository.KomentarRepository;
 
 @Service
-public class KomentariService {
+public class KomentarService {
 	
 	@Autowired
 	KomentarRepository komentariRepository;
 	
-	public List<Komentari> findAll() {
+	public List<Komentar> findAll() {
 		return komentariRepository.findAll();
 	}
 	
-	public Komentari save(Komentari komentari) {
-		return komentariRepository.save(komentari);
+	public Komentar save(Komentar komentar) {
+		return komentariRepository.save(komentar);
 	}
 	
-	public Komentari findOne(Long id) {
+	public Komentar findOne(Long id) {
 		return komentariRepository.findOne(id);
 	}
 	

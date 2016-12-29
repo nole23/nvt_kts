@@ -24,10 +24,6 @@ public class KorisnikService {
 		return korisnikRepository.findOneByUsernameAndPassword(username, password);
 	}
 	
-	public Korisnik findByUsername(String username) {
-		return korisnikRepository.findByUsername(username);
-	}
-	
 	//Dodavanje novog korisnika
 	public Korisnik save(Korisnik korisnik) {
 		return korisnikRepository.save(korisnik);
@@ -39,5 +35,13 @@ public class KorisnikService {
 	
 	public Korisnik findOne(Long id) {
 		return korisnikRepository.findOne(id);
+	}
+	
+	public Korisnik findByVerifyCode(String verifyCode) {
+		return korisnikRepository.findByVerifyCode(verifyCode);
+	}
+	
+	public Korisnik findByUsername(String username) {
+		return korisnikRepository.findByUsername(username);
 	}
 }

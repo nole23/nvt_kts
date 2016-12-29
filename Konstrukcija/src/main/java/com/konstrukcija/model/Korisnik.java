@@ -20,7 +20,6 @@ public class Korisnik {
 	private String fname;
 	private String lname;
 	private String password;
-	private String phone_number;
 	
 	@Column(unique = true)
 	private String email;
@@ -31,59 +30,49 @@ public class Korisnik {
 	@Column(nullable = true)
 	private Boolean verified;
 	
-	@OneToMany(mappedBy = "korisnik", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<UserAuthority> userAuthorities = new HashSet<UserAuthority>();
-	
-	@OneToMany(mappedBy = "korisnik", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<Objava> objava = new HashSet<Objava>();
-	
-	@OneToMany(mappedBy = "korisnik", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	private Set<Zaposleni> zaposleni = new HashSet<Zaposleni>();
+	@Column(nullable = true)
+	private String verifyCode;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Adresa adresa;
 	
 	@OneToMany(mappedBy = "korisnik", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<PrijavljeniOglas> prijavljeniOglas = new HashSet<PrijavljeniOglas>();
+	private Set<UserAuthority> userAuthorities = new HashSet<UserAuthority>();
+
+	@OneToMany(mappedBy = "korisnik", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	private Set<Zaposleni> zaposleni = new HashSet<Zaposleni>();
 	
-	public Set<PrijavljeniOglas> getPrijavljeniOglas() {
-		return prijavljeniOglas;
+	@OneToMany(mappedBy = "korisnik", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	private Set<Objavio> objavio = new HashSet<Objavio>();
+	
+	@OneToMany(mappedBy = "korisnik", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	private Set<PrijavaOglasa> prijavaOglasa = new HashSet<PrijavaOglasa>();
+	
+	@OneToMany(mappedBy = "korisnik", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	private Set<Komentar> komentar = new HashSet<Komentar>();
+
+	public Set<Objavio> getObjavio() {
+		return objavio;
 	}
 
-	public void setPrijavljeniOglas(Set<PrijavljeniOglas> prijavljeniOglas) {
-		this.prijavljeniOglas = prijavljeniOglas;
+	public void setObjavio(Set<Objavio> objavio) {
+		this.objavio = objavio;
 	}
 
-	public String getUsername() {
-		return username;
+	public Set<PrijavaOglasa> getPrijavaOglasa() {
+		return prijavaOglasa;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setPrijavaOglasa(Set<PrijavaOglasa> prijavaOglasa) {
+		this.prijavaOglasa = prijavaOglasa;
 	}
 
-	public Boolean getVerified() {
-		return verified;
+	public Set<Komentar> getKomentar() {
+		return komentar;
 	}
 
-	public void setVerified(Boolean verified) {
-		this.verified = verified;
-	}
-
-	public Set<Zaposleni> getZaposleni() {
-		return zaposleni;
-	}
-
-	public void setZaposleni(Set<Zaposleni> zaposleni) {
-		this.zaposleni = zaposleni;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setKomentar(Set<Komentar> komentar) {
+		this.komentar = komentar;
 	}
 
 	public Long getId() {
@@ -109,7 +98,7 @@ public class Korisnik {
 	public void setLname(String lname) {
 		this.lname = lname;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
@@ -118,12 +107,44 @@ public class Korisnik {
 		this.password = password;
 	}
 
-	public String getPhone_number() {
-		return phone_number;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setPhone_number(String phone_number) {
-		this.phone_number = phone_number;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public Boolean getVerified() {
+		return verified;
+	}
+
+	public void setVerified(Boolean verified) {
+		this.verified = verified;
+	}
+
+	public String getVerifyCode() {
+		return verifyCode;
+	}
+
+	public void setVerifyCode(String verifyCode) {
+		this.verifyCode = verifyCode;
+	}
+
+	public Adresa getAdresa() {
+		return adresa;
+	}
+
+	public void setAdresa(Adresa adresa) {
+		this.adresa = adresa;
 	}
 
 	public Set<UserAuthority> getUserAuthorities() {
@@ -134,19 +155,12 @@ public class Korisnik {
 		this.userAuthorities = userAuthorities;
 	}
 
-	public Set<Objava> getObjava() {
-		return objava;
+	public Set<Zaposleni> getZaposleni() {
+		return zaposleni;
 	}
 
-	public void setObjava(Set<Objava> objava) {
-		this.objava = objava;
+	public void setZaposleni(Set<Zaposleni> zaposleni) {
+		this.zaposleni = zaposleni;
 	}
 
-	public Adresa getAdresa() {
-		return adresa;
-	}
-
-	public void setAdresa(Adresa adresa) {
-		this.adresa = adresa;
-	}
 }

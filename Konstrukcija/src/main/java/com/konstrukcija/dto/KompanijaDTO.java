@@ -1,30 +1,29 @@
 package com.konstrukcija.dto;
 
-import com.konstrukcija.model.Adresa;
 import com.konstrukcija.model.Kompanija;
 
 public class KompanijaDTO {
 
 	private Long id;
-	private String nazivKompanije;
+	private String nazivKomapnije;
 	private String link;
-	private Adresa adresa;
+	private AdresaDTO adresaDTO;
 	
-	public KompanijaDTO() {}
+public KompanijaDTO() {}
 	
-	public KompanijaDTO(Long id, String nazivKompanija, String link, Adresa adresa) {
+	public KompanijaDTO(Long id, String nazivKomapnije, String link, AdresaDTO adresaDTO) {
 		super();
 		this.id = id;
-		this.nazivKompanije = nazivKompanija;
+		this.nazivKomapnije = nazivKomapnije;
 		this.link = link;
-		this.adresa = adresa;
+		this.adresaDTO = adresaDTO;
 	}
 	
-	public KompanijaDTO(Kompanija komanija) {
-		this.id = komanija.getId();
-		this.nazivKompanije = komanija.getNazivKomapnije();
-		this.link = komanija.getLink();
-		this.adresa = komanija.getAdresa();
+	public KompanijaDTO(Kompanija kompanija) {
+		this.id = kompanija.getId();
+		this.nazivKomapnije = kompanija.getNazivKomapnije();
+		this.link = kompanija.getLink();
+		this.adresaDTO = new AdresaDTO(kompanija.getAdresa());
 	}
 
 	public Long getId() {
@@ -35,12 +34,12 @@ public class KompanijaDTO {
 		this.id = id;
 	}
 
-	public String getNazivKompanije() {
-		return nazivKompanije;
+	public String getNazivKomapnije() {
+		return nazivKomapnije;
 	}
 
-	public void setNazivKompanije(String nazivKompanije) {
-		this.nazivKompanije = nazivKompanije;
+	public void setNazivKomapnije(String nazivKomapnije) {
+		this.nazivKomapnije = nazivKomapnije;
 	}
 
 	public String getLink() {
@@ -51,11 +50,17 @@ public class KompanijaDTO {
 		this.link = link;
 	}
 
-	public Adresa getAdresa() {
-		return adresa;
+	public AdresaDTO getAdresaDTO() {
+		return adresaDTO;
 	}
 
-	public void setAdresa(Adresa adresa) {
-		this.adresa = adresa;
+	public void setAdresaDTO(AdresaDTO adresaDTO) {
+		this.adresaDTO = adresaDTO;
+	}
+
+	@Override
+	public String toString() {
+		return "KompanijaDTO [id=" + id + ", nazivKomapnije=" + nazivKomapnije
+				+ ", link=" + link + ", adresaDTO=" + adresaDTO + "]";
 	}
 }

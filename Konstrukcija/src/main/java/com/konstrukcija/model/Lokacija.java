@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Lokacija {
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -19,17 +20,15 @@ public class Lokacija {
 	private String grad;
 	private String oblas;
 	private String ulica;
-	private int brojPTT;
-	private String brStana;
+	private int broj_ulice;
+	private String broj_zgrade;
+	private String broj_stana;
 	private String geo_duzina;
 	private String geo_sirina;
 	
 	@OneToMany(mappedBy = "lokacija", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Set<Nekretnina> nekretnina = new HashSet<Nekretnina>();
 
-	public Lokacija() {}
-	
-	
 	public Long getId() {
 		return id;
 	}
@@ -70,20 +69,28 @@ public class Lokacija {
 		this.ulica = ulica;
 	}
 
-	public int getBrojPTT() {
-		return brojPTT;
+	public int getBroj_ulice() {
+		return broj_ulice;
 	}
 
-	public void setBrojPTT(int brojPTT) {
-		this.brojPTT = brojPTT;
+	public void setBroj_ulice(int broj_ulice) {
+		this.broj_ulice = broj_ulice;
 	}
 
-	public String getBrStana() {
-		return brStana;
+	public String getBroj_zgrade() {
+		return broj_zgrade;
 	}
 
-	public void setBrStana(String brStana) {
-		this.brStana = brStana;
+	public void setBroj_zgrade(String broj_zgrade) {
+		this.broj_zgrade = broj_zgrade;
+	}
+
+	public String getBroj_stana() {
+		return broj_stana;
+	}
+
+	public void setBroj_stana(String broj_stana) {
+		this.broj_stana = broj_stana;
 	}
 
 	public String getGeo_duzina() {
@@ -108,5 +115,14 @@ public class Lokacija {
 
 	public void setNekretnina(Set<Nekretnina> nekretnina) {
 		this.nekretnina = nekretnina;
+	}
+
+	@Override
+	public String toString() {
+		return "Lokacija [id=" + id + ", drzava=" + drzava + ", grad=" + grad
+				+ ", oblas=" + oblas + ", ulica=" + ulica + ", broj_ulice="
+				+ broj_ulice + ", broj_zgrade=" + broj_zgrade + ", broj_stana="
+				+ broj_stana + ", geo_duzina=" + geo_duzina + ", geo_sirina="
+				+ geo_sirina + ", nekretnina=" + nekretnina + "]";
 	}
 }

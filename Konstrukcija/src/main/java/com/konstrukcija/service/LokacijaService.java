@@ -21,4 +21,8 @@ public class LokacijaService {
 	public Lokacija save(Lokacija lokacija) {
 		return lokacijaRepository.save(lokacija);
 	}
+	
+	public Lokacija findOne(Long id) {
+		return lokacijaRepository.findOne(id);
+	}
 }

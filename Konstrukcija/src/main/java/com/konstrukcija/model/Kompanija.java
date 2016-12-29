@@ -24,18 +24,10 @@ public class Kompanija {
 	private Adresa adresa;
 	
 	@OneToMany(mappedBy = "kompanija", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<Zaposleni> zaposleni = new HashSet<Zaposleni>();
+	private Set<Objavio> Objavio = new HashSet<Objavio>();
 	
 	@OneToMany(mappedBy = "kompanija", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<Objava> objava = new HashSet<Objava>();
-
-	public Set<Objava> getObjava() {
-		return objava;
-	}
-
-	public void setObjava(Set<Objava> objava) {
-		this.objava = objava;
-	}
+	private Set<Zaposleni> zaposleni = new HashSet<Zaposleni>();
 
 	public Long getId() {
 		return id;
@@ -69,6 +61,14 @@ public class Kompanija {
 		this.adresa = adresa;
 	}
 
+	public Set<Objavio> getObjavio() {
+		return Objavio;
+	}
+
+	public void setObjavio(Set<Objavio> objavio) {
+		Objavio = objavio;
+	}
+
 	public Set<Zaposleni> getZaposleni() {
 		return zaposleni;
 	}
@@ -76,13 +76,4 @@ public class Kompanija {
 	public void setZaposleni(Set<Zaposleni> zaposleni) {
 		this.zaposleni = zaposleni;
 	}
-
-	@Override
-	public String toString() {
-		return "Kompanija [id=" + id + ", nazivKomapnije=" + nazivKomapnije
-				+ ", link=" + link + ", adresa=" + adresa + ", zaposleni="
-				+ zaposleni + "]";
-	}
-	
-	
 }
