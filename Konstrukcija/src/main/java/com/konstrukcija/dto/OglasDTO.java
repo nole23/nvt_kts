@@ -3,12 +3,18 @@ package com.konstrukcija.dto;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.konstrukcija.model.Komentar;
 import com.konstrukcija.model.Ocena;
 import com.konstrukcija.model.Oglas;
+import com.konstrukcija.service.KomentarService;
 
 public class OglasDTO {
 
+	@Autowired
+	KomentarService komentarService;
+	
 	private Long id;
 	private String datum_objave;
 	private String datum_azuriranja;
@@ -44,6 +50,7 @@ public class OglasDTO {
 		this.objavioDTO = new ObjavioDTO(oglas.getObjavio());
 		this.komentarDTO = new HashSet<KomentarDTO>();
 		for(Komentar k: oglas.getKomentar()) {
+			
 			this.komentarDTO.add(new KomentarDTO(k));
 		}
 		this.ocenaDTO = new HashSet<OcenaDTO>();

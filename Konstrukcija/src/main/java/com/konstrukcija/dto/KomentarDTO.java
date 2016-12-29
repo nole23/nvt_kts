@@ -1,6 +1,7 @@
 package com.konstrukcija.dto;
 
 import com.konstrukcija.model.Komentar;
+import com.konstrukcija.model.Korisnik;
 
 public class KomentarDTO {
 
@@ -20,7 +21,7 @@ public KomentarDTO() {}
 		this.id = komentar.getId();
 		this.komentar = komentar.getKomentar();
 	}
-
+	
 	public Long getId() {
 		return id;
 	}

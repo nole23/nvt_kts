@@ -136,7 +136,6 @@ public class OglasController {
 	@RequestMapping(value = "/nekretnina/{idNekretnina}", method = RequestMethod.GET)
 	public ResponseEntity<OglasDTO> getOneNekretnina(@PathVariable Long idNekretnina) {
 		
-		//Na osnovu id nekretnine iscitamo je i nadjemo oglas za tu nekretninu
 		Nekretnina nekretnina = nekretninaService.findOne(idNekretnina);
 		Oglas oglas = oglasRepository.findByNekretnina(nekretnina);
 		
