@@ -1,5 +1,10 @@
 package com.konstrukcija.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.konstrukcija.model.Komentar;
+import com.konstrukcija.model.Ocena;
 import com.konstrukcija.model.Oglas;
 
 public class OglasDTO {
@@ -10,11 +15,15 @@ public class OglasDTO {
 	private String datum_isteka;
 	private NekretninaDTO nekretninaDTO;
 	private ObjavioDTO objavioDTO;
+	private Set<KomentarDTO> komentarDTO;
+	private Set<OcenaDTO> ocenaDTO;
+	private double prosek;
 	
 	public OglasDTO() {}
 	
 	public OglasDTO(Long id, String datum_objave, String datum_azuriranja,
-			String datum_isteka, NekretninaDTO nekretninaDTO, ObjavioDTO objavaDTO) {
+			String datum_isteka, NekretninaDTO nekretninaDTO,
+			ObjavioDTO objavaDTO, Set<KomentarDTO> komentarDTO, Set<OcenaDTO> ocenaDTO) {
 		super();
 		this.id = id;
 		this.datum_objave = datum_objave;
@@ -22,6 +31,8 @@ public class OglasDTO {
 		this.datum_isteka = datum_isteka;
 		this.nekretninaDTO = nekretninaDTO;
 		this.objavioDTO = objavaDTO;
+		this.komentarDTO = komentarDTO;
+		this.ocenaDTO = ocenaDTO;
 	}
 	
 	public OglasDTO(Oglas oglas) {
@@ -31,6 +42,20 @@ public class OglasDTO {
 		this.datum_isteka = oglas.getDatum_isteka();
 		this.nekretninaDTO = new NekretninaDTO(oglas.getNekretnina());
 		this.objavioDTO = new ObjavioDTO(oglas.getObjavio());
+		this.komentarDTO = new HashSet<KomentarDTO>();
+		for(Komentar k: oglas.getKomentar()) {
+			this.komentarDTO.add(new KomentarDTO(k));
+		}
+		this.ocenaDTO = new HashSet<OcenaDTO>();
+		double prosek1 = 0;
+		int i = 0;
+		for(Ocena o: oglas.getOcena()) {
+			int oce = o.getOcena();
+			prosek1 += oce;
+			i++;
+		}
+		double prosek2 = prosek1/i;
+		this.prosek = prosek2;
 	}
 
 	public Long getId() {
@@ -81,11 +106,27 @@ public class OglasDTO {
 		this.objavioDTO = objavioDTO;
 	}
 
-	@Override
-	public String toString() {
-		return "OglasDTO [id=" + id + ", datum_objave=" + datum_objave
-				+ ", datum_azuriranja=" + datum_azuriranja + ", datum_isteka="
-				+ datum_isteka + ", nekretninaDTO=" + nekretninaDTO
-				+ ", objavioDTO=" + objavioDTO + "]";
+	public Set<KomentarDTO> getKomentarDTO() {
+		return komentarDTO;
+	}
+
+	public void setKomentarDTO(Set<KomentarDTO> komentarDTO) {
+		this.komentarDTO = komentarDTO;
+	}
+
+	public Set<OcenaDTO> getOcenaDTO() {
+		return ocenaDTO;
+	}
+
+	public void setOcenaDTO(Set<OcenaDTO> ocenaDTO) {
+		this.ocenaDTO = ocenaDTO;
+	}
+
+	public double getProsek() {
+		return prosek;
+	}
+
+	public void setProsek(double prosek) {
+		this.prosek = prosek;
 	}
 }

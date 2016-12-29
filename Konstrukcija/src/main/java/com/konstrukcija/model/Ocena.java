@@ -1,10 +1,10 @@
 package com.konstrukcija.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -15,7 +15,8 @@ public class Ocena {
 	private Long id;
 	private int ocena;
 	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="oglas")
 	private Oglas oglas;
 
 	public Long getId() {

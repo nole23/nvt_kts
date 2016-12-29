@@ -15,17 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.KomentarDTO;
-import com.konstrukcija.dto.LokacijaDTO;
 import com.konstrukcija.dto.OcenaDTO;
 import com.konstrukcija.dto.OglasDTO;
 import com.konstrukcija.model.Komentar;
 import com.konstrukcija.model.Korisnik;
-import com.konstrukcija.model.Lokacija;
 import com.konstrukcija.model.Nekretnina;
 import com.konstrukcija.model.Objavio;
 import com.konstrukcija.model.Ocena;
 import com.konstrukcija.model.Oglas;
-import com.konstrukcija.repository.KorisnikRepository;
 import com.konstrukcija.repository.OglasRepository;
 import com.konstrukcija.service.KomentarService;
 import com.konstrukcija.service.KorisnikService;
@@ -64,7 +61,7 @@ public class OglasController {
 	 * @param oglasDTO, podatak do kada vazi objava
 	 * @return nekretnina je objavljena i vidljiva svim korisnicima sata
 	 */
-	@RequestMapping(value = "/{idNekretnina}/{idObjavi}", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "/add/{idNekretnina}/{idObjavi}", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<String> getObjavaNekretnine(Principal principal, @PathVariable Long idNekretnina, @PathVariable Long idObjavi, @RequestBody OglasDTO oglasDTO) {
 		
 		Nekretnina nekretnina = nekretninaService.findOne(idNekretnina);
@@ -110,6 +107,13 @@ public class OglasController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	/**
+	 * Dodati komentar za dati oglas
+	 * @param idOglas id oglasa kome dodajemo oglas
+	 * @param idKorisnik, id korisnika koji pise komentar
+	 * @param komentarDTO, komentar
+	 * @return nakon davanja oglasa on ce se pojaviti ispod nekretnine
+	 */
 	@RequestMapping(value = "/komentar/{idOglas}/{idKorisnik}", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<String> getKomentarOglas(@PathVariable Long idOglas,@PathVariable Long idKorisnik, @RequestBody KomentarDTO komentarDTO) {
 		
@@ -122,5 +126,21 @@ public class OglasController {
 		komentar = komentarService.save(komentar);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	/**
+	 * Prikaz odredjene nekretnine koja je objavljena
+	 * @param idNekretnina id nekretnine koju prikazujemo
+	 * @return svi potrebni podaci
+	 */
+	@RequestMapping(value = "/nekretnina/{idNekretnina}", method = RequestMethod.GET)
+	public ResponseEntity<OglasDTO> getOneNekretnina(@PathVariable Long idNekretnina) {
+		
+		//Na osnovu id nekretnine iscitamo je i nadjemo oglas za tu nekretninu
+		Nekretnina nekretnina = nekretninaService.findOne(idNekretnina);
+		Oglas oglas = oglasRepository.findByNekretnina(nekretnina);
+		
+		
+		return new ResponseEntity<>(new OglasDTO(oglas), HttpStatus.OK);
 	}
 }

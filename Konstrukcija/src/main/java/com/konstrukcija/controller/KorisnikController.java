@@ -153,7 +153,6 @@ public class KorisnikController {
 			korisnik.setVerified(true);
 			korisnikServer.save(korisnik);
 		}
-		
 		return new ResponseEntity<>("redirect:#/" ,HttpStatus.OK);
 	}
 	

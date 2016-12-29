@@ -27,7 +27,7 @@ public class Oglas {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Objavio objavio;
 	
-	@OneToMany(mappedBy = "oglas", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	@OneToMany(mappedBy = "oglas", fetch = FetchType.LAZY)
 	private Set<Ocena> ocena = new HashSet<Ocena>();
 	
 	@OneToMany(mappedBy = "oglas", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)

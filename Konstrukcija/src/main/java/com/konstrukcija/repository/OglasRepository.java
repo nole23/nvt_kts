@@ -8,4 +8,5 @@ import com.konstrukcija.model.Oglas;
 public interface OglasRepository extends JpaRepository<Oglas, Long> {
 
 	Oglas findByNekretnina(Nekretnina nekretnina);
+
 }

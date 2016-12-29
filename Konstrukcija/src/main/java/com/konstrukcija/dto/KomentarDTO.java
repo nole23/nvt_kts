@@ -6,21 +6,19 @@ public class KomentarDTO {
 
 	private Long id;
 	private String komentar;
-	private OglasDTO oglasDTO;
 	
 public KomentarDTO() {}
 	
-	public KomentarDTO(Long id, String komentar, OglasDTO oglasDTO) {
+	public KomentarDTO(Long id, String komentar) {
 		super();
 		this.id = id; 
 		this.komentar = komentar;
-		this.oglasDTO = oglasDTO;
+		
 	}
 	
 	public KomentarDTO(Komentar komentar) {
 		this.id = komentar.getId();
 		this.komentar = komentar.getKomentar();
-		this.oglasDTO = new OglasDTO(komentar.getOglas());
 	}
 
 	public Long getId() {
@@ -37,19 +35,5 @@ public KomentarDTO() {}
 
 	public void setKomentar(String komentar) {
 		this.komentar = komentar;
-	}
-
-	public OglasDTO getOglasDTO() {
-		return oglasDTO;
-	}
-
-	public void setOglasDTO(OglasDTO oglasDTO) {
-		this.oglasDTO = oglasDTO;
-	}
-
-	@Override
-	public String toString() {
-		return "KomentarDTO [id=" + id + ", komentar=" + komentar
-				+ ", oglasDTO=" + oglasDTO + "]";
 	}
 }
