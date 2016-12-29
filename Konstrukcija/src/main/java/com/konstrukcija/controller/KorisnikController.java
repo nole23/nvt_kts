@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.konstrukcija.dto.KorisnikDTO;
 import com.konstrukcija.dto.LoginDTO;
 import com.konstrukcija.model.Korisnik;
-import com.konstrukcija.model.Oglasavac;
 import com.konstrukcija.model.UserAuthority;
 import com.konstrukcija.repository.AdminRepository;
 import com.konstrukcija.repository.UserAuthorityRepository;
@@ -123,11 +122,12 @@ public class KorisnikController {
 	/**
 	 * Logovanje korisnika
 	 * @param loginDTO
-	 * @return
+	 * @return kada se korisnik uloguje kreira se token koji govori koji je korisnik ulogova
 	 */
 	@RequestMapping(value="/login", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<String>  login(@RequestBody LoginDTO loginDTO) {
 		try{
+			//provera korisnickom imena i pasvorda
 			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
 			Authentication authentication = authenticationMenager.authenticate(token);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
