@@ -23,7 +23,9 @@ import com.konstrukcija.model.Nekretnina;
 import com.konstrukcija.model.Objavio;
 import com.konstrukcija.model.Ocena;
 import com.konstrukcija.model.Oglas;
+import com.konstrukcija.model.PrijavaOglasa;
 import com.konstrukcija.repository.OglasRepository;
+import com.konstrukcija.repository.PrijavaOglasaRepository;
 import com.konstrukcija.service.KomentarService;
 import com.konstrukcija.service.KorisnikService;
 import com.konstrukcija.service.NekretnineService;
@@ -53,6 +55,9 @@ public class OglasController {
 	
 	@Autowired
 	private KomentarService komentarService;
+	
+	@Autowired
+	private PrijavaOglasaRepository prijavaOglasaRepository;
 	
 	/**
 	 * Objava oglasa kako bi bila dostupa svim posjetiocima sajta
@@ -95,7 +100,7 @@ public class OglasController {
 	 * @param ocenaDTO
 	 * @return 
 	 */
-	@RequestMapping(value = "/{idOglas}", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "/ocena/{idOglas}", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<String> getOcenaOglas(@PathVariable Long idOglas, @RequestBody OcenaDTO ocenaDTO) {
 		
 		Ocena ocena = new Ocena();
@@ -141,5 +146,27 @@ public class OglasController {
 		
 		
 		return new ResponseEntity<>(new OglasDTO(oglas), HttpStatus.OK);
+	}
+	
+	/**
+	 * Prijava odredjenog oglasa
+	 * @param idOglas oglas koji prijavljujemo
+	 * @param idKorisnik korisnik koji prijavljuje oglas
+	 * @return cuva se u bazu i stize notifikacija adminu da obrise oglas
+	 */
+	@RequestMapping(value = "/prijava/{idOglas}/{idKorisnik}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<String> getPrijavaOglasa(@PathVariable Long idOglas, @PathVariable Long idKorisnik) {
+		
+		Oglas oglas = oglasRepository.findOne(idOglas);
+		Korisnik korisnik = korisnikService.findOne(idKorisnik);
+		PrijavaOglasa prijavaOglasa = new PrijavaOglasa();
+		
+		prijavaOglasa.setKorisnik(korisnik);
+		prijavaOglasa.setOglas(oglas);
+		prijavaOglasa.setPrijava(true);
+		
+		prijavaOglasaRepository.save(prijavaOglasa);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
