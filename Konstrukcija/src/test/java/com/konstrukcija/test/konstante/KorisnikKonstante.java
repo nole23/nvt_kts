@@ -8,6 +8,9 @@ public class KorisnikKonstante {
 	public static final String PASSWORD = "123";
 	public static final String USERNAME = "nole";
 	
+	public static final String PASSWORD_THIRD = "321";
+	public static final String FIRST_NAME_THIRD = "elon";
+	
 	public static final int DB_COUNT = 10;
 	
 	public static final Long ADMIN_ID = 1l;
