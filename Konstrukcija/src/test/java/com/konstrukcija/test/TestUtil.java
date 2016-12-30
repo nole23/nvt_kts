@@ -1,4 +1,4 @@
-package com.konstrukcija;
+package com.konstrukcija.test;
 
 import java.io.IOException;
 

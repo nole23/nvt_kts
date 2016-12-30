@@ -19,29 +19,30 @@ public class KorisnikService {
 		return korisnikRepository.findAll();
 	}
 	
-	//Logovanje korisnika treba implementirati do kraja
-	public Korisnik findOneByUsernameAndPassword(String username, String password) {
-		return korisnikRepository.findOneByUsernameAndPassword(username, password);
+	public Korisnik findOne(Long id) {
+		return korisnikRepository.findOne(id);
 	}
 	
 	//Dodavanje novog korisnika
 	public Korisnik save(Korisnik korisnik) {
 		return korisnikRepository.save(korisnik);
 	}
+	
+	//Logovanje korisnika treba implementirati do kraja
+	public Korisnik findOneByUsernameAndPassword(String username, String password) {
+		return korisnikRepository.findOneByUsernameAndPassword(username, password);
+	}
+
+	public Korisnik findByUsername(String username) {
+		return korisnikRepository.findByUsername(username);
+	}
 
 	public Korisnik findByEmail(String email) {
 		return korisnikRepository.findByEmail(email);
 	}
 	
-	public Korisnik findOne(Long id) {
-		return korisnikRepository.findOne(id);
-	}
 	
 	public Korisnik findByVerifyCode(String verifyCode) {
 		return korisnikRepository.findByVerifyCode(verifyCode);
-	}
-	
-	public Korisnik findByUsername(String username) {
-		return korisnikRepository.findByUsername(username);
 	}
 }
