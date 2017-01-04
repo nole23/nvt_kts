@@ -38,7 +38,7 @@ angular
             })
             .when('/prodaja', {
                 templateUrl: 'views/prodaja.html',
-                controller: 'NekretnineCtrl',
+                controller: 'OglasiCtrl',
                 controllerAs: 'prodaja'
             })
             .when('/izdavanje', {
@@ -49,7 +49,8 @@ angular
             })
             .when('/login', {
                 templateUrl: 'views/login.html',
-                
+                controller: 'zasto',
+                controllerAs: 'registrovan'
             })
             .otherwise({
                 redirectTo: '/'

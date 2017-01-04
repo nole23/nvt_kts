@@ -11,6 +11,9 @@ angular.module('nekretnineClientApp')
 		
 		OglasiResource.getOglasi().then(function(items) {
 			$scope.oglasi = items;
-		});
-		
+		})
+
+		OglasiResource.getAllObjavljene().then(function(items) {
+			$scope.prodaja = items;
+		})
 	}]);

@@ -272,6 +272,8 @@
 	width: 100%;
 	height-min: 50px;
 	height: 170px;
+	background: #FFFAEF;
+    border-radius: 5px;
 }
 
 .image-data {

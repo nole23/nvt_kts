@@ -9,6 +9,7 @@ angular.module('nekretnineClientApp')
 		
 		var oglasi = [];
 		var nekretnine = [];
+		var prodaja = [];
 		var retVal = {};
 		
 		retVal.getOglasi = function() {
@@ -18,6 +19,12 @@ angular.module('nekretnineClientApp')
 			});
 		};
 		
+		retVal.getAllObjavljene = function() {
+			return Restangular.all("oglas/prodaja/all").getList().then(function(entries) {
+				prodaja = entries;
+				return prodaja;
+			});
+		};
 		
 		return retVal;
 		

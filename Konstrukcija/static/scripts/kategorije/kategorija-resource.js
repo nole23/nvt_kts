@@ -11,7 +11,7 @@ angular.module('nekretnineClientApp')
 		var retVal = {};
 		
 		retVal.getAllKategorija = function() {
-			return Restangular.all("kategorija/all").getList().then(function(entries) {
+			return Restangular.all("others/kategorija/all").getList().then(function(entries) {
 				kategorije = entries;
 				return kategorije;
 			});

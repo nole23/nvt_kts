@@ -16,7 +16,7 @@
 	<div class="estate-right">
 		<div class="estate-right-header">
 			<h1>Prodaja nekretnina</h1>
-			<div class="estate-right-counter">
+			<div class="estate-right-counter" ng-controller='KategorijeCtrl'>
 				<h3>{{nekretnine.length}} objavljenih oglasa</h3> 
 			</div>
 		</div>
@@ -35,43 +35,54 @@
 				nesto da pise
 			</div>
 			
-			<div class="sale-right-container-estate">
-				<div class="image-data">
-					<div class="sale-estate-image">
-						<img src=""/>
-					</div>
-					<div class="data-publicit">
-						Datum objave: 27.12.2016.
-					</div>
-				</div>
-				
-				<div class="sale-estate-info">
-					<div class="estate-info-name">
-						<a class="btnMain" href="#/">Novi sad, detelinara</a>					
-					</div>
-					<div class="estate-info">
-						<div class="estate-info-left">
-							<p>Kvadratura:</p>
-							<p>Sprat:</p>
+			<div ng-controller='OglasiCtrl'>
+				<div ng-repeat="prodaje in prodaja">
+					<div class="sale-right-container-estate" ng-if="prodaje.nekretninaDTO.kategorijaDTO.tip == 'prodaja'" >
+						<div class="image-data">
+							<div class="sale-estate-image">
+								<img src=""/>
+							</div>
+							<div class="data-publicit">
+								{{prodaje.datum_objave}}
+							</div>
 						</div>
-						<div class="estate-info-left">
-							<p>Sobnost:</p>
-						</div>					
+						
+						<div class="sale-estate-info">
+							<div class="estate-info-name">
+								<a class="btnMain" href="#/">{{prodaje.nekretninaDTO.lokacijaDTO.grad}}, {{prodaje.nekretninaDTO.lokacijaDTO.oblas}}</a>					
+							</div>
+							<div class="estate-info">
+								<div class="estate-info-left">
+									<p>Kvadratura: {{prodaje.nekretninaDTO.povrsina}}</p>
+									<!-- U koliko je stan ovo se prikazuje -->
+									<div ng-if="prodaje.nekretninaDTO.kategorijaDTO.tip == 'stan'">
+										<p>Sprat: {{prodaje.nekretninaDTO.sprat}}</p>
+									</div>
+									<!-- U koliko je kuca ovo se prikazuje -->
+									<div ng-if="prodaje.nekretninaDTO.kategorijaDTO.name == 'kuca'">
+										<p>Spratova: {{prodaje.nekretninaDTO.spratova}}</p>
+									</div>
+								</div>
+								<div class="estate-info-left">
+									<p>Sobnost: {{prodaje.nekretninaDTO.sobnost}}</p>
+								</div>					
+							</div>
+							<div class="estate-info-down">
+								<p> {{prodaje.nekretninaDTO.opis}} </p>
+							</div>
+						</div>
+		
+						<div class="sale-estate-price">
+							<div class="estate-price">
+								<h2>{{prodaje.nekretninaDTO.cena}} DIN</h2>
+								<div ng-if="prodaje.nekretninaDTO.objavioDTO.korisnikDTO === null"><h3>Agencija</h3></div>
+								<div ng-if="prodaje.nekretninaDTO.objavioDTO.kompanijaDTO === null"><h3>Korisnik</h3></div>
+							</div>
+						</div>
 					</div>
-					<div class="estate-info-down">
-						<p>Opis </p>
-					</div>
-				</div>
-
-				<div class="sale-estate-price">
-					<div class="estate-price">
-						<h2>1.000.000 DIN</h2>
-						<h3>Ko objavi</h3>
-					</div>
-					
-					
 				</div>
 			</div>
+			
 			
 		</div>
 		

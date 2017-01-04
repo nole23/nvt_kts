@@ -1,27 +1,33 @@
 package com.konstrukcija.dto;
 
 import com.konstrukcija.model.Kompanija;
+import com.konstrukcija.model.Korisnik;
+import com.konstrukcija.model.Nekretnina;
 import com.konstrukcija.model.Objavio;
 
 public class ObjavioDTO {
 
 	private Long id;
-	private NekretninaDTO nekretninaDTO;
-	private Kompanija kompanija;
+	private KorisnikDTO korisnikDTO;
+	private KompanijaDTO kompanijaDTO;
 	
 	public ObjavioDTO() {}
 	
-	public ObjavioDTO(Long id, NekretninaDTO nekretninaDTO, Kompanija kompanija) {
+	public ObjavioDTO(Long id, KorisnikDTO korisnikDTO, KompanijaDTO kompanijaDTO) {
 		super();
 		this.id = id;
-		this.nekretninaDTO = nekretninaDTO;
-		this.kompanija = kompanija;
+		if(kompanijaDTO == null)
+			this.korisnikDTO = korisnikDTO;
+		if(korisnikDTO == null)
+			this.kompanijaDTO = kompanijaDTO;
 	}
 	
 	public ObjavioDTO(Objavio objavio) {
 		this.id = objavio.getId();
-		this.nekretninaDTO = new NekretninaDTO(objavio.getNekretnina());
-		this.kompanija = objavio.getKompanija();
+		if(kompanijaDTO == null)
+			this.korisnikDTO = new KorisnikDTO(objavio.getKorisnik());
+		if(korisnikDTO == null)
+			this.kompanijaDTO = new KompanijaDTO(objavio.getKompanija());
 	}
 
 	public Long getId() {
@@ -32,25 +38,19 @@ public class ObjavioDTO {
 		this.id = id;
 	}
 
-	public NekretninaDTO getNekretninaDTO() {
-		return nekretninaDTO;
+	public KorisnikDTO getKorisnikDTO() {
+		return korisnikDTO;
 	}
 
-	public void setNekretninaDTO(NekretninaDTO nekretninaDTO) {
-		this.nekretninaDTO = nekretninaDTO;
+	public void setKorisnikDTO(KorisnikDTO korisnikDTO) {
+		this.korisnikDTO = korisnikDTO;
 	}
 
-	public Kompanija getKompanija() {
-		return kompanija;
+	public KompanijaDTO getKompanijaDTO() {
+		return kompanijaDTO;
 	}
 
-	public void setKompanija(Kompanija kompanija) {
-		this.kompanija = kompanija;
-	}
-
-	@Override
-	public String toString() {
-		return "ObjavioDTO [id=" + id + ", nekretninaDTO=" + nekretninaDTO + ", kompanija="
-				+ kompanija + "]";
+	public void setKompanijaDTO(KompanijaDTO kompanijaDTO) {
+		this.kompanijaDTO = kompanijaDTO;
 	}
 }
