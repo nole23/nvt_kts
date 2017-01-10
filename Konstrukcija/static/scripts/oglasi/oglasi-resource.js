@@ -10,6 +10,7 @@ angular.module('nekretnineClientApp')
 		var oglasi = [];
 		var nekretnine = [];
 		var prodaja = [];
+		var nekretnina = [];
 		var retVal = {};
 		
 		retVal.getOglasi = function() {
@@ -25,6 +26,7 @@ angular.module('nekretnineClientApp')
 				return prodaja;
 			});
 		};
+		
 		
 		return retVal;
 		

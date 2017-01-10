@@ -1,4 +1,110 @@
-<div ng-app='app' ng-controller='NekretnineCtrl'>
 
-	{{ proba.length }} broj
+
+<div class="sale" ng-controller='OglasiCtrl'>
+
+	<div class="advertisement-left" >
+		<div class="advertisement-header">
+			<p>{{jedNekretnina.nekretninaDTO.lokacijaDTO.grad}},{{jedNekretnina.nekretninaDTO.lokacijaDTO.oblas}},{{jedNekretnina.nekretninaDTO.cena}}</p>
+		</div>
+		<div class="advertisement-info">
+			<table width="100%">
+				<tr>
+					<td class="table-header">Lokacija:</td>
+					<td class="table-info">{{jedNekretnina.nekretninaDTO.lokacijaDTO.drzava}}, {{jedNekretnina.nekretninaDTO.lokacijaDTO.grad}}, {{jedNekretnina.nekretninaDTO.lokacijaDTO.oblast}}</td>
+				</tr>
+				<tr>
+					<td class="table-header">Ulica i broj:</td>
+					<td class="table-info">{{jedNekretnina.nekretninaDTO.lokacijaDTO.ulica}} {{jedNekretnina.nekretninaDTO.lokacijaDTO.broj_ulice}}</td>
+				</tr>
+				<tr>
+					<td class="table-header">Kvadratura:</td>
+					<td class="table-info">{{jedNekretnina.nekretninaDTO.povrsina}}</td>
+				</tr>
+				<tr>
+					<td class="table-header">Sobnost</td>
+					<td class="table-info">{{jedNekretnina.nekretninaDTO.sobnost}}</td>
+				</tr>
+				<tr>
+					<td class="table-header">Stanje objekta:</td>
+					<td class="table-info">{{jedNekretnina.nekretninaDTO.stanje_objekta}}</td>
+				</tr>
+				<tr>
+					<td class="table-header">Grejanje:</td>
+					<td class="table-info">{{jedNekretnina.nekretninaDTO.grejanje}}</td>
+				</tr>
+				<!-- uslov da li je stan ili kuca -->
+				
+				<tr ng-if="jedNekretnina.nekretninaDTO.kategorijaDTO.name == 'kuca'">
+					<td class="table-header">Spratova:</td>
+					<td class="table-info">{{jedNekretnina.nekretninaDTO.spratova}}</td>
+				</tr>
+				<tr ng-if="jedNekretnina.nekretninaDTO.kategorijaDTO.name == 'stan'">
+					<td class="table-header">Sprat:</td>
+					<td class="table-info">{{jedNekretnina.nekretninaDTO.sprat}}</td>
+				</tr>
+				<!-- kraj uslova -->
+				
+			</table>
+		</div>
+		
+		<div class="tehnicka-opremljenost">
+			<h3>Dodatne informacije</h3>
+			
+			<div class="opremljenost-info" ng-if="jedNekretnina.nekretninaDTO.tehnickaOpremljenostDTO.tarasa == true">Tarasa |</div>
+			<div class="opremljenost-info" ng-if="jedNekretnina.nekretninaDTO.tehnickaOpremljenostDTO.telefon == true">Telefon |</div>
+			<div class="opremljenost-info" ng-if="jedNekretnina.nekretninaDTO.tehnickaOpremljenostDTO.garaua == true">Garaza |</div>
+			<div class="opremljenost-info" ng-if="jedNekretnina.nekretninaDTO.tehnickaOpremljenostDTO.kablovska == true">Kablovska |</div>
+			<div class="opremljenost-info" ng-if="jedNekretnina.nekretninaDTO.tehnickaOpremljenostDTO.pogled_na_more == true">Pogled na more |</div>
+			<div class="opremljenost-info" ng-if="jedNekretnina.nekretninaDTO.tehnickaOpremljenostDTO.podrum == true">Podrum |</div>
+			<div class="opremljenost-info" ng-if="jedNekretnina.nekretninaDTO.tehnickaOpremljenostDTO.kamin == true">Kamin |</div>
+			<div class="opremljenost-info" ng-if="jedNekretnina.nekretninaDTO.tehnickaOpremljenostDTO.bazen == true">Bazen |</div>
+			<div class="opremljenost-info" ng-if="jedNekretnina.nekretninaDTO.tehnickaOpremljenostDTO.internet == true">Internet |</div>
+			<div class="opremljenost-info" ng-if="jedNekretnina.nekretninaDTO.tehnickaOpremljenostDTO.tavan == true">Tavan |</div>
+			<div class="opremljenost-info" ng-if="jedNekretnina.nekretninaDTO.tehnickaOpremljenostDTO.klima == true">Klima |</div>
+			<div class="opremljenost-info" ng-if="jedNekretnina.nekretninaDTO.tehnickaOpremljenostDTO.pogled_na_grad == true">Pogled na grad |</div>
+			<div class="opremljenost-info" ng-if="jedNekretnina.nekretninaDTO.tehnickaOpremljenostDTO.lift == true">Lift |</div>
+			<div class="opremljenost-info" ng-if="jedNekretnina.nekretninaDTO.tehnickaOpremljenostDTO.strija == true">Struja |</div>
+			<div class="opremljenost-info" ng-if="jedNekretnina.nekretninaDTO.tehnickaOpremljenostDTO.voda == true">Voda |</div>
+			<div class="opremljenost-info" ng-if="jedNekretnina.nekretninaDTO.tehnickaOpremljenostDTO.kanalizacija == true">Gas |</div>
+			<div class="opremljenost-info" ng-if="jedNekretnina.nekretninaDTO.tehnickaOpremljenostDTO.gas == true">Kanalizacija |</div>
+			
+		</div>
+		
+		<div class="opis-oglasa">
+			<h3>Opis oglasa</h3>
+			<div>{{jedNekretnina.nekretninaDTO.opis}}</div>
+		</div>
+	</div>
+	
+	<div class="advertisement-left">
+		<div class="advertisement-price">
+			<p>CENA: {{jedNekretnina.nekretninaDTO.cena}} DIN</p>
+		</div>
+		<div class="advertisement-img">
+			<img src="" />
+		</div>
+	</div>
+	
+	<div class="advertisement-right">
+		<div class="informacije-oglasivaca">
+			<div class="naslov">
+				<p>Informacije oglasivaca</p>
+			</div>
+			<div class="telo">
+				<p>Objavio: {{jedNekretnina.nekretninaDTO.objavioDTO.korisnikDTO.fname}}</p>
+				<p>Email: {{jedNekretnina.nekretninaDTO.objavioDTO.korisnikDTO.email}}</p>
+				<p>Postavi pitanje </p>
+				<p>Ostali oglasi </p>
+			</div>
+		</div>
+		
+		<div class="podaci-o-oglasu">
+			<p>Sifra oglasa: {{jedNekretnina.id}}</p>
+			<p>Datum objave: {{jedNekretnina.datum_objave}}</p>
+			<p>Datum azuriranja: {{jedNekretnina.datum_azuriranja}}</p>
+			<p>Datum isteka: {{jedNekretnina.datum_isteka}}</p>
+		</div>
+		
+	</div>
+
 </div>

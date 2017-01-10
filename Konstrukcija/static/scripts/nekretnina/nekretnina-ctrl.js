@@ -5,9 +5,9 @@
 'use strict';
 
 angular.module('nekretnineClientApp')
-	.controller('NekretnineCtrl', ['$scope', '$uibModal',
+	.controller('NekretnineCtrl', ['$scope', '$uibModal', '$routeParams',
 	   '$log', '_', 'NekretnineResource', 
-	   function($scope, $uibModal, $log, _, NekretnineResource) {
+	   function($scope, $uibModal, $routeParams, $log, _, NekretnineResource) {
 		
 		$scope.getIn=function(id){
 		    
@@ -16,11 +16,12 @@ angular.module('nekretnineClientApp')
 				
 				window.location = "#/nekretnine/prodaja/"+id;
 		    })
-		    
-		    
-		 
 		 }
+		
+		$scope.order_id = $routeParams.idNekretnina;
 		 
-		 
+		NekretnineResource.getNekretnina($routeParams.idNekretnina).then(function(items) {
+			$scope.jedNekretnina = items;
+		})
 		
 	}])

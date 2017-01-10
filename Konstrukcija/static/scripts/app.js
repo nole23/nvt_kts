@@ -22,7 +22,7 @@ angular
                 templateUrl: 'views/main.html',
                 controller: 'KategorijeCtrl',
                 controllerAs: 'kategorije',
-                controllerAS3: 'nekretnine'
+                controllerAS1: 'nekretnine'
             })
             .when('/registration', {
                 templateUrl: 'views/registracija.html',
@@ -30,21 +30,20 @@ angular
                     controllerAs1: 'registrovani',
                     controllerAs: 'nekretnine'
             })
-            //pitati u petak asistenta kako ovo uraditi
-            .when('/nekretnine/prodaja/:tip', {
-                templateUrl: 'views/nekretnine.html',
-                controller: 'NekretnineCtrl',
-                controllerAs: 'objave'
-            })
             .when('/prodaja', {
                 templateUrl: 'views/prodaja.html',
                 controller: 'OglasiCtrl',
                 controllerAs: 'prodaja'
             })
+            .when('/prodaja/nekretnina/:idNekretnina', {
+            	templateUrl: 'views/nekretnine.html',
+            	controller: 'NekretnineCtrl',
+            	controllerAs: 'jedNekretnina'
+            })
             .when('/izdavanje', {
             	
                 templateUrl: 'views/izdavanje.html',
-                controller: 'NekretnineCtrl',
+                controller: 'OglasiCtrl',
                 controllerAs: 'izdavanje'
             })
             .when('/login', {
