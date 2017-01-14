@@ -23,9 +23,15 @@
 			</div>
 		</div>
 		
-		<div id="header-e3">
-			<div class="registration">
+		<div id="header-e3" ng-show="!authenticated"">
+			<div class="registration" role="tablist">
 				<a class="btnLogin" href="#/login" ng-if="!isLoggedIn()&&getCurrentState()!=='login'" ui-sref="login">Ulogij se</a>   <span style="border-left: 2px  solid #808080; margin: 10px"></span> <a class="btnLogin" href="#/registration">Registruj se</a>
+			</div>
+		</div>
+		
+		<div id="header-e3" ng-show="authenticated">
+			<div class="registration">
+				<a class="btnLogin" href="#/">Ulogovani ste</a>
 			</div>
 		</div>
 	</div>
@@ -62,6 +68,8 @@
         <script src="scripts/korisnici/korisnici-resource.js"></script>
         <script src="scripts/nekretnina/nekretnina-ctrl.js"></script>
         <script src="scripts/nekretnina/nekretnina-resource.js"></script>
+        <script src="scripts/korisnici/authentication.js"></script>
+        <script src="scripts/korisnici/login.js"></script>
         
         <!-- endbuild -->
 </body>

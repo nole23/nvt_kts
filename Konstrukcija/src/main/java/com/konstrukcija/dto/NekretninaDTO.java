@@ -1,6 +1,10 @@
 package com.konstrukcija.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.konstrukcija.model.Nekretnina;
+import com.konstrukcija.model.Objavio;
 
 public class NekretninaDTO {
 
@@ -18,12 +22,13 @@ public class NekretninaDTO {
 	private KategorijaDTO kategorijaDTO;
 	private LokacijaDTO lokacijaDTO;
 	private TehnickaOpremljenostDTO tehnickaOpremljenostDTO;
+	private Set<ObjavioDTO> objavioDTO;
 	
 public NekretninaDTO() {}
 	
 	public NekretninaDTO(Long id, String naziv_nekretnine, Double cena, Double povrsina, String sobnost, String stanje_objekta, 
 			String grejanje, String spratova, String stanje, String sprat, String opis, LokacijaDTO lokacijaDTO, TehnickaOpremljenostDTO tehnickaOpremljenostDTO,
-			KategorijaDTO kategorijaDTO) {
+			KategorijaDTO kategorijaDTO, Set<ObjavioDTO> objavioDTO) {
 		super();
 		this.id = id;
 		this.naziv_nekretnine = naziv_nekretnine;
@@ -39,6 +44,7 @@ public NekretninaDTO() {}
 		this.lokacijaDTO = lokacijaDTO;
 		this.tehnickaOpremljenostDTO = tehnickaOpremljenostDTO;
 		this.kategorijaDTO = kategorijaDTO;
+		this.objavioDTO = objavioDTO;
 	}
 	
 	public NekretninaDTO(Nekretnina nekretnina) {
@@ -57,6 +63,11 @@ public NekretninaDTO() {}
 		this.lokacijaDTO = new LokacijaDTO(nekretnina.getLokacija());
 		this.tehnickaOpremljenostDTO = new TehnickaOpremljenostDTO(nekretnina.getTehnickaOpremljenost());
 		this.kategorijaDTO = new KategorijaDTO(nekretnina.getKategorija());
+		this.objavioDTO = new HashSet<ObjavioDTO>();
+		for(Objavio o: nekretnina.getObjavio()) {
+			
+			this.objavioDTO.add(new ObjavioDTO(o));
+		}
 	}
 
 	public Long getId() {
@@ -172,15 +183,11 @@ public NekretninaDTO() {}
 		this.tehnickaOpremljenostDTO = tehnickaOpremljenostDTO;
 	}
 
-	@Override
-	public String toString() {
-		return "NekretninaDTO [id=" + id + ", naziv_nekretnine="
-				+ naziv_nekretnine + ", cena=" + cena + ", povrsina="
-				+ povrsina + ", sobnost=" + sobnost + ", stanje_objekta="
-				+ stanje_objekta + ", grejanje=" + grejanje + ", spratova="
-				+ spratova + ", stanje=" + stanje + ", sprat=" + sprat
-				+ ", opis=" + opis + ", kategorijaDTO="
-				+ kategorijaDTO + ", lokacijaDTO=" + lokacijaDTO
-				+ ", tehnickaOpremljenostDTO=" + tehnickaOpremljenostDTO + "]";
+	public Set<ObjavioDTO> getObjavioDTO() {
+		return objavioDTO;
+	}
+
+	public void setObjavioDTO(Set<ObjavioDTO> objavioDTO) {
+		this.objavioDTO = objavioDTO;
 	}
 }

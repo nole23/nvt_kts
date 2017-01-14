@@ -3,7 +3,9 @@ package com.konstrukcija.controller;
 import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,23 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import antlr.collections.List;
-
 import com.konstrukcija.dto.KomentarDTO;
 import com.konstrukcija.dto.OcenaDTO;
 import com.konstrukcija.dto.OglasDTO;
-import com.konstrukcija.model.Kategorija;
 import com.konstrukcija.model.Komentar;
 import com.konstrukcija.model.Korisnik;
 import com.konstrukcija.model.Nekretnina;
-import com.konstrukcija.model.Objavio;
 import com.konstrukcija.model.Ocena;
 import com.konstrukcija.model.Oglas;
 import com.konstrukcija.model.PrijavaOglasa;
 import com.konstrukcija.repository.KategorijaRepository;
 import com.konstrukcija.repository.OglasRepository;
 import com.konstrukcija.repository.PrijavaOglasaRepository;
-import com.konstrukcija.service.KategorijaService;
 import com.konstrukcija.service.KomentarService;
 import com.konstrukcija.service.KorisnikService;
 import com.konstrukcija.service.NekretnineService;
@@ -67,6 +64,24 @@ public class OglasController {
 	@Autowired
 	private KategorijaRepository kategorijaRepository;
 	
+
+	
+	@RequestMapping(value = "/prodaja/all", method = RequestMethod.GET)
+	public ResponseEntity<List<OglasDTO>> getOglasProdaja() {
+		
+
+		List<Oglas> oglas = oglasRepository.findAll();
+		
+		List<OglasDTO> oglasDTO = new ArrayList<>();
+		for (Oglas o : oglas) {
+			oglasDTO.add(new OglasDTO(o));
+		}
+		return new ResponseEntity<>(oglasDTO, HttpStatus.OK);
+	}
+	
+	
+	
+
 	/**
 	 * Objava oglasa kako bi bila dostupa svim posjetiocima sajta
 	 * @param idNekretnina, id nekretnine koju objavljujemo
@@ -74,8 +89,8 @@ public class OglasController {
 	 * @param oglasDTO, podatak do kada vazi objava
 	 * @return nekretnina je objavljena i vidljiva svim korisnicima sata
 	 */
-	@RequestMapping(value = "/add/{idNekretnina}/{idObjavi}", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<String> getObjavaNekretnine(Principal principal, @PathVariable Long idNekretnina, @PathVariable Long idObjavi, @RequestBody OglasDTO oglasDTO) {
+	@RequestMapping(value = "/add/{idNekretnina}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<String> getObjavaNekretnine(Principal principal, @PathVariable Long idNekretnina, @RequestBody OglasDTO oglasDTO) {
 		
 		Nekretnina nekretnina = nekretninaService.findOne(idNekretnina);
 		Oglas oglasPostoji = oglasRepository.findByNekretnina(nekretnina);
@@ -84,7 +99,7 @@ public class OglasController {
 			return new ResponseEntity<>("ne moze vec postoji ",HttpStatus.OK);
 		}
 		
-		Objavio objavio = objavioService.findOne(idObjavi);
+		
 		Oglas oglas = new Oglas();
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -94,7 +109,6 @@ public class OglasController {
 		oglas.setDatum_azuriranja(dateFormat.format(date));
 		oglas.setDatum_isteka(oglasDTO.getDatum_isteka());
 		oglas.setNekretnina(nekretnina);
-		oglas.setObjavio(objavio);
 		
 		oglasRepository.save(oglas);
 		

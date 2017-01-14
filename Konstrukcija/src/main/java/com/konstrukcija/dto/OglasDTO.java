@@ -20,7 +20,6 @@ public class OglasDTO {
 	private String datum_azuriranja;
 	private String datum_isteka;
 	private NekretninaDTO nekretninaDTO;
-	private ObjavioDTO objavioDTO;
 	private Set<KomentarDTO> komentarDTO;
 	private Set<OcenaDTO> ocenaDTO;
 	private double prosek;
@@ -28,15 +27,13 @@ public class OglasDTO {
 	public OglasDTO() {}
 	
 	public OglasDTO(Long id, String datum_objave, String datum_azuriranja,
-			String datum_isteka, NekretninaDTO nekretninaDTO,
-			ObjavioDTO objavaDTO, Set<KomentarDTO> komentarDTO, Set<OcenaDTO> ocenaDTO) {
+			String datum_isteka, NekretninaDTO nekretninaDTO, Set<KomentarDTO> komentarDTO, Set<OcenaDTO> ocenaDTO) {
 		super();
 		this.id = id;
 		this.datum_objave = datum_objave;
 		this.datum_azuriranja = datum_azuriranja;
 		this.datum_isteka = datum_isteka;
 		this.nekretninaDTO = nekretninaDTO;
-		this.objavioDTO = objavaDTO;
 		this.komentarDTO = komentarDTO;
 		this.ocenaDTO = ocenaDTO;
 	}
@@ -47,7 +44,6 @@ public class OglasDTO {
 		this.datum_azuriranja = oglas.getDatum_azuriranja();
 		this.datum_isteka = oglas.getDatum_isteka();
 		this.nekretninaDTO = new NekretninaDTO(oglas.getNekretnina());
-		this.objavioDTO = new ObjavioDTO(oglas.getObjavio());
 		this.komentarDTO = new HashSet<KomentarDTO>();
 		for(Komentar k: oglas.getKomentar()) {
 			
@@ -103,14 +99,6 @@ public class OglasDTO {
 
 	public void setNekretninaDTO(NekretninaDTO nekretninaDTO) {
 		this.nekretninaDTO = nekretninaDTO;
-	}
-
-	public ObjavioDTO getObjavioDTO() {
-		return objavioDTO;
-	}
-
-	public void setObjavioDTO(ObjavioDTO objavioDTO) {
-		this.objavioDTO = objavioDTO;
 	}
 
 	public Set<KomentarDTO> getKomentarDTO() {

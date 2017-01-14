@@ -122,8 +122,8 @@ public class AdminController {
 			} if(oglas != null) {
 				Long idOglas = oglas.getId();
 				oglasService.delete(idOglas);
-				objavio.setOglas(null);
-				objavioService.save(objavio);
+				//objavio.setOglas(null);
+				//objavioService.save(objavio);
 				if(objavio != null) {
 					Long idObjavio = objavio.getId();
 					objavioService.remove(idObjavio);

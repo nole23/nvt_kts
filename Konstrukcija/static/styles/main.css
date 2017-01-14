@@ -272,6 +272,8 @@
 	width: 100%;
 	height-min: 50px;
 	height: 170px;
+	background: #FFFAEF;
+    border-radius: 5px;
 }
 
 .image-data {
@@ -284,6 +286,10 @@
 	width: 180px;
 	height: 150px;
 	margin: 0 1% 0 0;
+}
+.sale-estate-image img{
+	width: 180px;
+	height: 150px;
 }
 .data-publicit {
 	float: left;
@@ -329,4 +335,83 @@
 	margin: 2% 0 0 0;
 	font-size: 16px;
 	float: right;
+}
+/*********************Jedna nekretnina**************************/
+.advertisement-left {
+	float: left;
+	width: 36.5%;
+	margin: 0.5% 0.5% 0.5% 0;
+	
+}
+.advertisement-right {
+	float: right;
+	width: 25%;
+	margin: 0.5% 0 0.5% 0;
+}
+.advertisement-header p{
+	margin: 0;
+	font-size: 28px;
+	color: #e55a00;
+}
+.advertisement-info p{
+	margin: 0;
+}
+.advertisement-info table{
+	margin: 3% 0 0 0;
+}
+.table-header {
+	 width: 30%;
+	 text-align: right;
+}
+.table-info {
+	 width: 70%;
+	 text-align: left;
+}
+.tehnicka-opremljenost {
+	float: left;
+	margin: 1% 0 5% 0;
+}
+.opremljenost-info {
+	float: left;
+	text-align: center;
+}
+.informacije-oglasivaca {
+	border: 1px solid #333;
+    border-radius: 5px;
+    -webkit-border-radius: 5;
+    -moz-border-radius: 5;
+    
+}
+.naslov {
+	background: #ddd;
+	margin: -2% 0 0 0;
+}
+.naslov p{
+	margin: 2%;
+	font-size: 22px;
+}
+.telo {
+	height: 150px;
+}
+.telo p{
+	margin: 0;
+}
+.podaci-o-oglasu {
+	margin: 5% 0 0 0;
+}
+.podaci-o-oglasu p{
+	margin: 0;
+}
+.advertisement-img {
+	margin: 2%;
+}
+.advertisement-img img {
+	height: 350px;
+	width: 100%;
+}
+.advertisement-price p{
+	margin: 0;
+	font-size: 28px;
+	color: #e55a00;
+	text-align: right;
 }
