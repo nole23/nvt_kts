@@ -1,7 +1,7 @@
 package com.konstrukcija.service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.konstrukcija.model.Korisnik;
+import com.konstrukcija.model.UserAuthority;
 import com.konstrukcija.repository.KorisnikRepository;
 
 @Service
@@ -31,15 +32,11 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	      throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
 	    } else {
     	  	
-	    	List<GrantedAuthority> grantedAuthorities = user.getUserAuthorities().
-	    			stream()
-	                .map(authority -> new SimpleGrantedAuthority(authority.getAdmin().getName()))
-	                .collect(Collectors.toList());
+	    	List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
+	    	UserAuthority ua = user.getUserAuthorities();
+	    	grantedAuthorities.add(new SimpleGrantedAuthority(ua.getAdmin().getName()));
 	    	
-	    	return new org.springframework.security.core.userdetails.User(
-	    		  user.getUsername(),
-	    		  user.getPassword(),
-	    		  grantedAuthorities);
+	    	return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),grantedAuthorities);
 	    }
 	  }
 

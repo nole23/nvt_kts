@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Korisnik {
@@ -20,6 +21,7 @@ public class Korisnik {
 	private String fname;
 	private String lname;
 	private String password;
+	private boolean active;
 	
 	@Column(unique = true)
 	private String email;
@@ -36,8 +38,8 @@ public class Korisnik {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Adresa adresa;
 	
-	@OneToMany(mappedBy = "korisnik", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<UserAuthority> userAuthorities = new HashSet<UserAuthority>();
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "korisnik", cascade = CascadeType.ALL)
+	private UserAuthority userAuthorities;
 
 	@OneToMany(mappedBy = "korisnik", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Set<Zaposleni> zaposleni = new HashSet<Zaposleni>();
@@ -146,12 +148,12 @@ public class Korisnik {
 	public void setAdresa(Adresa adresa) {
 		this.adresa = adresa;
 	}
-
-	public Set<UserAuthority> getUserAuthorities() {
+	
+	public UserAuthority getUserAuthorities() {
 		return userAuthorities;
 	}
 
-	public void setUserAuthorities(Set<UserAuthority> userAuthorities) {
+	public void setUserAuthorities(UserAuthority userAuthorities) {
 		this.userAuthorities = userAuthorities;
 	}
 
@@ -163,4 +165,11 @@ public class Korisnik {
 		this.zaposleni = zaposleni;
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

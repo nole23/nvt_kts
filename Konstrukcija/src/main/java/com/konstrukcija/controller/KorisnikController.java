@@ -1,5 +1,6 @@
 package com.konstrukcija.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.KorisnikDTO;
 import com.konstrukcija.dto.LoginDTO;
+import com.konstrukcija.model.Admin;
 import com.konstrukcija.model.Korisnik;
 import com.konstrukcija.model.UserAuthority;
 import com.konstrukcija.repository.AdminRepository;
@@ -73,7 +75,8 @@ public class KorisnikController {
 		
 		List<KorisnikDTO> korisnikDTO = new ArrayList<>();
 		for(Korisnik k : korisnik) {
-			korisnikDTO.add(new KorisnikDTO(k));
+			if(k.isActive() == true)
+				korisnikDTO.add(new KorisnikDTO(k));
 		}
 		return new ResponseEntity<>(korisnikDTO, HttpStatus.OK);
 	}
@@ -99,9 +102,14 @@ public class KorisnikController {
 			korisnik.setPassword(encoder.encode(korisnikDTO.getPassword()));
 			korisnik.setEmail(korisnikDTO.getEmail());
 			korisnik.setUsername(korisnikDTO.getUsername());
+			korisnik.setActive(true);
 			korisnik.setVerified(false);
 			korisnik.setVerifyCode(UUID.randomUUID().toString());
 			
+			Admin admin = adminRepository.findByName(uloga);
+			
+			userAuthority.setAdmin(admin);
+			userAuthority.setKorisnik(korisnik);
 			
 			if( korisnikServer.findByUsername(korisnikDTO.getUsername()) != null || korisnikServer.findByEmail(korisnikDTO.getEmail()) != null) {
 				return new ResponseEntity<>("Ovaj email ili korisnicko ime je vec zauzeto", HttpStatus.BAD_REQUEST);
@@ -127,7 +135,11 @@ public class KorisnikController {
 	@RequestMapping(value="/login", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<String>  login(@RequestBody LoginDTO loginDTO) {
 		try{
-			//provera korisnickom imena i pasvorda
+			Korisnik korisnik = korisnikServer.findByUsername(loginDTO.getUsername());
+			if(korisnik.isActive() == false)
+				
+				return this.active(korisnik);
+			
 			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
 			Authentication authentication = authenticationMenager.authenticate(token);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -136,7 +148,7 @@ public class KorisnikController {
 			
 			return new ResponseEntity<String>(tokenUtils.generateToken(details), HttpStatus.OK);
 		} catch(Exception ex) {
-			return new ResponseEntity<String>("da li ovo radi "+loginDTO.getUsername(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Niste se ulogovali", HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -156,4 +168,144 @@ public class KorisnikController {
 		return new ResponseEntity<>("redirect:#/" ,HttpStatus.OK);
 	}
 	
+	
+	/**
+	 * @param korisnikDTO korisnik koji vise nije admin
+	 * @param principal provera da li je ulogovan i da li je admin
+	 * @return Aktuelni admin skida administraturu postojecem adminu
+	 */
+	@RequestMapping(value="/removal/admin",method=RequestMethod.POST, consumes="application/json")
+	public ResponseEntity<String> removalAdmin(@RequestBody KorisnikDTO korisnikDTO, Principal principal){
+
+		Korisnik admin = korisnikServer.findByUsername(principal.getName());
+		if(admin.getUserAuthorities().getAdmin().getName().equals("admin"))
+			return new ResponseEntity<>("Ovu komandu samo admin moze da koristi", HttpStatus.BAD_REQUEST);
+		
+		Korisnik korisnik = korisnikServer.findByUsername(korisnikDTO.getUsername());
+		UserAuthority userAuthority = userAuthoritRepository.findByKorisnik(korisnik);
+		String id = "2";//Prvo admin pa korisnik
+		Admin admin1 = adminRepository.findOne(Long.parseLong(id));
+		userAuthority.setAdmin(admin1);
+		
+		userAuthoritRepository.save(userAuthority);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	/**
+	 * 
+	 * @param principal korisnik koji je prijavljen
+	 * @return logicko brisanje korisnika koji je prijavljen
+	 */
+	@RequestMapping(value="/removal/korisnik",method=RequestMethod.GET)
+	public ResponseEntity<String> removalKorisnik(Principal principal){
+
+		Korisnik korisnik = korisnikServer.findByUsername(principal.getName());
+		if(korisnik == null)
+			return new ResponseEntity<>("Niste ulogovani", HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+		
+		korisnik.setActive(false);
+		
+		korisnikServer.save(korisnik);
+		
+		return new ResponseEntity<>("redirect:api/users/logout",HttpStatus.OK);
+	}
+	
+	
+	/**
+	 * 
+	 * @param principal
+	 * @return logout korisnik
+	 */
+	@RequestMapping(value="/logout",method=RequestMethod.POST, consumes="application/json")
+	public ResponseEntity<String> logout(Principal principal){
+
+		Korisnik korisnik = korisnikServer.findByUsername(principal.getName());
+		if(korisnik != null)
+			return new ResponseEntity<>("redirect:#/login", HttpStatus.OK);
+		
+		
+		
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	/**
+	 * @param principal korisnik kog zelimo azurirati
+	 * @param korisnikDTO novi podatak
+	 * @return azuriranje emaila
+	 */
+	@RequestMapping(value="/updat/email",method=RequestMethod.POST, consumes="application/json")
+	public ResponseEntity<String> updatEmail(Principal principal, @RequestBody KorisnikDTO korisnikDTO){
+
+		Korisnik korisnik = korisnikServer.findByUsername(principal.getName());
+		if(korisnik == null)
+			return new ResponseEntity<>("Niste ulogovani",HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+		
+		korisnik.setEmail(korisnikDTO.getEmail());
+		korisnik.setVerified(false);
+		korisnik.setVerifyCode(UUID.randomUUID().toString());
+		
+		korisnik = korisnikServer.save(korisnik);
+		mailSender.sendMail(korisnik.getEmail(), "Registration", "Click her to finish registration: <a href='http://localhost:8080/api/users/verify/"+korisnik.getVerifyCode()+"'>Click</a>");
+		
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	/**
+	 * @param principal korisnik kog azuriramo
+	 * @param korisnikDTO podatak koji menjamo
+	 * @return azuriranje sifre korisnika
+	 */
+	@RequestMapping(value="/updat/password",method=RequestMethod.POST, consumes="application/json")
+	public ResponseEntity<String> updatPassword(Principal principal, @RequestBody KorisnikDTO korisnikDTO){
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		Korisnik korisnik = korisnikServer.findByUsername(principal.getName());
+		if(korisnik == null)
+			return new ResponseEntity<>("Niste ulogovani",HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+		
+		korisnik.setPassword(encoder.encode(korisnikDTO.getPassword()));
+		korisnik.setVerified(false);
+		korisnik.setVerifyCode(UUID.randomUUID().toString());
+		
+		korisnik = korisnikServer.save(korisnik);
+		mailSender.sendMail(korisnik.getEmail(), "Registration", "Click her to finish registration: <a href='http://localhost:8080/api/users/verify/"+korisnik.getVerifyCode()+"'>Click</a>");
+		
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	/**
+	 * @param principal
+	 * @param korisnikDTO
+	 * @return azuriranje osnovnih informacija o korisniku
+	 */
+	@RequestMapping(value="/updat/info",method=RequestMethod.POST, consumes="application/json")
+	public ResponseEntity<String> updatInfo(Principal principal, @RequestBody KorisnikDTO korisnikDTO){
+
+		Korisnik korisnik = korisnikServer.findByUsername(principal.getName());
+		if(korisnik == null)
+			return new ResponseEntity<>("Niste ulogovani",HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+		
+		korisnik.setFname(korisnikDTO.getFname());
+		korisnik.setLname(korisnikDTO.getLname());
+		korisnik.setUsername(korisnikDTO.getUsername());
+		
+		korisnik = korisnikServer.save(korisnik);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/active",method=RequestMethod.POST, consumes="application/json")
+	public ResponseEntity<String> active(@RequestBody Korisnik korisnik2){
+
+		Korisnik korisnik = korisnikServer.findByUsername(korisnik2.getUsername());
+		
+		korisnik.setActive(true);
+		
+		korisnik = korisnikServer.save(korisnik);
+		
+		return new ResponseEntity<>("Ponovo ste aktivirali nalog",HttpStatus.OK);
+	}
 }

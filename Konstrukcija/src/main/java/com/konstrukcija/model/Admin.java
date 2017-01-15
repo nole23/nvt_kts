@@ -1,14 +1,11 @@
 package com.konstrukcija.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Admin {
@@ -18,8 +15,8 @@ public class Admin {
 	
 	String name;
 	
-	@OneToMany(mappedBy = "admin", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private Set<UserAuthority> userAuthority = new HashSet<UserAuthority>();
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "admin", cascade = CascadeType.ALL)
+	private UserAuthority userAuthority;
 
 	public Long getId() {
 		return id;
@@ -37,13 +34,11 @@ public class Admin {
 		this.name = name;
 	}
 
-	public Set<UserAuthority> getUserAuthority() {
+	public UserAuthority getUserAuthority() {
 		return userAuthority;
 	}
 
-	public void setUserAuthority(Set<UserAuthority> userAuthority) {
+	public void setUserAuthority(UserAuthority userAuthority) {
 		this.userAuthority = userAuthority;
 	}
-	
-	
 }
