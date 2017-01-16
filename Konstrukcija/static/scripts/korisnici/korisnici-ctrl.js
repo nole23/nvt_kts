@@ -22,9 +22,7 @@ angular.module('nekretnineClientApp')
 		$scope.registration = function() {
 			console.log('ime '+$scope.korisnik);
 			KorisniciResource.saveNewKorisnik($scope.korisnik);
-			//alert('dodato');
-			$log.info('success!');
-			window.location = "#/login";
+			//window.location = "#/login";
 		}
 		
 	}]);

@@ -48,7 +48,7 @@ angular
             })
             .when('/login', {
                 templateUrl: 'views/login.html',
-                controller: 'zasto',
+                controller: 'LoginCtrl',
                 controllerAs: 'registrovan'
             })
             .otherwise({

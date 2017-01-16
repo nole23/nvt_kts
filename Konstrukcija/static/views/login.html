@@ -35,7 +35,7 @@ input[type=submit]:hover {
 }
 </style>
 <div class="registration-ctrl">
-	<div class="registration-header">
+	<div ng-controller="KorisnikCtrl" class="registration-header">
 	
 		<h2>Da bi ste postavili oglas, treba da se prijavite ili registrujete na sistem. Hvala</h2>
 		<p> {{ registrovani.length }} registrovanih korisnika, {{nekretnine.length}} postavljenih oglasa</p>
@@ -43,13 +43,13 @@ input[type=submit]:hover {
 		
 	</div>
 	
-	<div class="registration-container">
+	<div ng-controller="LoginCtrl" class="registration-container">
 		<p>Ulogijete se</p>
 		<div class="registration-container-data">
 			<form ng-submit="login()">
 			
-				<input class="proba" type="text" placeholder="Korisniko ime" id="username" ng-model="user.username"/>
-				<input class="proba" type="password" placeholder="Sifra" id="password" ng-model="user.password"/>
+				<input class="proba" type="text" placeholder="Korisniko ime" id="username" ng-model="login.username"/>
+				<input class="proba" type="password" placeholder="Sifra" id="password" ng-model="login.password"/>
 				
 				<div class="registration-container-button">
 					<input class="buttonView" type="submit" value="Ulogij se">

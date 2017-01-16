@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.KorisnikDTO;
-import com.konstrukcija.dto.LoginDTO;
 import com.konstrukcija.model.Admin;
 import com.konstrukcija.model.Korisnik;
 import com.konstrukcija.model.UserAuthority;
@@ -132,19 +131,19 @@ public class KorisnikController {
 	 * @param loginDTO
 	 * @return kada se korisnik uloguje kreira se token koji govori koji je korisnik ulogova
 	 */
-	@RequestMapping(value="/login", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<String>  login(@RequestBody LoginDTO loginDTO) {
+	@RequestMapping(value="/login/{username}/{password}", method = RequestMethod.GET)
+	public ResponseEntity<String> loginKorisnik(@PathVariable String username, @PathVariable String password) {
 		try{
-			Korisnik korisnik = korisnikServer.findByUsername(loginDTO.getUsername());
+			Korisnik korisnik = korisnikServer.findByUsername(username);
 			if(korisnik.isActive() == false)
 				
 				return this.active(korisnik);
 			
-			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
+			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
 			Authentication authentication = authenticationMenager.authenticate(token);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			
-			UserDetails details = userDetailsService.loadUserByUsername(loginDTO.getUsername());
+			UserDetails details = userDetailsService.loadUserByUsername(username);
 			
 			return new ResponseEntity<String>(tokenUtils.generateToken(details), HttpStatus.OK);
 		} catch(Exception ex) {
