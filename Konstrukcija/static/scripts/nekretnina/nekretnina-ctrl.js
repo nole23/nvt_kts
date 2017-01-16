@@ -22,6 +22,8 @@ angular.module('nekretnineClientApp')
 		 
 		NekretnineResource.getNekretnina($routeParams.idNekretnina).then(function(items) {
 			$scope.jedNekretnina = items;
+			console.log('test sa necim '+items.nekretninaDTO.objavioDTO[0].korisnikDTO.fname);
 		})
+	
 		
 	}])

@@ -91,10 +91,9 @@
 				<p>Informacije oglasivaca</p>
 			</div>
 			<div class="telo">
-				<p>Objavio: {{jedNekretnina.nekretninaDTO.objavioDTO.korisnikDTO.fname}}</p>
-				<p>Email: {{jedNekretnina.nekretninaDTO.objavioDTO.korisnikDTO.email}}</p>
-				<p>Postavi pitanje </p>
-				<p>Ostali oglasi </p>
+				<p>Objavio: {{jedNekretnina.nekretninaDTO.objavioDTO[0].korisnikDTO.fname}}</p>
+				<p>Email: {{jedNekretnina.nekretninaDTO.objavioDTO[0].korisnikDTO.email}}</p><br/>
+				<p><a href><img title="Postavite pitanje" src="./imege/query.png"/></a> </p>
 			</div>
 		</div>
 		

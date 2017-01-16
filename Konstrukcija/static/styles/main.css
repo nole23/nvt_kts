@@ -247,10 +247,36 @@
 	width: 80%;
 	margin: 0 10% 0 10%;
 }
+.btnMain11{
+	float: left;
+	text-decoration:none;
+	color: #e55a00;
+	font-weight:bold;
+	font-size: 20px;
+	margin: 0 10% 0 0;
+}
+.estate-right-left-container1 {
+	float: left;
+	width: 95%;
+	border: 1px solid #808080;
+	float: left;
+	margin: 0 1% 1% 1%;
+	-webkit-border-radius: 5;
+    -moz-border-radius: 5;
+    border-radius: 5px;
+ 	
+}
 .sale-container {
 	float:left;
 	margin: 2% 3% 2% 2%;
 	width: 28%;
+	text-align: center;
+	
+}
+.sale-container1 {
+	float:left;
+	margin: 0 3% 2% 2%;
+	width: 95%;
 	text-align: center;
 	
 }
@@ -395,6 +421,10 @@
 }
 .telo p{
 	margin: 0;
+}
+.telo img {
+	width: 70%;
+	height: 50px;
 }
 .podaci-o-oglasu {
 	margin: 5% 0 0 0;

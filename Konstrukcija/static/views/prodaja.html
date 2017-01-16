@@ -21,12 +21,17 @@
 			</div>
 		</div>
 		
-		<div class="estate-right-left-container">
+		<div class="estate-right-left-container1" ng-controller='KategorijeCtrl'>
 			<h3>Kategorije</h3>
 			
-			<div class="sale-container">
-				<a class="btnMain" href="#/">Kuca</a>
+			<div class="sale-container1">
+				<div ng-repeat="kategorija in kategorije">
+					<div ng-if="kategorija.tip == 'prodaja'">
+						<a class="btnMain11" href="#/">{{kategorija.name}}</a>
+					</div>
+				</div>
 			</div>
+			
 			
 		</div>
 		

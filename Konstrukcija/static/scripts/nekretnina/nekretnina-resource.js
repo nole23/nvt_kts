@@ -33,8 +33,10 @@ angular.module('nekretnineClientApp')
 		return Restangular.one("oglas/nekretnina/"+id).get().then(function(item) {
 			jedNekretnina = item;
 			return jedNekretnina;
+			
 		});
 	}
+	
 	
 	return retVal;
     }]);

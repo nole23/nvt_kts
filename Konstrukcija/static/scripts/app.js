@@ -34,7 +34,8 @@ angular
             .when('/prodaja', {
                 templateUrl: 'views/prodaja.html',
                 controller: 'OglasiCtrl',
-                controllerAs: 'prodaja'
+                controllerAs: 'prodaja',
+                controllerAs1: 'kategorije'
             })
             .when('/prodaja/nekretnina/:idNekretnina', {
             	templateUrl: 'views/nekretnine.html',
