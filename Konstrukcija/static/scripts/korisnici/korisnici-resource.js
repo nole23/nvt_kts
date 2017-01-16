@@ -26,10 +26,7 @@ angular.module('nekretnineClientApp')
 		};
 		
 		retVal.saveNewKorisnik = function(korisnik) {
-			return Restangular.all('users/registration/korisnik').post(korisnik).then(function(data, nesto) {
-				korisnici.push(data);
-				console.log(nesto);
-			})
+			return Restangular.all('users/registration/korisnik').post(angular.toJson(korisnik));
 		}
 		
 		return retVal;

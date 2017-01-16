@@ -3,17 +3,19 @@
  */
 
 angular.module('nekretnineClientApp')
-	.factory('LoginResources', ['Restangular', '_', function(Restangular, $http, _) {
+	.factory('LoginResources', ['Restangular', '_', '$http', '$q', function(Restangular, _, $http, $q) {
 		'use strict';
-		
-		var retVal = {};
-		
-		retVal.loginUsers = function(username, password) {
-			return Restangular.all('users/login/nolee/321').getList().then(function(data){
-				console.log('authentication token: ' + data);
-			})
+		return {
+			login : function(username, password, callBack) {
+				console.log('ime '+username);
+				var link = '/api/users/login/'+username+'/'+password;
+				$http.get(link).success(function(data, textStatus, xhr) {
+					console.log(JSON.stringify(xhr));
+				}).error(function(data, textStatus, xhr) {
+					console.log(JSON.stringify(data));
+				})
+				
+			}
 		}
-		
-		return retVal;
 		
 	}]);

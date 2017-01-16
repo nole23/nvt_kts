@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.KorisnikDTO;
+import com.konstrukcija.dto.LoginDTO;
 import com.konstrukcija.model.Admin;
 import com.konstrukcija.model.Korisnik;
 import com.konstrukcija.model.UserAuthority;
@@ -91,10 +93,11 @@ public class KorisnikController {
 	 */
 	@RequestMapping(value="/registration/{uloga}", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<String>  saveKorisnika(@PathVariable String uloga, @RequestBody KorisnikDTO korisnikDTO) {
+
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		Korisnik korisnik = new Korisnik();
 		UserAuthority userAuthority = new UserAuthority();
-			
+		
 		if(uloga.equals("korisnik")) {
 			korisnik.setFname(korisnikDTO.getFname());
 			korisnik.setLname(korisnikDTO.getLname());
@@ -111,13 +114,13 @@ public class KorisnikController {
 			userAuthority.setKorisnik(korisnik);
 			
 			if( korisnikServer.findByUsername(korisnikDTO.getUsername()) != null || korisnikServer.findByEmail(korisnikDTO.getEmail()) != null) {
-				return new ResponseEntity<>("Ovaj email ili korisnicko ime je vec zauzeto", HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<String>("Ovaj email ili korisnicko ime je vec zauzeto", HttpStatus.BAD_REQUEST);
 			}
 			
 			korisnik = korisnikServer.save(korisnik);
 			userAuthoritRepository.save(userAuthority);
-			mailSender.sendMail(korisnik.getEmail(), "Registration", "Click her to finish registration: <a href='http://localhost:8080/api/users/verify/"+korisnik.getVerifyCode()+"'>Click</a>");
-			return new ResponseEntity<>("Uspesno ste se registrovali", HttpStatus.CREATED);
+			//mailSender.sendMail(korisnik.getEmail(), "Registration", "Click her to finish registration: <a href='http://localhost:8080/api/users/verify/"+korisnik.getVerifyCode()+"'>Click</a>");
+			return new ResponseEntity<String>("Uspesno ste se registrovali", HttpStatus.CREATED);
 		} else {
 			return new ResponseEntity<String>("Cant create that type of user, ony Customer and Advertiser allowed",HttpStatus.BAD_REQUEST);
 		}
@@ -145,9 +148,9 @@ public class KorisnikController {
 			
 			UserDetails details = userDetailsService.loadUserByUsername(username);
 			
-			return new ResponseEntity<String>(tokenUtils.generateToken(details), HttpStatus.OK);
+			return new ResponseEntity<String>(tokenUtils.generateToken(details),  new HttpHeaders(), HttpStatus.OK);
 		} catch(Exception ex) {
-			return new ResponseEntity<String>("Niste se ulogovali", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("Niste se ulogovali",  new HttpHeaders(), HttpStatus.NOT_FOUND);
 		}
 	}
 	
