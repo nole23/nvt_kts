@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.konstrukcija.App;
-import com.konstrukcija.TestUtil;
+import com.konstrukcija.test.TestUtil;
 import com.konstrukcija.model.Nekretnina;
 import com.konstrukcija.test.konstante.NekretnineKonstante;
 
