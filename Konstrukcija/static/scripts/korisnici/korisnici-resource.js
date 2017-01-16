@@ -19,7 +19,7 @@ angular.module('nekretnineClientApp')
 		};
 		
 		retVal.getNekretnine = function() {
-			return Restangular.all("oglas/all").getList().then(function(entries) {
+			return Restangular.all("oglas/prodaja/all").getList().then(function(entries) {
 				nekretnine = entries;
 				return nekretnine;
 			});
