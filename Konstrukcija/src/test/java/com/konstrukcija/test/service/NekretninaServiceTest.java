@@ -1,15 +1,15 @@
 package com.konstrukcija.test.service;
 
 import static com.konstrukcija.test.konstante.KorisnikKonstante.DB_COUNT;
-import static com.konstrukcija.test.konstante.NekretninaKonstante.NAZIV_NEKRETNINE;
-import static com.konstrukcija.test.konstante.NekretninaKonstante.CENA;
-import static com.konstrukcija.test.konstante.NekretninaKonstante.POVRSINA;
-import static com.konstrukcija.test.konstante.NekretninaKonstante.SOBRNOS;
-import static com.konstrukcija.test.konstante.NekretninaKonstante.STANJE_OBJEKTA;
-import static com.konstrukcija.test.konstante.NekretninaKonstante.GREJANJE;
-import static com.konstrukcija.test.konstante.NekretninaKonstante.SPRATOVA;
-import static com.konstrukcija.test.konstante.NekretninaKonstante.SPRAT;
-import static com.konstrukcija.test.konstante.NekretninaKonstante.OPIS;
+import static com.konstrukcija.test.konstante.NekretnineKonstante.NAZIV_NEKRETNINE;
+import static com.konstrukcija.test.konstante.NekretnineKonstante.CENA;
+import static com.konstrukcija.test.konstante.NekretnineKonstante.POVRSINA;
+import static com.konstrukcija.test.konstante.NekretnineKonstante.SOBRNOS;
+import static com.konstrukcija.test.konstante.NekretnineKonstante.STANJE_OBJEKTA;
+import static com.konstrukcija.test.konstante.NekretnineKonstante.GREJANJE;
+import static com.konstrukcija.test.konstante.NekretnineKonstante.SPRATOVA;
+import static com.konstrukcija.test.konstante.NekretnineKonstante.SPRAT;
+import static com.konstrukcija.test.konstante.NekretnineKonstante.OPIS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
