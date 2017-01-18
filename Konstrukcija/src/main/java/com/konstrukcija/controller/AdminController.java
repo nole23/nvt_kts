@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.KategorijaDTO;
-import com.konstrukcija.dto.KorisnikDTO;
+import com.konstrukcija.model.Admin;
 import com.konstrukcija.model.Kategorija;
 import com.konstrukcija.model.Lokacija;
 import com.konstrukcija.model.Nekretnina;
@@ -53,7 +53,6 @@ public class AdminController {
 	
 	@Autowired
 	private OglasRepository oglasService;
-	
 	
 	/**
 	 * Cuvanje nove kategorije, moze samo menadzer sistema da uradi
