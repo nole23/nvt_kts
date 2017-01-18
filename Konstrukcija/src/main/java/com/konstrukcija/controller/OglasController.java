@@ -43,9 +43,6 @@ import com.konstrukcija.service.OglasService;
 @RestController
 @RequestMapping(value ="api/oglas")
 public class OglasController {
-
-	@Autowired
-	private OglasService oglasService;
 	
 	@Autowired
 	private OglasRepository oglasRepository;
@@ -73,20 +70,6 @@ public class OglasController {
 	
 
 	
-	@RequestMapping(value = "/prodaja/all", method = RequestMethod.GET)
-	public ResponseEntity<List<OglasDTO>> getOglasProdaja() {
-		
-
-		List<Oglas> oglas = oglasRepository.findAll();
-		
-		List<OglasDTO> oglasDTO = new ArrayList<>();
-		for (Oglas o : oglas) {
-			oglasDTO.add(new OglasDTO(o));
-		}
-		return new ResponseEntity<>(oglasDTO, HttpStatus.OK);
-	}
-	
-	
 	/**
 	 * Ispis svih oglasa
 	 * @return svi oglasi su prikazani
@@ -94,7 +77,7 @@ public class OglasController {
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<OglasDTO>> getAllOglasProdaja() {
 		
-		List<Oglas> oglas = oglasService.findAll();
+		List<Oglas> oglas = oglasRepository.findAll();
 		
 		List<OglasDTO> oglasDTO = new ArrayList<>();
 		for (Oglas o : oglas) {
