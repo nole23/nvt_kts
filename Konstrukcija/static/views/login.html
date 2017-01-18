@@ -34,7 +34,8 @@ input[type=submit]:hover {
     background-color: #195aff;
 }
 </style>
-<div class="registration-ctrl">
+<div class="registration-ctrl" ng-controller="LoginCtrl">
+
 	<div ng-controller="KorisnikCtrl" class="registration-header">
 	
 		<h2>Da bi ste postavili oglas, treba da se prijavite ili registrujete na sistem. Hvala</h2>
@@ -43,7 +44,7 @@ input[type=submit]:hover {
 		
 	</div>
 	
-	<div ng-controller="LoginCtrl" class="registration-container">
+	<div  class="registration-container">
 		<p>Ulogijete se</p>
 		<div class="registration-container-data">
 			<form ng-submit="login()">
@@ -59,6 +60,15 @@ input[type=submit]:hover {
 			</form>
 		</div>
 		
+		
+		
+	</div>
+	<div class="login-message" ng-if="messageVerified == 'verified'">
+		<h3>Vas nalog nije verifikovan molimo vas verifikujte ga pomocu linka koji ste dobili u email</h3>
+	</div>
+	
+	<div class="login-message" ng-if="messageActive == 'active'">
+		<h3>Vas nalog je izbrisan trenutno ne mozete ga vratiti. Probajte za koji dan!</h3>
 	</div>
 
 </div>

@@ -41,7 +41,7 @@
                         //$state.go('main');
                     } else {
                         // callback za neuspesan login
-                    	console.log(response.error);
+                    	
                         callback(response);
                     }
                 });
