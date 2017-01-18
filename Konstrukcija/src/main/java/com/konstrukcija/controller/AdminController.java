@@ -14,16 +14,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.KategorijaDTO;
+import com.konstrukcija.dto.KorisnikDTO;
 import com.konstrukcija.model.Admin;
 import com.konstrukcija.model.Kategorija;
+import com.konstrukcija.model.Korisnik;
 import com.konstrukcija.model.Lokacija;
 import com.konstrukcija.model.Nekretnina;
 import com.konstrukcija.model.Objavio;
 import com.konstrukcija.model.Oglas;
 import com.konstrukcija.model.TehnickaOpremljenost;
+import com.konstrukcija.model.UserAuthority;
+import com.konstrukcija.repository.AdminRepository;
 import com.konstrukcija.repository.KategorijaRepository;
 import com.konstrukcija.repository.ObjavioRepository;
 import com.konstrukcija.repository.OglasRepository;
+import com.konstrukcija.repository.UserAuthorityRepository;
+import com.konstrukcija.service.KorisnikService;
 import com.konstrukcija.service.LokacijaService;
 import com.konstrukcija.service.NekretnineService;
 import com.konstrukcija.service.ObjavioService;
@@ -53,6 +59,30 @@ public class AdminController {
 	
 	@Autowired
 	private OglasRepository oglasService;
+	
+	@RequestMapping(value = "/add/admin/{idKorisnik}}", method = RequestMethod.GET)
+	public ResponseEntity<MessageDTO> addAdmin(Principal principal, @PathVariable Long idKorisnik, 
+		@RequestBody UserAuthorityRepository userAuthorityRepository, @RequestBody KorisnikService korisnikService, 
+		@RequestBody AdminRepository adminRepository) {
+
+		MessageDTO mesageDTO = new MessageDTO();
+		
+		Korisnik admin = korisnikService.findByUsername(principal.getName());
+		if(admin.getUserAuthorities().getAdmin().getName().equals("admin"))
+			mesageDTO.setError("niste admin");
+			return new ResponseEntity<MessageDTO>(mesageDTO, HttpStatus.BAD_REQUEST);
+			
+		Korisnik korisnik = korisnikService.findOne(idKorisnik);
+		UserAuthority userAuthority = userAuthorityRepository.findByKorisnik(korisnik);
+		String id = "1";
+		Admin admin1 = adminRepository.findOne(Long.parseLong(id));
+		userAuthority.setAdmin(admin1);
+		
+		userAuthorityRepository.save(userAuthority);
+		
+		mesageDTO.setSuccess("dodali admina");
+		return new ResponseEntity<MessageDTO>(mesageDTO, HttpStatus.OK);
+	}
 	
 	/**
 	 * Cuvanje nove kategorije, moze samo menadzer sistema da uradi
