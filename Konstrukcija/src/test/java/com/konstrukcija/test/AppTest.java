@@ -4,6 +4,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import com.konstrukcija.test.controllers.AdminControllerTest;
+import com.konstrukcija.test.controllers.AzuriranjeControllerTest;
 import com.konstrukcija.test.controllers.KompanijaControllerTest;
 import com.konstrukcija.test.controllers.NekretnincConrollerTest;
 import com.konstrukcija.test.controllers.OglasControllerTest;
@@ -25,5 +26,6 @@ import com.konstrukcija.test.service.NekretninaServiceTest;
 	KompanijaControllerTest.class,
 	NekretnincConrollerTest.class,
 	OglasControllerTest.class,
+	AzuriranjeControllerTest.class,
 	OthersControllerTest.class})
 public class AppTest {}

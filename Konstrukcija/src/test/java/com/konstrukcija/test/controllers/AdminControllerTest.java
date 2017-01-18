@@ -74,7 +74,7 @@ private static final String URL_PREFIX = "/api/admin";
 	@Test
     @Transactional
     @Rollback(true)
-    public void NewKategorija() throws Exception {
+    public void newKategorija() throws Exception {
         Kategorija kat = new Kategorija();
         kat.setName("Nova Kategorija");
         kat.setTip("Novi tip");
