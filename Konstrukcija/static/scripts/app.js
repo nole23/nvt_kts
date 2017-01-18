@@ -58,7 +58,7 @@ angular
             .when('/account/:idKorisnik', {
             	templateUrl: 'views/account.html',
             	controller: 'AcauntCtrl',
-            	controllerAs: 'jedanKorisnik',
+            	controllerAs: 'korisnik',
             	resolve: {
                     app: function($q, $localStorage, $location) {
                         

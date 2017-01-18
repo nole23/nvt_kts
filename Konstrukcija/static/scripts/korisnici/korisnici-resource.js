@@ -38,6 +38,28 @@ angular.module('nekretnineClientApp')
 			})
 		};
 		
+		retVal.updatUsers = function(korisnik) {
+			console.log(korisnik.username);
+			var korisnik1 = {
+					fname: korisnik.fname,
+					lname: korisnik.lname,
+					username: korisnik.username
+			}
+			return Restangular.all('users/updat/info').post(korisnik1);
+			
+		};
+		
+		retVal.updateAdress = function(adresa) {
+			return Restangular.all('users/adresa').post(adresa);
+		}
+		
+		retVal.updateEmail = function(email) {
+			return Restangular.all('users/updat/email').post(email);
+		}
+		
+		retVal.updatePassword = function(pass) {
+			return Restangular.all('users/updat/password').post(pass);
+		}
 		return retVal;
 		
 	}]);

@@ -21,13 +21,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.konstrukcija.dto.AdresaDTO;
 import com.konstrukcija.dto.KorisnikDTO;
 import com.konstrukcija.dto.LoginDTO;
+import com.konstrukcija.dto.LokacijaDTO;
 import com.konstrukcija.dto.MessageDTO;
 import com.konstrukcija.model.Admin;
+import com.konstrukcija.model.Adresa;
 import com.konstrukcija.model.Korisnik;
+import com.konstrukcija.model.Lokacija;
+import com.konstrukcija.model.Nekretnina;
 import com.konstrukcija.model.UserAuthority;
 import com.konstrukcija.repository.AdminRepository;
+import com.konstrukcija.repository.AdresaRepository;
 import com.konstrukcija.repository.UserAuthorityRepository;
 import com.konstrukcija.security.TokenUtils;
 import com.konstrukcija.service.KorisnikService;
@@ -68,6 +74,9 @@ public class KorisnikController {
 	
 	@Autowired
 	private MyMailSenderService mailSender;
+	
+	@Autowired
+	private AdresaRepository adresaRepository;
 	
 	
 	@RequestMapping(value="/all",method = RequestMethod.GET)
@@ -142,6 +151,15 @@ public class KorisnikController {
 			messageDTO.setError("ime");
 			return new ResponseEntity<>(messageDTO, HttpStatus.OK);
 		}
+		if(korisnik.isActive() == false) {
+			messageDTO.setError("active");
+			return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+		}
+		if(korisnik.getVerified() == false) {
+			messageDTO.setError("verified");
+			return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+		}
+		
 		try{
 			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
 			Authentication authentication = authenticationMenager.authenticate(token);
@@ -166,14 +184,14 @@ public class KorisnikController {
 	 * @return
 	 */
 	@RequestMapping(value="/verify/{verifyCode}",method=RequestMethod.GET)
-	public ResponseEntity<String> verify(@PathVariable String verifyCode){
+	public ResponseEntity<MessageDTO> verify(@PathVariable String verifyCode){
 		
 		Korisnik korisnik = korisnikServer.findByVerifyCode(verifyCode);
 		if(korisnik!=null){
 			korisnik.setVerified(true);
 			korisnikServer.save(korisnik);
 		}
-		return new ResponseEntity<>("redirect:#/" ,HttpStatus.OK);
+		return new ResponseEntity<MessageDTO>(HttpStatus.OK);
 	}
 	
 	
@@ -305,10 +323,10 @@ public class KorisnikController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/active",method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<String> active(@RequestBody Korisnik korisnik2){
+	@RequestMapping(value="/active",method=RequestMethod.GET)
+	public ResponseEntity<String> active(Principal principal){
 
-		Korisnik korisnik = korisnikServer.findByUsername(korisnik2.getUsername());
+		Korisnik korisnik = korisnikServer.findByUsername(principal.getName());
 		
 		korisnik.setActive(true);
 		
@@ -323,5 +341,26 @@ public class KorisnikController {
 		Korisnik korisnik = korisnikServer.findByUsername(principal.getName());
 		
 		return new ResponseEntity<>(new KorisnikDTO(korisnik), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/adresa", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<MessageDTO> getLokacijaNekretnine(Principal principal, @RequestBody AdresaDTO adresaDTO) {
+		
+		MessageDTO mesageDTO = new MessageDTO();
+		Korisnik korisnik = korisnikServer.findByUsername(principal.getName());
+		Adresa adresa = new Adresa();
+		
+		adresa.setDrzava(adresaDTO.getDrzava());
+		adresa.setGrad(adresaDTO.getGrad());
+		adresa.setUlica(adresaDTO.getUlica());
+		adresa.setBroj_zgrade(adresaDTO.getBroj_zgrade());
+		adresa.setBroj_stama(adresaDTO.getBroj_stama());
+		
+		korisnik.setAdresa(adresa);
+		
+		adresaRepository.save(adresa);
+		korisnikServer.save(korisnik);
+		mesageDTO.setSuccess("azuriranaAdresa");
+		return new ResponseEntity<MessageDTO>(mesageDTO, HttpStatus.OK);
 	}
 }

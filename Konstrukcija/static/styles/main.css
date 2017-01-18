@@ -229,6 +229,18 @@
 	width: 70%;
 	margin: 1% 15% 1% 15%;
 }
+.login-message {
+	float: left;
+	width: 70%;
+	height: 50px;
+	margin: 1% 15% 1% 15%;
+	border-radius: 5px;
+    -webkit-border-radius: 5;
+    -moz-border-radius: 5;
+    text-align: center;
+    color: #fff;
+    background-color: orange;
+}
 .registration-container p{
 	margin: 0;
 	color: #e55a00;
@@ -449,7 +461,11 @@
 .account {
 	float: left;
 	width: 80%;
-	margin: 0 10% 0 10%;
+	margin: 0 10% 0 20%;
+}
+.message-containter {
+	float: left;
+	width: 70%;
 }
 .message-login {
 	float: left;
@@ -477,14 +493,13 @@
 	float: left;
 	width: 29%;
 	height: 350px;
+	text-align: center;
+	font-size: 25px;
 }
 .account-left img{
 	width: 100%;
 	height: 320px;
-}
-.account-jbg {
 	border: 1px solid #333;
-	text-align: center;
 }
 .account-right {
 	float: right;
@@ -493,50 +508,46 @@
 }
 .account-info {
 	float: left;
-	width: 49%;
+	width: 60%;
 }
-.account-comand{
-	float: right;
-	width: 49%;
-	margin: 1% 0 0 0;
-}
-.account-button {
+table#t01 tr:nth-child(even) {background: #FFF }
+table#t01 tr:nth-child(odd) {background: #CCC }
+.account-table {
 	float: left;
-	width: 100%;
-	margin: 1% 0 0 0;
+	width: 20%;
+	text-align: center;
+	margin: 0;
 }
-.account-user {
+.dugmici {
+	float: left;
+	margin: 5% 0 0 0;
+	width: 60%;
+}
+.dugmici button{
 	margin: 1% 0 0 0;
-	border: 1px solid #333;
+	width: 48%;
+}
+/****************************Modal*************************/
+.modal-account {
+	margin: 0;
+	border-bottom: 1px solid #333;
+}
+.modal-account h3{
 	text-align: center;
 }
-.account-user h3{
+.modal-form {
+	margin: 2%;
+	width: 95%;
+}
+.modal-form input{
+	width: 99%;
+	height: 30px;
+	border-radius: 5px;
+    -webkit-border-radius: 5;
+    -moz-border-radius: 5;
+}
+.modal-comand {
 	
-	width: 100%;
-	margin: 0;
-	font-size: 28px;
-}
-.stil {
-	
-	color: #828282
-}
-.account-user-adress {
-	border-top: 1px solid #333;
-	font-size: 18px;
-}
-.comand-updat-info {
-	float: left;
-	width: 100%;
-	
-}
-.updat-info-button {
-	margin: 1% 0 0 0;
-	width: 100%;
-    border: none;
-    color: white;
-    text-align: center;
-    font-size: 24px;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
+	margin: 2% 0 0 0;
+	width: 95%;
 }
