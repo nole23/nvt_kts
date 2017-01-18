@@ -1,5 +1,7 @@
 package com.konstrukcija.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -107,20 +109,21 @@ public class AzuriranjaController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-		@RequestMapping(value = "/update/{idKorisnik}", method = RequestMethod.POST, consumes = "application/json")
-		public ResponseEntity<String> updateKorisnik(@PathVariable Long idKorisnik, @RequestBody KorisnikDTO korisnikDTO) {
+	@RequestMapping(value = "/update}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<MessageDTO> updateKorisnik(Principal principal, @RequestBody KorisnikDTO korisnikDTO) {
+
+		MessageDTO mesageDTO = new MessageDTO();
 		
-			Korisnik korisnik = korisnikService.findOne(idKorisnik);
+		Korisnik korisnik = korisnikService.findByUsername(principal.getName());
+
+		korisnik.setFname(korisnikDTO.getFname());
+		korisnik.setLname(korisnikDTO.getLname());
+		korisnik.setUsername(korisnikDTO.getUsername());
+
+		korisnik = korisnikService.save(korisnik);
 		
-			korisnik.setFname(korisnikDTO.getFname());
-			korisnik.setLname(korisnikDTO.getLname());
-			korisnik.setUsername(korisnikDTO.getUsername());
-			korisnik.setPassword(korisnikDTO.getPassword());
-			korisnik.setEmail(korisnikDTO.getEmail());
-		
-			korisnik = korisnikService.save(korisnik);
-		
-			return new ResponseEntity<>(HttpStatus.OK);
+		mesageDTO.setSuccess("azuriraneInformacije");
+		return new ResponseEntity<MessageDTO>(mesageDTO, HttpStatus.OK);
 	}
 	
 }
