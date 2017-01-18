@@ -1,5 +1,6 @@
 package com.konstrukcija.controller;
 
+
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +22,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.konstrukcija.dto.AdresaDTO;
 import com.konstrukcija.dto.KorisnikDTO;
 import com.konstrukcija.dto.LoginDTO;
+import com.konstrukcija.dto.LokacijaDTO;
+import com.konstrukcija.dto.MessageDTO;
 import com.konstrukcija.model.Admin;
+import com.konstrukcija.model.Adresa;
 import com.konstrukcija.model.Korisnik;
+import com.konstrukcija.model.Lokacija;
+import com.konstrukcija.model.Nekretnina;
 import com.konstrukcija.model.UserAuthority;
 import com.konstrukcija.repository.AdminRepository;
+import com.konstrukcija.repository.AdresaRepository;
 import com.konstrukcija.repository.UserAuthorityRepository;
 import com.konstrukcija.security.TokenUtils;
 import com.konstrukcija.service.KorisnikService;
@@ -68,6 +76,9 @@ public class KorisnikController {
 	@Autowired
 	private MyMailSenderService mailSender;
 	
+	@Autowired
+	private AdresaRepository adresaRepository;
+	
 	
 	@RequestMapping(value="/all",method = RequestMethod.GET)
 	public ResponseEntity<List<KorisnikDTO>> getKorisnik() {
@@ -92,10 +103,11 @@ public class KorisnikController {
 	 */
 	@RequestMapping(value="/registration/{uloga}", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<String>  saveKorisnika(@PathVariable String uloga, @RequestBody KorisnikDTO korisnikDTO) {
+
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		Korisnik korisnik = new Korisnik();
 		UserAuthority userAuthority = new UserAuthority();
-			
+		
 		if(uloga.equals("korisnik")) {
 			korisnik.setFname(korisnikDTO.getFname());
 			korisnik.setLname(korisnikDTO.getLname());
@@ -112,13 +124,13 @@ public class KorisnikController {
 			userAuthority.setKorisnik(korisnik);
 			
 			if( korisnikServer.findByUsername(korisnikDTO.getUsername()) != null || korisnikServer.findByEmail(korisnikDTO.getEmail()) != null) {
-				return new ResponseEntity<>("Ovaj email ili korisnicko ime je vec zauzeto", HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<String>("Ovaj email ili korisnicko ime je vec zauzeto", HttpStatus.BAD_REQUEST);
 			}
 			
 			korisnik = korisnikServer.save(korisnik);
 			userAuthoritRepository.save(userAuthority);
-			mailSender.sendMail(korisnik.getEmail(), "Registration", "Click her to finish registration: <a href='http://localhost:8080/api/users/verify/"+korisnik.getVerifyCode()+"'>Click</a>");
-			return new ResponseEntity<>("Uspesno ste se registrovali", HttpStatus.CREATED);
+			//mailSender.sendMail(korisnik.getEmail(), "Registration", "Click her to finish registration: <a href='http://localhost:8080/api/users/verify/"+korisnik.getVerifyCode()+"'>Click</a>");
+			return new ResponseEntity<String>("Uspesno ste se registrovali", HttpStatus.CREATED);
 		} else {
 			return new ResponseEntity<String>("Cant create that type of user, ony Customer and Advertiser allowed",HttpStatus.BAD_REQUEST);
 		}
@@ -132,23 +144,38 @@ public class KorisnikController {
 	 * @param loginDTO
 	 * @return kada se korisnik uloguje kreira se token koji govori koji je korisnik ulogova
 	 */
-	@RequestMapping(value="/login", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<String>  login(@RequestBody LoginDTO loginDTO) {
+	@RequestMapping(value="/login/", method = RequestMethod.POST)
+	public ResponseEntity<MessageDTO> loginKorisnik(@RequestBody LoginDTO loginDTO) {
+		MessageDTO messageDTO = new MessageDTO();
+		Korisnik korisnik = korisnikServer.findByUsername(loginDTO.getUsername());
+		if(korisnik == null) {
+			messageDTO.setError("ime");
+			return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+		}
+		if(korisnik.isActive() == false) {
+			messageDTO.setError("active");
+			return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+		}
+		if(korisnik.getVerified() == false) {
+			messageDTO.setError("verified");
+			return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+		}
+		
 		try{
-			Korisnik korisnik = korisnikServer.findByUsername(loginDTO.getUsername());
-			if(korisnik.isActive() == false)
-				
-				return this.active(korisnik);
-			
 			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
 			Authentication authentication = authenticationMenager.authenticate(token);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			
 			UserDetails details = userDetailsService.loadUserByUsername(loginDTO.getUsername());
 			
-			return new ResponseEntity<String>(tokenUtils.generateToken(details), HttpStatus.OK);
+			
+			
+			messageDTO.setCookies(tokenUtils.generateToken(details));
+			messageDTO.setRola(korisnik.getUserAuthorities().getAdmin().getName());
+			return new ResponseEntity<>(messageDTO, HttpStatus.OK);
 		} catch(Exception ex) {
-			return new ResponseEntity<String>("Niste se ulogovali", HttpStatus.NOT_FOUND);
+			messageDTO.setError("sifra");
+			return new ResponseEntity<>(messageDTO, HttpStatus.OK);
 		}
 	}
 	
@@ -158,14 +185,14 @@ public class KorisnikController {
 	 * @return
 	 */
 	@RequestMapping(value="/verify/{verifyCode}",method=RequestMethod.GET)
-	public ResponseEntity<String> verify(@PathVariable String verifyCode){
+	public ResponseEntity<MessageDTO> verify(@PathVariable String verifyCode){
 		
 		Korisnik korisnik = korisnikServer.findByVerifyCode(verifyCode);
 		if(korisnik!=null){
 			korisnik.setVerified(true);
 			korisnikServer.save(korisnik);
 		}
-		return new ResponseEntity<>("redirect:#/" ,HttpStatus.OK);
+		return new ResponseEntity<MessageDTO>(HttpStatus.OK);
 	}
 	
 	
@@ -275,37 +302,46 @@ public class KorisnikController {
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+
 	
-	/**
-	 * @param principal
-	 * @param korisnikDTO
-	 * @return azuriranje osnovnih informacija o korisniku
-	 */
-	@RequestMapping(value="/updat/info",method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<String> updatInfo(Principal principal, @RequestBody KorisnikDTO korisnikDTO){
+	@RequestMapping(value="/active",method=RequestMethod.GET)
+	public ResponseEntity<String> active(Principal principal){
 
 		Korisnik korisnik = korisnikServer.findByUsername(principal.getName());
-		if(korisnik == null)
-			return new ResponseEntity<>("Niste ulogovani",HttpStatus.NON_AUTHORITATIVE_INFORMATION);
-		
-		korisnik.setFname(korisnikDTO.getFname());
-		korisnik.setLname(korisnikDTO.getLname());
-		korisnik.setUsername(korisnikDTO.getUsername());
-		
-		korisnik = korisnikServer.save(korisnik);
-		
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-	
-	@RequestMapping(value="/active",method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<String> active(@RequestBody Korisnik korisnik2){
-
-		Korisnik korisnik = korisnikServer.findByUsername(korisnik2.getUsername());
 		
 		korisnik.setActive(true);
 		
 		korisnik = korisnikServer.save(korisnik);
 		
 		return new ResponseEntity<>("Ponovo ste aktivirali nalog",HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/profile",method=RequestMethod.GET)
+	public ResponseEntity<KorisnikDTO> getUsers(Principal principal){
+
+		Korisnik korisnik = korisnikServer.findByUsername(principal.getName());
+		
+		return new ResponseEntity<>(new KorisnikDTO(korisnik), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/adresa", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<MessageDTO> getLokacijaNekretnine(Principal principal, @RequestBody AdresaDTO adresaDTO) {
+		
+		MessageDTO mesageDTO = new MessageDTO();
+		Korisnik korisnik = korisnikServer.findByUsername(principal.getName());
+		Adresa adresa = new Adresa();
+		
+		adresa.setDrzava(adresaDTO.getDrzava());
+		adresa.setGrad(adresaDTO.getGrad());
+		adresa.setUlica(adresaDTO.getUlica());
+		adresa.setBroj_zgrade(adresaDTO.getBroj_zgrade());
+		adresa.setBroj_stama(adresaDTO.getBroj_stama());
+		
+		korisnik.setAdresa(adresa);
+		
+		adresaRepository.save(adresa);
+		korisnikServer.save(korisnik);
+		mesageDTO.setSuccess("azuriranaAdresa");
+		return new ResponseEntity<MessageDTO>(mesageDTO, HttpStatus.OK);
 	}
 }

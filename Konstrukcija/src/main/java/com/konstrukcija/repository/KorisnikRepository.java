@@ -12,5 +12,4 @@ public interface KorisnikRepository extends JpaRepository<Korisnik, Long>{
 	Korisnik findOne(Long id);
 	Korisnik findByVerifyCode(String verifyCode);
 
-	
 }

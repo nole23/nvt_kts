@@ -8,6 +8,7 @@ angular.module('nekretnineClientApp')
 		
 		var registrovani = [];
 		var korisnici = [];
+		var korisnik = [];
 		var nekretnine = [];
 		var retVal = {};
 		
@@ -19,18 +20,46 @@ angular.module('nekretnineClientApp')
 		};
 		
 		retVal.getNekretnine = function() {
-			return Restangular.all("oglas/all").getList().then(function(entries) {
+			return Restangular.all("oglas/prodaja/all").getList().then(function(entries) {
 				nekretnine = entries;
 				return nekretnine;
 			});
 		};
 		
 		retVal.saveNewKorisnik = function(korisnik) {
-			return Restangular.all('users/registration/korisnik').post(korisnik).then(function(data) {
-				korisnici.push(data);
+			return Restangular.all('users/registration/korisnik').post(angular.toJson(korisnik));
+		};
+		
+		//treba prvo implementirati tamo ovu funkciju
+		retVal.getKorisnik = function(token) {
+			return Restangular.one('users/profile').get().then(function(entries) {
+				korisnik = entries;
+				return korisnik;
 			})
+		};
+		
+		retVal.updatUsers = function(korisnik) {
+			console.log(korisnik.username);
+			var korisnik1 = {
+					fname: korisnik.fname,
+					lname: korisnik.lname,
+					username: korisnik.username
+			}
+			return Restangular.all('users/updat/info').post(korisnik1);
+			
+		};
+		
+		retVal.updateAdress = function(adresa) {
+			return Restangular.all('users/adresa').post(adresa);
 		}
 		
+		retVal.updateEmail = function(email) {
+			return Restangular.all('users/updat/email').post(email);
+		}
+		
+		retVal.updatePassword = function(pass) {
+			return Restangular.all('users/updat/password').post(pass);
+		}
 		return retVal;
 		
 	}]);

@@ -1,0 +1,81 @@
+<div class="account">
+	<div class="message-containter">
+		<div class="message-login" ng-if="messageLogin == null">
+			<h3>Uspesno ste se ulogovali</h3>
+		</div>
+	</div>
+	<div  class="message-login" ng-if="messageUpdate === 'true'">
+		<h3>Uspesno ste se ulogovali</h3>
+	</div>
+	
+	
+	
+	<div class="account-users">
+		<div class="account-left">
+		
+			<div class="account-image">
+				<a href><img src="./imege/avata1.png" /></a>
+				{{korisnik.username}}
+			</div>
+
+			
+		</div>
+		
+		<div class="account-right">
+			<div class="account-info">
+				<table id="t01">
+					<tr>
+						<td >Ime</td>
+						<td class="account-table"></td>
+						<td>{{korisnik.fname}}</td>
+					</tr>
+					<tr>
+						<td>Prezime</td>
+						<td class="account-table"></td>
+						<td>{{korisnik.lname}}</td>
+					</tr>
+					<tr>
+						<td>Email</td>
+						<td class="account-table"></td>
+						<td>{{korisnik.email}}</td>
+					</tr>
+					<tr>
+						<td>Telefon</td>
+						<td class="account-table"></td>
+						<td>{{korisnik.phone}}</td>
+					</tr>
+					<tr>
+						<td>Adresa</td>
+						<td class="account-table"></td>
+						<td ng-if="korisnik.adresaDTO != null">{{korisnik.adresaDTO.drzava}} -> {{korisnik.adresaDTO.grad}} -> {{korisnik.adresaDTO.ulica}} -> {{korisnik.adresaDTO.broj_zgrade}} -> {{korisnik.adresaDTO.broj_stama}}</td>
+						<td ng-if="korisnik.adresaDTO == null">Azurirajete adresu</td>
+						
+					</tr>
+				</table>
+			</div>
+			
+			<div class="dugmici">
+				<button type="button" aria-label="Izmena" class="" ng-click="azuriranjeLicnih(korisnik)">Azuriranje podataka
+					<span class="" aria-hidden="true"></span>
+				</button>
+				
+				<!-- Ukoliko nije dodata adresa mora se prvo dodati zbog prava podataka -->
+				<button ng-if="korisnik.adresaDTO != null" type="button" aria-label="Izmena" class="" ng-click="azuriranjeAdrese(korisnik.adresaDTO)">Azuriranje adrese
+					<span class="" aria-hidden="true"></span>
+				</button>
+				<button ng-if="korisnik.adresaDTO == null" type="button" aria-label="Izmena" class="" ng-click="dodatiAdrese()">Dodati adrese
+					<span class="" aria-hidden="true"></span>
+				</button>
+				<!-- --------------------------------------------------------- -->
+				
+				<button type="button" aria-label="Izmena" class="" ng-click="azuriranjeEmaila(korisnik)">Azuriranje emaila
+					<span class="" aria-hidden="true"></span>
+				</button>
+				<button type="button" aria-label="Izmena" class="" ng-click="openModal(student)">Azuriranje sifre
+					<span class="" aria-hidden="true"></span>
+				</button>
+			</div>
+			
+		</div>
+	</div>
+</div>

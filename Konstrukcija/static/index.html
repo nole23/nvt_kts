@@ -5,12 +5,14 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+    
+	<link rel="stylesheet" href="styles/main1.css">
 	<link rel="stylesheet" href="styles/main.css">
 	
   </head>
   <body ng-app="nekretnineClientApp">
 
-
+	
 	
 	<div id="header">
 		<div id="header-e1">
@@ -23,13 +25,18 @@
 			</div>
 		</div>
 		
-		<div id="header-e3" ng-show="!authenticated"">
-			<div class="registration" role="tablist">
-				<a class="btnLogin" href="#/login" ng-if="!isLoggedIn()&&getCurrentState()!=='login'" ui-sref="login">Ulogij se</a>   <span style="border-left: 2px  solid #808080; margin: 10px"></span> <a class="btnLogin" href="#/registration">Registruj se</a>
+		<div id="header-e3" >
+			<div class="registration" role="tablist" ng-if="!isLoggedIn()">
+				<a class="btnLogin" href="#/login" >Ulogij se</a>   <span style="border-left: 2px  solid #808080; margin: 10px"></span> <a class="btnLogin" href="#/registration">Registruj se</a>
+			</div>
+			<div class="registration" role="tablist" ng-if="isLoggedIn()">
+				<a class="btnLogin" href="#/account/jaslkdsdkjfalksdkasdjaksljkasjdlkaskdjaslj">Moj nalog</a><span style="border-left: 2px  solid #808080; margin: 10px"></span><a class="btnLogin" href ng-click="logout()" >Odjavi se</a>
 			</div>
 		</div>
 		
-		<div id="header-e3" ng-show="authenticated">
+			
+		
+		<div ng-if="isLogin == true">
 			<div class="registration">
 				<a class="btnLogin" href="#/">Ulogovani ste</a>
 			</div>
@@ -54,6 +61,8 @@
     <script src="bower_components/restangular/dist/restangular.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/angular-lodash-module/angular-lodash-module.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/ng-storage/ngStorage.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -62,6 +71,7 @@
         <script src="scripts/korisnici/authentication.js"></script>
         <script src="scripts/oglasi/oglasi-ctrl.js"></script>
         <script src="scripts/oglasi/oglasi-resource.js"></script>
+        <script src="scripts/oglasi/oglasiCtrl.js"></script>
         <script src="scripts/kategorije/kategorija-ctrl.js"></script>
         <script src="scripts/kategorije/kategorija-resource.js"></script>
         <script src="scripts/korisnici/korisnici-ctrl.js"></script>
@@ -70,6 +80,8 @@
         <script src="scripts/nekretnina/nekretnina-resource.js"></script>
         <script src="scripts/korisnici/authentication.js"></script>
         <script src="scripts/korisnici/login.js"></script>
+        <script src="scripts/korisnici/auth-service.js"></script>
+        <script src="scripts/korisnici/korisnik-ctrl.js"></script>
         
         <!-- endbuild -->
 </body>

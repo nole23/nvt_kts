@@ -229,6 +229,18 @@
 	width: 70%;
 	margin: 1% 15% 1% 15%;
 }
+.login-message {
+	float: left;
+	width: 70%;
+	height: 50px;
+	margin: 1% 15% 1% 15%;
+	border-radius: 5px;
+    -webkit-border-radius: 5;
+    -moz-border-radius: 5;
+    text-align: center;
+    color: #fff;
+    background-color: orange;
+}
 .registration-container p{
 	margin: 0;
 	color: #e55a00;
@@ -247,10 +259,36 @@
 	width: 80%;
 	margin: 0 10% 0 10%;
 }
+.btnMain11{
+	float: left;
+	text-decoration:none;
+	color: #e55a00;
+	font-weight:bold;
+	font-size: 20px;
+	margin: 0 10% 0 0;
+}
+.estate-right-left-container1 {
+	float: left;
+	width: 95%;
+	border: 1px solid #808080;
+	float: left;
+	margin: 0 1% 1% 1%;
+	-webkit-border-radius: 5;
+    -moz-border-radius: 5;
+    border-radius: 5px;
+ 	
+}
 .sale-container {
 	float:left;
 	margin: 2% 3% 2% 2%;
 	width: 28%;
+	text-align: center;
+	
+}
+.sale-container1 {
+	float:left;
+	margin: 0 3% 2% 2%;
+	width: 95%;
 	text-align: center;
 	
 }
@@ -396,6 +434,10 @@
 .telo p{
 	margin: 0;
 }
+.telo img {
+	width: 70%;
+	height: 50px;
+}
 .podaci-o-oglasu {
 	margin: 5% 0 0 0;
 }
@@ -414,4 +456,98 @@
 	font-size: 28px;
 	color: #e55a00;
 	text-align: right;
+}
+/***************************************ACAUNT*********************************/
+.account {
+	float: left;
+	width: 80%;
+	margin: 0 10% 0 20%;
+}
+.message-containter {
+	float: left;
+	width: 70%;
+}
+.message-login {
+	float: left;
+	width: 100%;
+	height: 50px;
+	border: 1px solid #333;
+	border-color: #04df14 #19c10e;
+	text-align: center;
+	color: #fff;
+	border-radius: 10px;
+    -webkit-border-radius: 5;
+    -moz-border-radius: 5;
+    background-color: #C1FFC1;
+    margin: 0 0 1% 0;
+}
+.message-login h3{
+	margin: 2%;
+	color: #228B22
+}
+.account-users {
+	float: left;
+	width: 100%;
+}
+.account-left {
+	float: left;
+	width: 29%;
+	height: 350px;
+	text-align: center;
+	font-size: 25px;
+}
+.account-left img{
+	width: 100%;
+	height: 320px;
+	border: 1px solid #333;
+}
+.account-right {
+	float: right;
+	width: 68%;
+	margin: 0 0 0 2%;
+}
+.account-info {
+	float: left;
+	width: 60%;
+}
+table#t01 tr:nth-child(even) {background: #FFF }
+table#t01 tr:nth-child(odd) {background: #CCC }
+.account-table {
+	float: left;
+	width: 20%;
+	text-align: center;
+	margin: 0;
+}
+.dugmici {
+	float: left;
+	margin: 5% 0 0 0;
+	width: 60%;
+}
+.dugmici button{
+	margin: 1% 0 0 0;
+	width: 48%;
+}
+/****************************Modal*************************/
+.modal-account {
+	margin: 0;
+	border-bottom: 1px solid #333;
+}
+.modal-account h3{
+	text-align: center;
+}
+.modal-form {
+	margin: 2%;
+	width: 95%;
+}
+.modal-form input{
+	width: 99%;
+	height: 30px;
+	border-radius: 5px;
+    -webkit-border-radius: 5;
+    -moz-border-radius: 5;
+}
+.modal-comand {
+	
+	margin: 2% 0 0 0;
+	width: 95%;
 }
