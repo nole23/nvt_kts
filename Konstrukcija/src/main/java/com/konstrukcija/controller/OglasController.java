@@ -6,17 +6,22 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.KomentarDTO;
+import com.konstrukcija.dto.NekretninaDTO;
 import com.konstrukcija.dto.OcenaDTO;
 import com.konstrukcija.dto.OglasDTO;
 import com.konstrukcija.model.Komentar;
@@ -33,13 +38,15 @@ import com.konstrukcija.service.KorisnikService;
 import com.konstrukcija.service.NekretnineService;
 import com.konstrukcija.service.ObjavioService;
 import com.konstrukcija.service.OcenaService;
+import com.konstrukcija.service.OglasService;
 
 @RestController
 @RequestMapping(value ="api/oglas")
 public class OglasController {
 
-	//@Autowired
-	//private OglasService oglasService;
+	@Autowired
+	private OglasService oglasService;
+	
 	@Autowired
 	private OglasRepository oglasRepository;
 	
@@ -80,7 +87,39 @@ public class OglasController {
 	}
 	
 	
+	/**
+	 * Ispis svih oglasa
+	 * @return svi oglasi su prikazani
+	 */
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	public ResponseEntity<List<OglasDTO>> getAllOglasProdaja() {
+		
+		List<Oglas> oglas = oglasService.findAll();
+		
+		List<OglasDTO> oglasDTO = new ArrayList<>();
+		for (Oglas o : oglas) {
+			oglasDTO.add(new OglasDTO(o));
+		}
+		return new ResponseEntity<>(oglasDTO, HttpStatus.OK);
+	}
 	
+	/**
+	 * Ispis svih oglasa na osnovu kategorije
+	 * @return oglas je objavljena u zavisnosti od kategorije
+	 */
+	@RequestMapping(value = "/prodaja/all", method = RequestMethod.GET)
+	public ResponseEntity<List<OglasDTO>> getOglasIspisPoKategoriji() {
+		
+		List<Oglas> oglas = oglasRepository.findAll();
+		
+		List<OglasDTO> oglasDTO = new ArrayList<>();
+		for (Oglas o : oglas) {
+			if (o.getNekretnina().getKategorija().getName() == o.getNekretnina().getKategorija().getTip()){
+				oglasDTO.add(new OglasDTO(o));
+			}
+		}
+		return new ResponseEntity<>(oglasDTO, HttpStatus.OK);
+	}
 
 	/**
 	 * Objava oglasa kako bi bila dostupa svim posjetiocima sajta
@@ -89,6 +128,7 @@ public class OglasController {
 	 * @param oglasDTO, podatak do kada vazi objava
 	 * @return nekretnina je objavljena i vidljiva svim korisnicima sata
 	 */
+
 	@RequestMapping(value = "/add/{idNekretnina}", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<String> getObjavaNekretnine(Principal principal, @PathVariable Long idNekretnina, @RequestBody OglasDTO oglasDTO) {
 		

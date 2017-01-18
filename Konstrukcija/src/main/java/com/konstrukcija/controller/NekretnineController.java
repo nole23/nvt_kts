@@ -2,7 +2,9 @@ package com.konstrukcija.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.LokacijaDTO;
@@ -315,5 +318,53 @@ public class NekretnineController {
 		nekretninaService.save(nekretnina);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	/**
+	 * Pretraga nekretnina po ceni i nazivu
+	 * @param params, vrednosti trazenih podataka
+	 * @param tehnickaOpremljenostDTO, podaci o koji se cuvaju u bazi
+	 * @return listu pronadjenih nekretnina za zadat kriterijum
+	 */
+	@RequestMapping(value="/search", method = RequestMethod.GET)
+	public ResponseEntity<List<NekretninaDTO>> PretragaNekretnine(@RequestParam Map<String, String> params, @RequestBody TehnickaOpremljenostDTO tehnickaOpremljenostDTO){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		putDouble(map, "cenaOd", params);
+		putDouble(map, "cenaDo", params);
+		
+		putString(map, "naziv", params);
+		
+		map.putAll(params);
+		
+		//List<TehnickaOpremljenost> te = tehnickaOpremljenostService.findAll();
+		List<TehnickaOpremljenostDTO> tech = new ArrayList<TehnickaOpremljenostDTO>();
+		
+		List<NekretninaDTO> retList = nekretninaService.findNekretnina(map, tech);
+		return new ResponseEntity<List<NekretninaDTO>>(retList, HttpStatus.OK);
+	}
+	
+	public static Double tryParseDouble(String text) {
+		try {
+			return Double.parseDouble(text);
+		} catch (NumberFormatException e) {
+			return null;
+		}
+	}
+	
+	public static void putDouble(Map<String, Object> map, String name, Map<String, String> params){
+		String s = params.remove(name);
+		if(s!=null){
+			Double d = tryParseDouble(s);
+			map.put(name, d);
+		}
+	}
+	
+	public static void putString(Map<String, Object> map, String name, Map<String, String> params){
+		String s = params.remove(name);
+		if(s!=null){
+			String st = s;
+			map.put(name, st);
+		}
 	}
 }
