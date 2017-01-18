@@ -49,7 +49,9 @@ input[type=submit]:hover {
 			<form ng-submit="login()">
 			
 				<input class="proba" type="text" placeholder="Korisniko ime" id="username" ng-model="korisnik.username"/>
+				<div ng-if="messageLogin == 'ime'" style="margin: 0 0 0 5%; color: #ff0000">pogresno ime</div>
 				<input class="proba" type="password" placeholder="Sifra" id="password" ng-model="korisnik.password"/>
+				<div ng-if="messageLogin == 'sifra'" style="margin: 0 0 0 5%; color: #ff0000">pogresna sifra</div>
 				
 				<div class="registration-container-button">
 					<input class="buttonView" type="submit" value="Ulogij se">
