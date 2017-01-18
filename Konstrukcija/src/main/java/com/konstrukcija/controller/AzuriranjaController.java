@@ -1,5 +1,7 @@
 package com.konstrukcija.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.LokacijaDTO;
+import com.konstrukcija.dto.KorisnikDTO;
 import com.konstrukcija.dto.TehnickaOpremljenostDTO;
+import com.konstrukcija.model.Korisnik;
 import com.konstrukcija.model.Lokacija;
 import com.konstrukcija.model.TehnickaOpremljenost;
+import com.konstrukcija.service.KorisnikService;
 import com.konstrukcija.service.LokacijaService;
 import com.konstrukcija.service.TehnickaOpremljenostService;
 
@@ -22,6 +27,9 @@ public class AzuriranjaController {
 
 	@Autowired
 	private LokacijaService lokacijaService;
+	
+	@Autowired
+	private KorisnikService korisnikService;
 	
 	@Autowired
 	private TehnickaOpremljenostService tehnickaOpremljenostService;
@@ -99,6 +107,23 @@ public class AzuriranjaController {
 		tehnickaOpremljenost = tehnickaOpremljenostService.save(tehnickaOpremljenost);
 
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/update}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<MessageDTO> updateKorisnik(Principal principal, @RequestBody KorisnikDTO korisnikDTO) {
+
+		MessageDTO mesageDTO = new MessageDTO();
+		
+		Korisnik korisnik = korisnikService.findByUsername(principal.getName());
+
+		korisnik.setFname(korisnikDTO.getFname());
+		korisnik.setLname(korisnikDTO.getLname());
+		korisnik.setUsername(korisnikDTO.getUsername());
+
+		korisnik = korisnikService.save(korisnik);
+		
+		mesageDTO.setSuccess("azuriraneInformacije");
+		return new ResponseEntity<MessageDTO>(mesageDTO, HttpStatus.OK);
 	}
 	
 }
