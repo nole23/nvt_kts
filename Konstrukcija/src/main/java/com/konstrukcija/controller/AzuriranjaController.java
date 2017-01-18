@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.LokacijaDTO;
 import com.konstrukcija.dto.KorisnikDTO;
+import com.konstrukcija.dto.MessageDTO;
 import com.konstrukcija.dto.TehnickaOpremljenostDTO;
 import com.konstrukcija.model.Korisnik;
 import com.konstrukcija.model.Lokacija;

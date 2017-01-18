@@ -70,5 +70,9 @@ input[type=submit]:hover {
 	<div class="login-message" ng-if="messageActive == 'active'">
 		<h3>Vas nalog je izbrisan trenutno ne mozete ga vratiti. Probajte za koji dan!</h3>
 	</div>
+	
+	<div class="login-message"  ng-controller="KorisnikCtrl" ng-if="messageRegistration == 'uspesno'">
+		<h3>Poslali smo vam verifikacioni kod na email. Molimo vas verifikujte nalog!</h3>
+	</div>
 
 </div>

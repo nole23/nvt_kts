@@ -35,6 +35,11 @@ input[type=submit]:hover {
 }
 </style>
 <div class="registration-ctrl">
+
+	<div class="login-message" ng-if="messageRegistration == 'error'">
+		<h3>Ne mozemo da vas registrujemo probajte kasnije</h3>
+	</div>
+	
 	<div class="registration-header">
 	
 		<h2>Da bi ste postavili oglas, treba da se prijavite ili registrujete na sistem. Hvala</h2>
@@ -48,10 +53,12 @@ input[type=submit]:hover {
 		<div class="registration-container-data">
 			<form ng-submit="registration()">
 				<input class="proba" type="text" placeholder="E-mail" id="email" ng-model="korisnik.email"/>
+				<div ng-if="messageRegistration == 'mailZauzet'" style="margin: 0 0 0 5%; color: #ff0000">ovaj email je zauzet</div>
 				<input class="proba1" type="text" placeholder="Ime" id="fname" ng-model="korisnik.fname"/>
 				<input class="proba1" type="text" placeholder="Prezime" id="lname" ng-model="korisnik.lname"/>
 				<input class="proba" type="text" placeholder="Telefon" id="phone_number" ng-model="korisnik.phone_number"/>
 				<input class="proba" type="text" placeholder="Korisniko ime" id="username" ng-model="korisnik.username"/>
+				<div ng-if="messageRegistration == 'usernamZauzet'" style="margin: 0 0 0 5%; color: #ff0000">ovo korisnicko ime zauzeto</div>
 				<input class="proba1" type="password" placeholder="Sifra" id="password" ng-model="korisnik.password"/>
 				<input class="proba1" type="password" placeholder="Ponovite sifra" />
 				

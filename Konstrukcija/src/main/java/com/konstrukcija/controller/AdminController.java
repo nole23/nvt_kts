@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.KategorijaDTO;
 import com.konstrukcija.dto.KorisnikDTO;
+import com.konstrukcija.dto.MessageDTO;
 import com.konstrukcija.model.Admin;
 import com.konstrukcija.model.Kategorija;
 import com.konstrukcija.model.Korisnik;
@@ -60,18 +61,26 @@ public class AdminController {
 	@Autowired
 	private OglasRepository oglasService;
 	
+	@Autowired
+	private KorisnikService korisnikService;
+	
+	@Autowired
+	private UserAuthorityRepository userAuthorityRepository;
+	
+	@Autowired
+	private AdminRepository adminRepository;
+	
 	@RequestMapping(value = "/add/admin/{idKorisnik}}", method = RequestMethod.GET)
-	public ResponseEntity<MessageDTO> addAdmin(Principal principal, @PathVariable Long idKorisnik, 
-		@RequestBody UserAuthorityRepository userAuthorityRepository, @RequestBody KorisnikService korisnikService, 
-		@RequestBody AdminRepository adminRepository) {
+	public ResponseEntity<MessageDTO> addAdmin(Principal principal, @PathVariable Long idKorisnik) {
 
 		MessageDTO mesageDTO = new MessageDTO();
 		
 		Korisnik admin = korisnikService.findByUsername(principal.getName());
-		if(admin.getUserAuthorities().getAdmin().getName().equals("admin"))
+		if(admin.getUserAuthorities().getAdmin().getName().equals("admin")){
 			mesageDTO.setError("niste admin");
 			return new ResponseEntity<MessageDTO>(mesageDTO, HttpStatus.BAD_REQUEST);
-			
+		}
+		
 		Korisnik korisnik = korisnikService.findOne(idKorisnik);
 		UserAuthority userAuthority = userAuthorityRepository.findByKorisnik(korisnik);
 		String id = "1";

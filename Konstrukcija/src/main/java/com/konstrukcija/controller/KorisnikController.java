@@ -25,13 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.konstrukcija.dto.AdresaDTO;
 import com.konstrukcija.dto.KorisnikDTO;
 import com.konstrukcija.dto.LoginDTO;
-import com.konstrukcija.dto.LokacijaDTO;
 import com.konstrukcija.dto.MessageDTO;
 import com.konstrukcija.model.Admin;
 import com.konstrukcija.model.Adresa;
 import com.konstrukcija.model.Korisnik;
-import com.konstrukcija.model.Lokacija;
-import com.konstrukcija.model.Nekretnina;
 import com.konstrukcija.model.UserAuthority;
 import com.konstrukcija.repository.AdminRepository;
 import com.konstrukcija.repository.AdresaRepository;
@@ -102,13 +99,25 @@ public class KorisnikController {
 	 * ili zaposlenog
 	 */
 	@RequestMapping(value="/registration/{uloga}", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<String>  saveKorisnika(@PathVariable String uloga, @RequestBody KorisnikDTO korisnikDTO) {
-
+	public ResponseEntity<MessageDTO>  saveKorisnika(@PathVariable String uloga, @RequestBody KorisnikDTO korisnikDTO) {
+		
+		MessageDTO messageDTO = new MessageDTO();
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		Korisnik korisnik = new Korisnik();
 		UserAuthority userAuthority = new UserAuthority();
 		
 		if(uloga.equals("korisnik")) {
+			
+			if( korisnikServer.findByUsername(korisnikDTO.getUsername()) != null) {
+				messageDTO.setError("usernamZauzet");
+				return new ResponseEntity<MessageDTO>(messageDTO, HttpStatus.OK);
+			}
+			if( korisnikServer.findByEmail(korisnikDTO.getEmail()) != null ) {
+				messageDTO.setError("mailZauzet");
+				return new ResponseEntity<MessageDTO>(messageDTO, HttpStatus.OK);
+			}
+			
+			
 			korisnik.setFname(korisnikDTO.getFname());
 			korisnik.setLname(korisnikDTO.getLname());
 			korisnik.setPassword(encoder.encode(korisnikDTO.getPassword()));
@@ -123,16 +132,16 @@ public class KorisnikController {
 			userAuthority.setAdmin(admin);
 			userAuthority.setKorisnik(korisnik);
 			
-			if( korisnikServer.findByUsername(korisnikDTO.getUsername()) != null || korisnikServer.findByEmail(korisnikDTO.getEmail()) != null) {
-				return new ResponseEntity<String>("Ovaj email ili korisnicko ime je vec zauzeto", HttpStatus.BAD_REQUEST);
-			}
+			
 			
 			korisnik = korisnikServer.save(korisnik);
 			userAuthoritRepository.save(userAuthority);
-			//mailSender.sendMail(korisnik.getEmail(), "Registration", "Click her to finish registration: <a href='http://localhost:8080/api/users/verify/"+korisnik.getVerifyCode()+"'>Click</a>");
-			return new ResponseEntity<String>("Uspesno ste se registrovali", HttpStatus.CREATED);
+			mailSender.sendMail(korisnik.getEmail(), "Registration", "Click her to finish registration: <a href='http://localhost:8080/api/users/verify/"+korisnik.getVerifyCode()+"'>Click</a>");
+			messageDTO.setSuccess("uspesno");
+			return new ResponseEntity<MessageDTO>(messageDTO, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>("Cant create that type of user, ony Customer and Advertiser allowed",HttpStatus.BAD_REQUEST);
+			messageDTO.setError("error");
+			return new ResponseEntity<MessageDTO>(messageDTO,HttpStatus.OK);
 		}
 		
 		
