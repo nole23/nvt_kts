@@ -22,7 +22,7 @@ public class Oglas {
 	private String datum_isteka;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	private Nekretnina nekretnina;
+	public Nekretnina nekretnina;
 	
 	@OneToMany(mappedBy = "oglas", fetch = FetchType.LAZY)
 	private Set<Ocena> ocena = new HashSet<Ocena>();

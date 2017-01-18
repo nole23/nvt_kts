@@ -29,7 +29,7 @@ public class Nekretnina {
 	private String opis;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	private Kategorija kategorija;
+	public Kategorija kategorija;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Lokacija lokacija;
