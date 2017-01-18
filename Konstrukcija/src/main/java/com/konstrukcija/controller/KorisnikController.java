@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.KorisnikDTO;
 import com.konstrukcija.dto.LoginDTO;
+import com.konstrukcija.dto.MessageDTO;
 import com.konstrukcija.model.Admin;
 import com.konstrukcija.model.Korisnik;
 import com.konstrukcija.model.UserAuthority;
@@ -134,23 +134,29 @@ public class KorisnikController {
 	 * @param loginDTO
 	 * @return kada se korisnik uloguje kreira se token koji govori koji je korisnik ulogova
 	 */
-	@RequestMapping(value="/login/{username}/{password}", method = RequestMethod.GET)
-	public ResponseEntity<String> loginKorisnik(@PathVariable String username, @PathVariable String password) {
+	@RequestMapping(value="/login/", method = RequestMethod.POST)
+	public ResponseEntity<MessageDTO> loginKorisnik(@RequestBody LoginDTO loginDTO) {
+		MessageDTO messageDTO = new MessageDTO();
+		Korisnik korisnik = korisnikServer.findByUsername(loginDTO.getUsername());
+		if(korisnik == null) {
+			messageDTO.setError("ime");
+			return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+		}
 		try{
-			Korisnik korisnik = korisnikServer.findByUsername(username);
-			if(korisnik.isActive() == false)
-				
-				return this.active(korisnik);
-			
-			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
 			Authentication authentication = authenticationMenager.authenticate(token);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			
-			UserDetails details = userDetailsService.loadUserByUsername(username);
+			UserDetails details = userDetailsService.loadUserByUsername(loginDTO.getUsername());
 			
-			return new ResponseEntity<String>(tokenUtils.generateToken(details),  new HttpHeaders(), HttpStatus.OK);
+			
+			
+			messageDTO.setCookies(tokenUtils.generateToken(details));
+			messageDTO.setRola(korisnik.getUserAuthorities().getAdmin().getName());
+			return new ResponseEntity<>(messageDTO, HttpStatus.OK);
 		} catch(Exception ex) {
-			return new ResponseEntity<String>("Niste se ulogovali",  new HttpHeaders(), HttpStatus.NOT_FOUND);
+			messageDTO.setError("sifra");
+			return new ResponseEntity<>(messageDTO, HttpStatus.OK);
 		}
 	}
 	
@@ -309,5 +315,13 @@ public class KorisnikController {
 		korisnik = korisnikServer.save(korisnik);
 		
 		return new ResponseEntity<>("Ponovo ste aktivirali nalog",HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/profile",method=RequestMethod.GET)
+	public ResponseEntity<KorisnikDTO> getUsers(Principal principal){
+
+		Korisnik korisnik = korisnikServer.findByUsername(principal.getName());
+		
+		return new ResponseEntity<>(new KorisnikDTO(korisnik), HttpStatus.OK);
 	}
 }

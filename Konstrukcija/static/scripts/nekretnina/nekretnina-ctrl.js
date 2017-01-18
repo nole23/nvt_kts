@@ -19,7 +19,7 @@ angular.module('nekretnineClientApp')
 		 }
 		
 		$scope.order_id = $routeParams.idNekretnina;
-		 
+		console.log('jbg '+$routeParams.idNekretnina);
 		NekretnineResource.getNekretnina($routeParams.idNekretnina).then(function(items) {
 			$scope.jedNekretnina = items;
 			console.log('test sa necim '+items.nekretninaDTO.objavioDTO[0].korisnikDTO.fname);

@@ -8,6 +8,7 @@ angular.module('nekretnineClientApp')
 		
 		var registrovani = [];
 		var korisnici = [];
+		var korisnik = [];
 		var nekretnine = [];
 		var retVal = {};
 		
@@ -27,7 +28,15 @@ angular.module('nekretnineClientApp')
 		
 		retVal.saveNewKorisnik = function(korisnik) {
 			return Restangular.all('users/registration/korisnik').post(angular.toJson(korisnik));
-		}
+		};
+		
+		//treba prvo implementirati tamo ovu funkciju
+		retVal.getKorisnik = function(token) {
+			return Restangular.one('users/profile').get().then(function(entries) {
+				korisnik = entries;
+				return korisnik;
+			})
+		};
 		
 		return retVal;
 		

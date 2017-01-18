@@ -9,16 +9,18 @@ public class KorisnikDTO {
 	private String password;
 	private String email;
 	private String username;
+	private AdresaDTO adresaDTO;
 	
 	public KorisnikDTO() {}
 	
-	public KorisnikDTO(String fname, String lname, String password, String email, String username) {
+	public KorisnikDTO(String fname, String lname, String password, String email, String username, AdresaDTO adresaDTO) {
 		super();
 		this.fname = fname;
 		this.lname = lname;
 		this.password = password;
 		this.email = email;
 		this.username = username;
+		this.adresaDTO = adresaDTO;
 	}
 	
 	public KorisnikDTO(Korisnik korisnik) {
@@ -27,6 +29,8 @@ public class KorisnikDTO {
 		this.password = korisnik.getPassword();
 		this.email = korisnik.getEmail();
 		this.username = korisnik.getUsername();
+		if(korisnik.getAdresa() != null)
+			this.adresaDTO = new AdresaDTO(korisnik.getAdresa());
 	}
 	
 	public String getUsername() {
@@ -69,14 +73,11 @@ public class KorisnikDTO {
 		this.email = email;
 	}
 
-
-
-	@Override
-	public String toString() {
-		return "KorisnikDTO [fname=" + fname + ", lname="
-				+ lname + ", pass=" + password 
-				+ ", email=" + email + ", adresa= ]";
+	public AdresaDTO getAdresaDTO() {
+		return adresaDTO;
 	}
-	
-	
+
+	public void setAdresaDTO(AdresaDTO adresaDTO) {
+		this.adresaDTO = adresaDTO;
+	}
 }

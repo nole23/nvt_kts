@@ -1,0 +1,68 @@
+<div class="account">
+	<div class="message-login" ng-if="$localStorage.messageLogin == 'ulogovan'">
+		<h3>Uspesno ste se ulogovali</h3>
+	</div>
+	
+	<div class="account-users">
+		<div class="account-left">
+		
+			<div class="account-image">
+				<img src="" />
+			</div>
+			
+			<div clss="account-jbg">
+				nole
+			</div>
+			
+		</div>
+		
+		<div class="account-right">
+			<div class="account-info">
+				<div class="account-user">
+					<h3>{{jedanKorisnik.fname}}</h3>
+				</div>
+				<div class="account-user">
+					<h3>{{jedanKorisnik.lname}}</h3>
+				</div>
+				<div class="account-user">
+					<h3>{{jedanKorisnik.phone}}</h3>
+				</div>
+				<div class="account-user">
+					<h3>{{jedanKorisnik.email}}</h3>
+				</div>
+				<div class="account-user" ng-if="jedanKorisnik.adresaDTO != null">
+					<h3>ADRESA</h3>
+					<div class="account-user-adress">
+						Drzava: <span class="stil">Srbija</span> <br/>
+						Grad  : <span class="stil">Novi Sad</span> <br/>
+						Ulica : <span class="stil">Svetislava Kasapinovica</span> <br/>
+						Broj  : <span class="stil">21</span> <br/>
+						Stan  : <span class="stil">29</span> <br/>
+					</div>
+				</div>
+				<div class="account-user" ng-if="jedanKorisnik.adresaDTO == null">
+					<h3>ADRESA</h3>
+					<div class="account-user-adress">
+						Niste dodali adresu dodajte je sad
+					</div>
+				</div>
+			</div>
+			
+			<div class="account-comand">
+				<div class="comand-updat-info">
+					<button class="updat-info-button" style="background: #e55a00">Promenite licne podatke</button>
+				</div>
+				<div class="comand-updat-info">
+					<button class="updat-info-button" style="background: #e55a00">Promena e-mail</button>
+				</div>
+				<div class="comand-updat-info">
+					<button class="updat-info-button" style="background: #e55a00">Promena sifre</button>
+				</div>
+				<div class="comand-updat-info">
+					<button class="updat-info-button" style="background: #e55a00">Promena adrese</button>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
