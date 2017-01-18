@@ -40,9 +40,4 @@ public class KorisnikService {
 	public Korisnik findByVerifyCode(String verifyCode) {
 		return korisnikRepository.findByVerifyCode(verifyCode);
 	}
-	
-	public Korisnik findByUsername(String username) {
-		return korisnikRepository.findByUsername(username);
-	}
-
 }

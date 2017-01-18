@@ -301,27 +301,7 @@ public class KorisnikController {
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
-	/**
-	 * @param principal
-	 * @param korisnikDTO
-	 * @return azuriranje osnovnih informacija o korisniku
-	 */
-	@RequestMapping(value="/updat/info",method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<String> updatInfo(Principal principal, @RequestBody KorisnikDTO korisnikDTO){
 
-		Korisnik korisnik = korisnikServer.findByUsername(principal.getName());
-		if(korisnik == null)
-			return new ResponseEntity<>("Niste ulogovani",HttpStatus.NON_AUTHORITATIVE_INFORMATION);
-		
-		korisnik.setFname(korisnikDTO.getFname());
-		korisnik.setLname(korisnikDTO.getLname());
-		korisnik.setUsername(korisnikDTO.getUsername());
-		
-		korisnik = korisnikServer.save(korisnik);
-		
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
 	
 	@RequestMapping(value="/active",method=RequestMethod.GET)
 	public ResponseEntity<String> active(Principal principal){
