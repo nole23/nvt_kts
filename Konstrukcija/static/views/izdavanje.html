@@ -1,0 +1,98 @@
+<div class="sale">
+
+
+
+	<div class=estate-left>
+		<div class="estate-left-conainer">
+			<div class="estate-left-container-header">
+				<button class="btn">Suzavanje pretrage</button>
+			</div>
+			<button class="btn">Lokacija</button>
+			<button class="btn">Cena</button>
+		</div>
+	</div>
+	
+
+	<div class="estate-right">
+		<div class="estate-right-header">
+			<h1>Prodaja nekretnina</h1>
+			<div class="estate-right-counter" ng-controller='KategorijeCtrl'>
+				<h3>{{nekretnine.length}} objavljenih oglasa</h3> 
+			</div>
+		</div>
+		
+		<div class="estate-right-left-container1" ng-controller='KategorijeCtrl'>
+			<h3>Kategorije</h3>
+			
+			<div class="sale-container1">
+				<div ng-repeat="kategorija in kategorije">
+					<div ng-if="kategorija.tip == 'izdavanje'">
+						<a class="btnMain11" href="#/">{{kategorija.name}}</a>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+		
+		<div class="sale-right-container">
+			<div class="sale-right-container-filter">
+				nesto da pise
+			</div>
+			
+			<div>
+				<div ng-repeat="prodaje in prodaja">
+					<div class="sale-right-container-estate" ng-if="prodaje.nekretninaDTO.kategorijaDTO.tip == 'izdavanje'" >
+						<div class="image-data">
+							<div class="sale-estate-image">
+								<a href ng-click='nekretninaJedna(prodaje.nekretninaDTO.id)'><img src=""/></a>
+							</div>
+							<div class="data-publicit">
+								{{prodaje.datum_objave}}
+							</div>
+						</div>
+						
+						<div class="sale-estate-info">
+							<div class="estate-info-name">
+								<a class="btnMain"  ng-click='nekretninaJedna(prodaje.nekretninaDTO.id)' href>{{prodaje.nekretninaDTO.lokacijaDTO.grad}}, {{prodaje.nekretninaDTO.lokacijaDTO.oblas}}</a>					
+							</div>
+							<div class="estate-info">
+								<div class="estate-info-left">
+									<p>Kvadratura: {{prodaje.nekretninaDTO.povrsina}}</p>
+									<!-- U koliko je stan ovo se prikazuje -->
+									<div ng-if="prodaje.nekretninaDTO.kategorijaDTO.tip == 'stan'">
+										<p>Sprat: {{prodaje.nekretninaDTO.sprat}}</p>
+									</div>
+									<!-- U koliko je kuca ovo se prikazuje -->
+									<div ng-if="prodaje.nekretninaDTO.kategorijaDTO.name == 'kuca'">
+										<p>Spratova: {{prodaje.nekretninaDTO.spratova}}</p>
+									</div>
+								</div>
+								<div class="estate-info-left">
+									<p>Sobnost: {{prodaje.nekretninaDTO.sobnost}}</p>
+								</div>					
+							</div>
+							<div class="estate-info-down">
+								<p> {{prodaje.nekretninaDTO.opis}} </p>
+							</div>
+						</div>
+		
+						<div class="sale-estate-price">
+							<div class="estate-price">
+								<h2>{{prodaje.nekretninaDTO.cena}} DIN</h2>
+								<div ng-if="prodaje.nekretninaDTO.objavioDTO.korisnikDTO.fname.equals('')"><h3>Agencija</h3></div>
+								<div ng-if="prodaje.nekretninaDTO.objavioDTO.kompanijaDTO.nazivKomapnije.equals('')"><h3>Korisnik</h3></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+		
+		
+	
+	</div>
+	
+</div>

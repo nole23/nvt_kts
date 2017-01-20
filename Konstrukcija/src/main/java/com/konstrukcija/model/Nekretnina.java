@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -42,6 +43,9 @@ public class Nekretnina {
 	
 	@OneToMany(mappedBy = "nekretnina", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Set<Oglas> oglas = new HashSet<Oglas>();
+	
+	@OneToMany(mappedBy = "nekretnina", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	private Set<Image> image = new HashSet<Image>();
 
 	public Long getId() {
 		return id;
@@ -169,5 +173,13 @@ public class Nekretnina {
 
 	public void setOglas(Set<Oglas> oglas) {
 		this.oglas = oglas;
+	}
+
+	public Set<Image> getImage() {
+		return image;
+	}
+
+	public void setImage(Set<Image> image) {
+		this.image = image;
 	}
 }

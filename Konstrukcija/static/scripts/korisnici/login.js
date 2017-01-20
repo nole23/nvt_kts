@@ -35,10 +35,9 @@ angular.module('nekretnineClientApp') // ... omitted code
 				
 			} else if(success.error == null) {
 				$log.info('success!');
-				var id = success.cookies;
-				var lokacija = "#/account/"+id;
-				$scope.messageLogin = success.error;
-				window.location = lokacija;
+				console.log(success.rola);
+				$scope.messageLogin = success.rola;
+				window.location = '#/account';
 				$scope.messageLogin = 'hahahah';
 			}
 		}

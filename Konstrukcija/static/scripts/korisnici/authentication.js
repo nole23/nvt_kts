@@ -24,13 +24,13 @@
             $http.post('http://localhost:8080/api/users/login/', korisnik)
                 .success(function (response) {
                     // ukoliko postoji token, prijava je uspecna
-                	console.log(response);
+                	
                     if (response.cookies) {
                         // korisnicko ime, token i rola (ako postoji) cuvaju se u lokalnom skladištu
-                        var currentUser = { username: username, token: response.cookies }
+                        var currentUser = { username: username, token: response.cookies, rola: response.rola }
                         //var tokenPayload = jwtHelper.decodeToken(response.token);
                         //if(tokenPayload.role){
-                        currentUser.role = response.rola;
+                        
                         //}
                         // prijavljenog korisnika cuva u lokalnom skladistu
                         $localStorage.currentUser = currentUser;

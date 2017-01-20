@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -52,6 +53,9 @@ public class Korisnik {
 	
 	@OneToMany(mappedBy = "korisnik", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Set<Komentar> komentar = new HashSet<Komentar>();
+	
+	@ManyToMany(mappedBy = "korisnik", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	private Set<Image> image = new HashSet<Image>();
 
 	public Set<Objavio> getObjavio() {
 		return objavio;
@@ -171,5 +175,13 @@ public class Korisnik {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public Set<Image> getImage() {
+		return image;
+	}
+
+	public void setImage(Set<Image> image) {
+		this.image = image;
 	}
 }

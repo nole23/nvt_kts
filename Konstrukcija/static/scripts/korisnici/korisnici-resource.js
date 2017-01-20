@@ -47,7 +47,7 @@ angular.module('nekretnineClientApp')
 					lname: korisnik.lname,
 					username: korisnik.username
 			}
-			return Restangular.all('users/updat/info').post(korisnik1);
+			return Restangular.all('lokacija/update/users').post(korisnik1);
 			
 		};
 		

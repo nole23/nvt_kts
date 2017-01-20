@@ -1,6 +1,11 @@
 package com.konstrukcija.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.konstrukcija.model.Korisnik;
+import com.konstrukcija.model.Objavio;
+import com.konstrukcija.model.Zaposleni;
 
 public class KorisnikDTO {
 
@@ -10,10 +15,11 @@ public class KorisnikDTO {
 	private String email;
 	private String username;
 	private AdresaDTO adresaDTO;
+	private Set<ZaposleniDTO> zaposleniDTO;
 	
 	public KorisnikDTO() {}
 	
-	public KorisnikDTO(String fname, String lname, String password, String email, String username, AdresaDTO adresaDTO) {
+	public KorisnikDTO(String fname, String lname, String password, String email, String username, AdresaDTO adresaDTO, Set<ZaposleniDTO> zaposleniDTO) {
 		super();
 		this.fname = fname;
 		this.lname = lname;
@@ -21,6 +27,7 @@ public class KorisnikDTO {
 		this.email = email;
 		this.username = username;
 		this.adresaDTO = adresaDTO;
+		this.zaposleniDTO = zaposleniDTO;
 	}
 	
 	public KorisnikDTO(Korisnik korisnik) {
@@ -31,6 +38,11 @@ public class KorisnikDTO {
 		this.username = korisnik.getUsername();
 		if(korisnik.getAdresa() != null)
 			this.adresaDTO = new AdresaDTO(korisnik.getAdresa());
+		this.zaposleniDTO = new HashSet<ZaposleniDTO>();
+		for(Zaposleni z: korisnik.getZaposleni()) {
+			this.zaposleniDTO.add(new ZaposleniDTO(z));
+		}
+		
 	}
 	
 	public String getUsername() {
@@ -79,5 +91,13 @@ public class KorisnikDTO {
 
 	public void setAdresaDTO(AdresaDTO adresaDTO) {
 		this.adresaDTO = adresaDTO;
+	}
+
+	public Set<ZaposleniDTO> getZaposleniDTO() {
+		return zaposleniDTO;
+	}
+
+	public void setZaposleniDTO(Set<ZaposleniDTO> zaposleniDTO) {
+		this.zaposleniDTO = zaposleniDTO;
 	}
 }

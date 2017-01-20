@@ -1,5 +1,8 @@
 package com.konstrukcija.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +13,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.konstrukcija.dto.ImageDTO;
 import com.konstrukcija.dto.LokacijaDTO;
 import com.konstrukcija.dto.KorisnikDTO;
 import com.konstrukcija.dto.MessageDTO;
 import com.konstrukcija.dto.TehnickaOpremljenostDTO;
+import com.konstrukcija.model.Image;
 import com.konstrukcija.model.Korisnik;
 import com.konstrukcija.model.Lokacija;
+import com.konstrukcija.model.Nekretnina;
 import com.konstrukcija.model.TehnickaOpremljenost;
+import com.konstrukcija.repository.ImageRepository;
 import com.konstrukcija.service.KorisnikService;
 import com.konstrukcija.service.LokacijaService;
+import com.konstrukcija.service.NekretnineService;
 import com.konstrukcija.service.TehnickaOpremljenostService;
 
 @RestController
@@ -34,6 +43,12 @@ public class AzuriranjaController {
 	
 	@Autowired
 	private TehnickaOpremljenostService tehnickaOpremljenostService;
+	
+	@Autowired
+	private NekretnineService nekretninaSerive;
+	
+	@Autowired
+	private ImageRepository imageRepository;
 	
 	/**
 	 * Azuriranje podataka lokacije u slucaju da se promeni ulica il broj zgrade
@@ -110,7 +125,7 @@ public class AzuriranjaController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/update}", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "/update/users", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<MessageDTO> updateKorisnik(Principal principal, @RequestBody KorisnikDTO korisnikDTO) {
 
 		MessageDTO mesageDTO = new MessageDTO();
@@ -127,4 +142,42 @@ public class AzuriranjaController {
 		return new ResponseEntity<MessageDTO>(mesageDTO, HttpStatus.OK);
 	}
 	
+	
+	/*
+	@RequestMapping(value = "add/image/{idNekretnine}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<MessageDTO> uploadPictureImage(Principal principal, @RequestBody MultipartFile file, @PathVariable Long idNekretnine) {
+
+		MessageDTO mesageDTO = new MessageDTO();
+		
+		Korisnik korisnik = korisnikService.findByUsername(principal.getName());
+		if(korisnik == null) {
+			mesageDTO.setError("nisteUlogovani");
+			return new ResponseEntity<MessageDTO>(mesageDTO, HttpStatus.OK);
+		}
+		Nekretnina nekretnina = nekretninaSerive.findOne(idNekretnine);
+		Image image = new Image();
+		image.setKorisnik(korisnik);
+		image.setNekretnina(nekretnina);
+		image.setPicture(imageDTO.getPicture());
+		
+		 if (!file.isEmpty()) {
+	            try {
+	                byte[] bytes = file.getBytes();
+	                BufferedOutputStream stream = 
+	                        new BufferedOutputStream(new FileOutputStream(new File(name + "-uploaded")));
+	                stream.write(bytes);
+	                stream.close();
+	               
+	            } catch (Exception e) {
+	                return "You failed to upload " + name + " => " + e.getMessage();
+	            }
+	        } else {
+	            return "You failed to upload " + name + " because the file was empty.";
+	        }
+		
+		imageRepository.save(image);
+		
+		mesageDTO.setSuccess("slikaDodat");
+		return new ResponseEntity<MessageDTO>(mesageDTO, HttpStatus.OK);
+	}*/
 }

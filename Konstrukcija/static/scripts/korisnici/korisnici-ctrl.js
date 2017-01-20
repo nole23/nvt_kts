@@ -15,6 +15,11 @@ angular.module('nekretnineClientApp')
 			$scope.registrovani = items;
 		});
 		
+		$scope.update = function() {
+			KorisniciResource.updatUsers($scope.resource);
+		}
+		
+		
 		KorisniciResource.getNekretnine().then(function(items) {
 			$scope.nekretnine = items;
 		})

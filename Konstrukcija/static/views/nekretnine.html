@@ -90,10 +90,13 @@
 			<div class="naslov">
 				<p>Informacije oglasivaca</p>
 			</div>
-			<div class="telo">
+			<div class="telo" ng-if="isLoggedIn()">
 				<p>Objavio: {{jedNekretnina.nekretninaDTO.objavioDTO[0].korisnikDTO.fname}}</p>
 				<p>Email: {{jedNekretnina.nekretninaDTO.objavioDTO[0].korisnikDTO.email}}</p><br/>
 				<p><a href><img title="Postavite pitanje" src="./imege/query.png"/></a> </p>
+			</div>
+			<div class="telo" ng-if="!isLoggedIn()">
+				<p>Da bi ste videli informacije oglasivaca molimo vas da se <a href="#/login">Ulogujete</a></p>
 			</div>
 		</div>
 		

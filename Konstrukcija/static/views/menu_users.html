@@ -1,0 +1,116 @@
+
+<div class="account">
+	<div id="wrap">
+	
+	
+		<ul class="navbar">
+			<li><a href="" onclick="myFunction(1)" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='korisnik'">Moj nalog</a></li>
+			<li><a href="" onclick="myFunction(2)" ng-if="korisnik.zaposleniDTO[0] != null">Kompanija</a></li>
+			
+			<li><a href="" onclick="myFunction(3)" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='korisnik'">Moj oglas (0)</a></li>
+			<li><a href="" onclick="myFunction(4)" ng-if="korisnik.zaposleniDTO[0] != null">Objave (0)</a></li>
+			
+			<li><a href="" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='korisnik'">Moji podaci</a>
+				<ul>
+					<li><a href="" ng-click="azuriranjeLicnih(korisnik)" >Promena podataka</a></li>
+					<li><a href="" ng-click="azuriranjeAdrese(korisnik.adresaDTO)" ng-if="korisnik.adresaDTO != null">Promena adrese</a></li>
+					<li><a href="" ng-click="dodatiAdrese()" ng-if="korisnik.adresaDTO == null">Dodati adresu</a></li>
+					<li><a href="" ng-click="azuriranjeEmaila(korisnik)">Promena lozinke</a></li>
+					<li><a href="" onclick="myFunction(9)">Promena emaila</a></li>
+				</ul>         
+			</li>
+			<li><a href="" ng-if="korisnik.zaposleniDTO[0] != null">Podaci kompanije</a>
+				<ul>
+					<li><a href="" onclick="myFunction(10)">Promena podataka</a></li>
+					<li><a href="" onclick="myFunction(11)">Promena adrese</a></li>
+					<li><a href="" onclick="myFunction(12)">Dodati adresu</a></li>
+					<li><a href="" onclick="myFunction(13)">Promena lozinke</a></li>
+					<li><a href="" onclick="myFunction(14)">Promena emaila</a></li>
+				</ul>         
+			</li>
+			
+			<li><a href="">Uloge</a>
+				<ul>
+					<li><a href="" onclick="myFunction(15)" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='korisnik'">Kreiranje kompanije</a></li>
+					<li><a href="" onclick="myFunction(16)" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='korisnik'">Kontaktiranje administratora</a></li>
+					
+					<li><a href="" onclick="myFunction(17)" ng-if="korisnik.zaposleniDTO[0] != null">Dodavanje novog zaposlenog</a></li>
+				</ul>         
+			</li>
+			<li><a href="">Odjavi se</a></li>
+		</ul>
+		
+	
+	</div>
+	
+	
+	<div id="myDropdown1">
+		<div class="account-container">
+			<p>Moj nalog</p>
+		</div>
+		
+		<div class="account-body" style="margin: 0">
+			<div class="body-header">
+				<p>Moji oglasi</p>
+			</div>
+			
+			
+			<div class="container1-body">
+				<p>Postovani korisnice jos uvek nemate postavljen oglas zasto ne bi ste postavili oglas danas</p>
+				
+				<a class="btnAddOglas" href="#/add/estate">Dodaj oglas</a>
+					
+			</div>
+			
+		</div>
+	</div>
+	
+	<div id="myDropdown2" style="display: none">
+		<div class="account-container">
+			<p>Radi li </p>
+		</div>
+		
+		
+	</div>
+	
+	
+	
+	<div id="myDropdown3" style="display: none">
+		<div class="account-container">
+			<p>Radi li </p>
+		</div>
+		
+		
+	</div>
+	
+</div>
+
+<script>
+function myFunction(id) {
+	var div = 'myDropdown'+id;
+	document.getElementById(div).style.display ="";
+	for(i=1; i<16; i++) {
+		if(i != id){
+			var div1 = 'myDropdown'+i
+			document.getElementById(div1).style.display ="none";
+		}
+		
+	}
+	
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>

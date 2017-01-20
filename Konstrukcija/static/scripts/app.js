@@ -55,8 +55,8 @@ angular
                 controller: 'LoginCtrl',
                 controllerAs: 'registrovan'
             })
-            .when('/account/:idKorisnik', {
-            	templateUrl: 'views/account.html',
+            .when('/account', {
+            	templateUrl: 'views/menu_users.html',
             	controller: 'AcauntCtrl',
             	controllerAs: 'korisnik',
             	resolve: {
@@ -67,8 +67,19 @@ angular
                         };
                     }
                 }
-            	
-            	//controller: 'AccauntCtrl'
+            })
+            .when('/add/estate', {
+            	templateUrl: 'views/add_estate.html',
+            	resolve: {
+                    app: function($q, $localStorage, $location) {
+                        
+                        if ($localStorage.currentUser == null) {
+                        	alert('prvo se ulogujte');
+                        	$localStorage.message = 'ulogij'
+                            $location.path('/login');
+                        };
+                    }
+                }
             })
             .otherwise({
                 redirectTo: '/'
@@ -96,7 +107,7 @@ angular
               return undefined;
             }
             else{
-              return LoginResources.getCurrentUser().role;
+              return LoginResources.getCurrentUser().rola;
             }
         }
         $rootScope.isLoggedIn = function () {
