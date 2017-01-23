@@ -60,8 +60,12 @@ public NekretninaDTO() {}
 		this.stanje = nekretnina.getStanje();
 		this.sprat = nekretnina.getSprat();
 		this.opis = nekretnina.getOpis();
-		this.lokacijaDTO = new LokacijaDTO(nekretnina.getLokacija());
-		this.tehnickaOpremljenostDTO = new TehnickaOpremljenostDTO(nekretnina.getTehnickaOpremljenost());
+		if(nekretnina.getLokacija() != null) {
+			this.lokacijaDTO = new LokacijaDTO(nekretnina.getLokacija());
+		}
+		if(nekretnina.getTehnickaOpremljenost() != null) {
+			this.tehnickaOpremljenostDTO = new TehnickaOpremljenostDTO(nekretnina.getTehnickaOpremljenost());
+		}
 		this.kategorijaDTO = new KategorijaDTO(nekretnina.getKategorija());
 		this.objavioDTO = new HashSet<ObjavioDTO>();
 		for(Objavio o: nekretnina.getObjavio()) {

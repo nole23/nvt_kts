@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.LokacijaDTO;
+import com.konstrukcija.dto.MessageDTO;
 import com.konstrukcija.dto.NekretninaDTO;
 import com.konstrukcija.dto.TehnickaOpremljenostDTO;
 import com.konstrukcija.model.Kategorija;
@@ -119,15 +120,18 @@ public class NekretnineController {
 	 * @return saveNekretnina 
 	 */
 	@RequestMapping(value = "/add/{idKategorija}/{idKorisnik}/{idKompanija}", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<String> saveNekretnine(@PathVariable Long idKategorija, @PathVariable String idKompanija, @PathVariable String idKorisnik, @RequestBody NekretninaDTO nekretninaDTO) {
+	public ResponseEntity<MessageDTO> saveNekretnine(@PathVariable Long idKategorija, @PathVariable String idKompanija, @PathVariable String idKorisnik, @RequestBody NekretninaDTO nekretninaDTO, Principal principal) {
+		MessageDTO messageDTO = new MessageDTO();
+		
+		Korisnik korisnik = korisnikRepository.findByUsername(principal.getName());
+		if(korisnik == null) {
+			messageDTO.setError("ulogovano");
+			return new ResponseEntity<>(messageDTO,HttpStatus.BAD_REQUEST);
+		}
 		Kategorija kat = kategorijaRepository.findOne(idKategorija);
 		String nazivKat = kat.getTip();
 		
 		if(idKompanija.equals("null")){
-			
-			Long id = Long.parseLong(idKorisnik);
-			
-			
 			
 			if(nazivKat.equals("prodaja")) {
 				
@@ -138,25 +142,27 @@ public class NekretnineController {
 				nekretnina = new Nekretnina();
 				
 				nekretnina.setNaziv_nekretnine(nekretninaDTO.getNaziv_nekretnine());
-				nekretnina.setCena(nekretninaDTO.getCena());
-				nekretnina.setPovrsina(nekretninaDTO.getPovrsina());
-				nekretnina.setSobnost(nekretninaDTO.getSobnost());
-				nekretnina.setStanje_objekta(nekretninaDTO.getStanje_objekta());
-				nekretnina.setGrejanje(nekretninaDTO.getGrejanje());
-				nekretnina.setSpratova(nekretninaDTO.getSpratova());
+				nekretnina.setCena(nekretninaDTO.getCena());//
+				nekretnina.setPovrsina(nekretninaDTO.getPovrsina());//
+				nekretnina.setSobnost(nekretninaDTO.getSobnost());//
+				nekretnina.setStanje_objekta(nekretninaDTO.getStanje_objekta());//
+				nekretnina.setGrejanje(nekretninaDTO.getGrejanje());//
+				nekretnina.setSpratova(nekretninaDTO.getSpratova());//
 				nekretnina.setStanje(nekretninaDTO.getStanje());
-				nekretnina.setSprat(nekretninaDTO.getSprat());
-				nekretnina.setOpis(nekretninaDTO.getOpis());
-				nekretnina.setKategorija(kategorijaRepository.findOne(idKategorija));
+				nekretnina.setSprat(nekretninaDTO.getSprat());//
+				nekretnina.setOpis(nekretninaDTO.getOpis());//
+				nekretnina.setKategorija(kategorijaRepository.findOne(idKategorija));//
 				
-				objavio.setKorisnik(korisnikRepository.findOne(id));
+				objavio.setKorisnik(korisnik);
 				objavio.setKompanija(null);
 				objavio.setNekretnina(nekretnina);
 				
 				nekretnina = nekretninaService.save(nekretnina);
 				objavioRepository.save(objavio);
 				
-				return new ResponseEntity<>("korisnik "+id,HttpStatus.OK);
+				messageDTO.setSuccess("dodao&korisnk&prodja");
+				messageDTO.setId(nekretnina.getId());
+				return new ResponseEntity<>(messageDTO,HttpStatus.OK);
 			
 			} else {
 				Nekretnina nekretnina;
@@ -177,14 +183,16 @@ public class NekretnineController {
 				nekretnina.setOpis(nekretninaDTO.getOpis());
 				nekretnina.setKategorija(kategorijaRepository.findOne(idKategorija));
 				
-				objavio.setKorisnik(korisnikRepository.findOne(id));
+				objavio.setKorisnik(korisnik);
 				objavio.setKompanija(null);
 				objavio.setNekretnina(nekretnina);
 				
 				nekretnina = nekretninaService.save(nekretnina);
 				objavioRepository.save(objavio);
 				
-				return new ResponseEntity<>("korisnik "+id,HttpStatus.OK);
+				messageDTO.setSuccess("dodao&korisnk&izdavanje");
+				messageDTO.setId(nekretnina.getId());
+				return new ResponseEntity<>(messageDTO,HttpStatus.OK);
 			}
 		} else if(idKorisnik.equals("null")) {
 			
@@ -217,7 +225,9 @@ public class NekretnineController {
 				nekretnina = nekretninaService.save(nekretnina);
 				objavioRepository.save(objavio);
 				
-				return new ResponseEntity<>("korisnik "+id,HttpStatus.OK);
+				messageDTO.setSuccess("dodao&kompanija&prodja");
+				messageDTO.setId(nekretnina.getId());
+				return new ResponseEntity<>(messageDTO,HttpStatus.OK);
 			
 			} else {
 				Nekretnina nekretnina;
@@ -245,11 +255,14 @@ public class NekretnineController {
 				nekretnina = nekretninaService.save(nekretnina);
 				objavioRepository.save(objavio);
 				
-				return new ResponseEntity<>("korisnik "+id,HttpStatus.OK);
+				messageDTO.setSuccess("dodao&korisnk&izdavanje");
+				messageDTO.setId(nekretnina.getId());
+				return new ResponseEntity<>(messageDTO,HttpStatus.OK);
 			}
 			
 		} else  {
-			return new ResponseEntity<String>("Lose",HttpStatus.BAD_REQUEST);
+			messageDTO.setError("neuspelo");
+			return new ResponseEntity<>(messageDTO,HttpStatus.OK);
 		}
 	}
 	
@@ -260,8 +273,13 @@ public class NekretnineController {
 	 * @return sacuvana u bazi nova lokacija i azurirana nekretnina
 	 */
 	@RequestMapping(value = "/lokacija/{idNekretnina}", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<String> getLokacijaNekretnine(@PathVariable Long idNekretnina, @RequestBody LokacijaDTO lokacijaDTO) {
+	public ResponseEntity<MessageDTO> getLokacijaNekretnine(@PathVariable Long idNekretnina, @RequestBody LokacijaDTO lokacijaDTO, Principal principal) {
+		MessageDTO mesaDTO = new MessageDTO();
 		
+		Korisnik korisnik = korisnikRepository.findByUsername(principal.getName());
+		if(korisnik == null ){
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		Nekretnina nekretnina = nekretninaService.findOne(idNekretnina);
 		Lokacija lokacija = new Lokacija();
 		
@@ -278,7 +296,8 @@ public class NekretnineController {
 		lokacija = lokacijaService.save(lokacija);
 		nekretninaService.save(nekretnina);
 		
-		return new ResponseEntity<>(HttpStatus.OK);
+		mesaDTO.setSuccess("sacuvano");
+		return new ResponseEntity<>(mesaDTO, HttpStatus.OK);
 	}
 	
 	/**
@@ -288,7 +307,14 @@ public class NekretnineController {
 	 * @return na osnovu idNekretnine odredjenoj nekrtnini dodajemo tehnicku opreljenost
 	 */
 	@RequestMapping(value = "/tehnicka/opremljenost/{idNekretnina}", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<String> getTehnickaNekretnine(@PathVariable Long idNekretnina, @RequestBody TehnickaOpremljenostDTO tehnickaOpremljenostDTO) {
+	public ResponseEntity<MessageDTO> getTehnickaNekretnine(@PathVariable Long idNekretnina, @RequestBody TehnickaOpremljenostDTO tehnickaOpremljenostDTO, Principal principal) {
+		
+		MessageDTO messageDTO = new MessageDTO();
+		Korisnik korisnik = korisnikRepository.findByUsername(principal.getName());
+		if(korisnik == null) {
+			messageDTO.setError("ulogujtese");
+			return new ResponseEntity<>(messageDTO, HttpStatus.BAD_REQUEST);
+		}
 		
 		Nekretnina nekretnina = nekretninaService.findOne(idNekretnina);
 		TehnickaOpremljenost tehnickaOpremljenost = new TehnickaOpremljenost();
@@ -317,7 +343,8 @@ public class NekretnineController {
 		tehnickaOpremljenost = tehnickaOpremljenostService.save(tehnickaOpremljenost);
 		nekretninaService.save(nekretnina);
 		
-		return new ResponseEntity<>(HttpStatus.OK);
+		messageDTO.setSuccess("sacuvano");
+		return new ResponseEntity<>(messageDTO, HttpStatus.OK);
 	}
 	
 	/**
