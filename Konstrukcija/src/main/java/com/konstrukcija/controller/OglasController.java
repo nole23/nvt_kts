@@ -81,7 +81,10 @@ public class OglasController {
 		
 		List<OglasDTO> oglasDTO = new ArrayList<>();
 		for (Oglas o : oglas) {
-			oglasDTO.add(new OglasDTO(o));
+			if(o.getNekretnina().getLokacija()!=null || o.getNekretnina().getTehnickaOpremljenost() != null)
+				if(o.getNekretnina().getLokacija() != null)
+					if(o.getNekretnina().getTehnickaOpremljenost() != null)
+						oglasDTO.add(new OglasDTO(o));
 		}
 		return new ResponseEntity<>(oglasDTO, HttpStatus.OK);
 	}

@@ -17,4 +17,6 @@ angular.module('nekretnineClientApp')
 			$scope.nekretnine = items;
 		})
 		
+		
+		
 	}])

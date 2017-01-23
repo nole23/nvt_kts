@@ -7,18 +7,16 @@ public class ObjavioDTO {
 	private Long id;
 	private KorisnikDTO korisnikDTO;
 	private KompanijaDTO kompanijaDTO;
-	private NekretninaDTO nekretninaDTO;
 	
 	public ObjavioDTO() {}
 	
-	public ObjavioDTO(Long id, KorisnikDTO korisnikDTO, KompanijaDTO kompanijaDTO, NekretninaDTO nekretninaDTO) {
+	public ObjavioDTO(Long id, KorisnikDTO korisnikDTO, KompanijaDTO kompanijaDTO) {
 		super();
 		this.id = id;
 		if(kompanijaDTO == null)
 			this.korisnikDTO = korisnikDTO;
 		if(korisnikDTO == null)
 			this.kompanijaDTO = kompanijaDTO;
-		this.nekretninaDTO = nekretninaDTO;
 	}
 	
 	public ObjavioDTO(Objavio objavio) {
@@ -27,7 +25,6 @@ public class ObjavioDTO {
 			this.korisnikDTO = new KorisnikDTO(objavio.getKorisnik());
 		if(korisnikDTO == null)
 			this.kompanijaDTO = new KompanijaDTO(objavio.getKompanija());
-		this.nekretninaDTO = new NekretninaDTO(objavio.getNekretnina());
 	}
 
 	public Long getId() {
@@ -54,11 +51,4 @@ public class ObjavioDTO {
 		this.kompanijaDTO = kompanijaDTO;
 	}
 
-	public NekretninaDTO getNekretninaDTO() {
-		return nekretninaDTO;
-	}
-
-	public void setNekretninaDTO(NekretninaDTO nekretninaDTO) {
-		this.nekretninaDTO = nekretninaDTO;
-	}
 }
