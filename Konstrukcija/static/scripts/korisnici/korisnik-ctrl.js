@@ -5,13 +5,18 @@ angular.module('nekretnineClientApp')
 	   '$log', '_', 'KorisniciResource', 
 	   function($scope, $uibModal, $routeParams, $log, _, KorisniciResource) {
 		
-
+		var korisnikId = [];
 		
 		$scope.order_id = $routeParams.idKorisnik;
 		console.log('jbg '+$routeParams.idKorisnik);
 		KorisniciResource.getKorisnik($routeParams.idKorisnik).then(function(items) {
 			$scope.korisnik = items;
+			korisnikId = items;
 			console.log(items);
+		})
+		
+		KorisniciResource.getObjava($scope.korisnik).then(function(items) {
+			$scope.objava = items;
 		})
 		
 		$scope.azuriranjeAdrese = function(resource) {

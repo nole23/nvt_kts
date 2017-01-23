@@ -8,7 +8,7 @@
 			<li><a href="" onclick="myFunction(2)" ng-if="korisnik.zaposleniDTO[0] != null">Kompanija</a></li>
 			
 			<li><a href="" onclick="myFunction(3)" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='korisnik'">Moj oglas (0)</a></li>
-			<li><a href="" onclick="myFunction(4)" ng-if="korisnik.zaposleniDTO[0] != null">Objave (0)</a></li>
+			<li><a href="" onclick="myFunction(4)" ng-if="korisnik.zaposleniDTO[0] != null">Objave ($scope.objava.length)</a></li>
 			
 			<li><a href="" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='korisnik'">Moji podaci</a>
 				<ul>
@@ -42,7 +42,7 @@
 		
 	
 	</div>
-	
+
 	
 	<div id="myDropdown1">
 		<div class="account-container">
@@ -64,6 +64,7 @@
 			
 		</div>
 	</div>
+	
 	
 	<div id="myDropdown2" style="display: none">
 		<div class="account-container">

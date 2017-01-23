@@ -7,6 +7,7 @@ angular.module('nekretnineClientApp')
 		'use strict';
 		
 		var registrovani = [];
+		var oglasi = [];
 		var korisnici = [];
 		var korisnik = [];
 		var nekretnine = [];
@@ -16,6 +17,13 @@ angular.module('nekretnineClientApp')
 			return Restangular.all("users/all").getList().then(function(entries) {
 				registrovani = entries;
 				return registrovani;
+			});
+		};
+		
+		retVal.getObjava = function() {
+			return Restangular.all("others/oglasi/korisnika").getList().then(function(entries) {
+				oglasi = entries;
+				return oglasi;
 			});
 		};
 		

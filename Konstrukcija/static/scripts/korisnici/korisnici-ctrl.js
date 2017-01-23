@@ -28,6 +28,8 @@ angular.module('nekretnineClientApp')
 			RegistrationResouce.saveNewKorisnik($scope.korisnik, registrationCbck);
 		}
 		
+		
+		
 		function registrationCbck(success) {
 			if (success.error == 'mailZauzet') {
 				$log.info('email zauzet!');
