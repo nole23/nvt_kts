@@ -20,6 +20,10 @@ angular.module('nekretnineClientApp')
 			});
 		};
 		
+		retVal.deleteNekretnina = function(id) {
+			return Restangular.one('admin/delete/nekretnina/', id).remove();
+		};
+		
 		retVal.getAllObjavljene = function() {
 			return Restangular.all("oglas/all").getList().then(function(entries) {
 				prodaja = entries;

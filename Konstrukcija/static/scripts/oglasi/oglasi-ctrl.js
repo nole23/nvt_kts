@@ -23,5 +23,35 @@ angular.module('nekretnineClientApp')
 			console.log('da li je dosao '+lokacija);
 		}
 		
+		$scope.deleteNekretnina = function(id) {
+			OglasiResource.deleteNekretnina(id);
+			alert('Obrisana je nekretnina. Ako i dalje postoji u sistemu refresujte stranicu')
+			$scope.messageDelete = true;
+			window.location.reload() = "#/account"
+			
+		}
+		
+		$scope.obnoviti = function(resource) {
+			
+			var modalInstance = $uibModal.open({
+				templateUrl: 'views/modals/obnoviti_oglas.html',
+				controller: 'ObnovitiOglasCtrl',
+				scope: $scope,
+				resolve: {
+					resource: function() {
+						return resource;
+					}
+				}
+			});
+		}
+	}])
+	.controller('ObnovitiOglasCtrl', ['$scope', '$uibModalInstance', 'resource', '$log', '_', 'RegistrationResouce', 
+	    function($scope, $uibModalInstance, resource, $log, _, RegistrationResouce) {
+		
+		$scope.resource = resource;
+		console.log($scope.resource);
+		
+		
+		
 		
 	}]);

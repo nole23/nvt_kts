@@ -78,10 +78,10 @@ public class AzuriranjaController {
 	 * @param lokacijaDTO
 	 * @return
 	 */
-	@RequestMapping(value = "/gps/{idLokacija}", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<String> updatGPSLokacije(@PathVariable Long idLokacija, @RequestBody LokacijaDTO lokacijaDTO) {
+	@RequestMapping(value = "/gps", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<String> updatGPSLokacije(@RequestBody LokacijaDTO lokacijaDTO) {
 		
-		Lokacija lokacija = lokacijaService.findOne(idLokacija);
+		Lokacija lokacija = lokacijaService.findOne(lokacijaDTO.getId());
 		
 		lokacija.setGeo_duzina(lokacijaDTO.getGeo_duzina());
 		lokacija.setGeo_sirina(lokacijaDTO.getGeo_sirina());
@@ -97,10 +97,10 @@ public class AzuriranjaController {
 	 * @param tehnickaOpremljenostDTO
 	 * @return
 	 */
-	@RequestMapping(value = "/tehnicka/{idTehnica}", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<String> getTehnickaNekretnine(@PathVariable Long idTehnica, @RequestBody TehnickaOpremljenostDTO tehnickaOpremljenostDTO) {
+	@RequestMapping(value = "/tehnicka/{id}", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<String> getTehnickaNekretnine(@RequestBody TehnickaOpremljenostDTO tehnickaOpremljenostDTO, @PathVariable Long id) {
 		
-		TehnickaOpremljenost tehnickaOpremljenost = tehnickaOpremljenostService.findOne(idTehnica);
+		TehnickaOpremljenost tehnickaOpremljenost = tehnickaOpremljenostService.findOne(id);
 		
 		tehnickaOpremljenost.setTarasa(tehnickaOpremljenostDTO.getTarasa());
 		tehnickaOpremljenost.setTelefon(tehnickaOpremljenostDTO.getTelefon());

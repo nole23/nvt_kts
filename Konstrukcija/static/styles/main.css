@@ -499,9 +499,56 @@
 .container1-body {
 	margin: 0 0 0 2%;
 }
+.container1-body-estate {
+	float: left;
+	border: 1px solid #e7e7e7;
+	width: 98%;
+	height: 150px;
+	margin: 2% 0 0 0;
+	background-color: #FFFAEF;
+}
+.estate-image img{
+	float: left;
+	width: 200px;
+	height: 150px;
+}
+.oglas {
+	float: left;
+	margin: 0 0 0 5%;
+	font-size: 24px;
+	width: 30%;
+}
+.oglas p{
+	font-size: 16px;
+	margin: 0;
+}
+.oglas-komande {
+	float: right;
+	margin: 0 0 0 10%;
+	width: 20%;
+	text-align: left;
+}
+.oglas-komande a{
+	text-decoration: none;
+	color: #e55a00;
+	margin: 2%;
+}
+.oglas-komande a:hover{
+	color: #993d00;
+}
+.cena {
+	font-size: 24px;
+}
+.dugmici-azuriranj {
+	margin: 10% 0 0 0;
+}
 .message-containter {
 	float: left;
 	width: 70%;
+}
+.oglas-komande img {
+	width: 30px;
+	height: 30px;
 }
 .message-login {
 	float: left;

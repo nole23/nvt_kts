@@ -15,6 +15,8 @@ angular.module('nekretnineClientApp')
 			console.log(items);
 		})
 		
+		
+		
 		KorisniciResource.getObjava($scope.korisnik).then(function(items) {
 			$scope.objava = items;
 		})

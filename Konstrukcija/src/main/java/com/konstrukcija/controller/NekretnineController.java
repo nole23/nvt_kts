@@ -91,6 +91,27 @@ public class NekretnineController {
 		return new ResponseEntity<>(nekretnineDTO, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/all/users", method = RequestMethod.GET)
+	public ResponseEntity<List<NekretninaDTO>> getAllNekretninaUsers(Principal principal) {
+		
+		Korisnik korisnik = korisnikRepository.findByUsername(principal.getName());
+		
+		List<Objavio> objavio = objavioRepository.findByKorisnik(korisnik);
+		
+		//List<Nekretnina> nekretnina = nekretninaService.findOne()
+		List<Nekretnina> nekrenine = nekretninaService.findAll();
+		
+		List<NekretninaDTO> nekretnineDTO = new ArrayList<>();
+		for (Nekretnina n : nekrenine) {
+			for(Objavio o: objavio) {
+				if(n.getId() == o.getNekretnina().getId()) {
+					nekretnineDTO.add(new NekretninaDTO(n));
+				}
+			}
+		}
+		return new ResponseEntity<>(nekretnineDTO, HttpStatus.OK);
+	}
+	
 	
 	/**
 	 * Test slucaj proveriti sa asistentom

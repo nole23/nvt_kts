@@ -7,6 +7,7 @@ angular.module('nekretnineClientApp')
 	'use strict';
 
 	var objave = [];
+	var nekretnineKorisnika = [];
 	var jedNekretnina = [];
 	var retVal = {};
 	
@@ -17,6 +18,13 @@ angular.module('nekretnineClientApp')
 			return objave;
 		});
 	};
+	
+	retVal.getUserEstate = function() {
+		return Restangular.all("nekretnineee/all/users").getList().then(function(entries) {
+			nekretnineKorisnika = entries;
+			return nekretnineKorisnika;
+		})
+	}
 	
 	retVal.getSveNekretnine = function(id) {
 		console.log('proba dva '+id);
@@ -37,8 +45,15 @@ angular.module('nekretnineClientApp')
 		});
 	}
 	
-
 	
+	retVal.updatGPS = function(resource) {
+		return Restangular.all("lokacija/gps").post(resource);
+	}
+	
+	retVal.updateTehnicka = function(resource, id) {
+		
+		return Restangular.all("lokacija/tehnicka/"+id).post(resource);
+	}
 	
 	return retVal;
     }]);
