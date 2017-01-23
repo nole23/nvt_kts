@@ -1,0 +1,222 @@
+
+<div class="add-estate" ng-controller="AddEstatCtrl">
+	<div class="kategorija-nekretnine" style="margin: 1% 0 1% 0">
+
+		<div style="width: 100%; margin: 0 0 0 0; text-align: center; color: green; font-size: 20px">
+			<p>Dodati novu nekretninu</p>
+		</div>
+
+	</div>
+	
+	<form ng-submit="addNekretnina()">
+		
+		<div class="kategorija-nekretnine" style="margin: 1% 0 1% 0" ng-if="messageAddCena == true || messageAddPovrsina == true ||
+		messageAddSpratova == true || messageAddSprat == true || messageAddTip == true || messageAddNaziv == true">
+
+			<div class="header-left-estate" style="margin: 0 5% 0 0;">
+				<p>Proverite: </p>
+			</div>
+
+			<div class="eader-left-estate"  >
+				<div ng-if="messageAddCena == true" style="margin: 0 0 0 5%; color: #ff0000">&#9733;Pogresan tip cene&#9733;</div>
+			</div>
+			
+			<div class="eader-left-estate">
+				<div ng-if="messageAddPovrsina == true" style="margin: 0 0 0 5%; color: #ff0000">&#9733;Pogresan tip za povrsinu&#9733;</div>
+			</div>
+			
+			<div class="eader-left-estate">
+				<div ng-if="messageAddSpratova == true" style="margin: 0 0 0 5%; color: #ff0000">&#9733;Ne pogresan tip za dodavanje spratova&#9733;</div>
+			</div>
+			
+			<div class="eader-left-estate">
+				<div ng-if="messageAddSprat == true" style="margin: 0 0 0 5%; color: #ff0000">&#9733;Ne pogresan tip za dodavanje spratova&#9733;</div>
+			</div>
+			
+			<div class="eader-left-estate">
+				<div ng-if="messageAddTip == true" style="margin: 0 0 0 5%; color: #ff0000">&#9733;Niste naveli tip nekretnine&#9733;</div>
+			</div>
+			
+			<div class="eader-left-estate">
+				<div ng-if="messageAddNaziv == true" style="margin: 0 0 0 5%; color: #ff0000">&#9733;Morate dati naziv nekrentine&#9733;</div>
+			</div>
+			
+		</div>
+		
+		<div class="kategorija-nekretnine" style="margin: 1% 0 1% 0"  ng-if="messageErrorAddEstate == true">
+
+			<div class="header-left-estate" style="width: 100%; color: red; margin: 0 0 0 30%;">
+				<p>Nismo mogli da sacuvamo greska na serveru probajte za koji minut</p>
+			</div>
+
+		</div>
+		
+		
+		<div class="kategorija-nekretnine" style="margin: 0">
+
+			<div class="header-left-estate">
+				<p>Kategorije () &#9733;</p>
+			</div>
+
+			<div class="eader-left-estate">
+				<select class="stil-select1" onchange="myFunction(this)">
+					<option></option>
+					<option value="1">Prodaja</option>
+					<option value="2">Izdavanje</option>
+				</select>
+				
+				<div id="myDropdown1" style="display: none">
+					<select class="stil-select1" id="tip" ng-model="nekretnina.tip">
+						<option></option>
+						<option ng-repeat="kategorija in kategorije"
+							ng-if="kategorija.tip == 'prodaja'" value="{{kategorija.id}}">{{kategorija.name}}</option>
+					</select>
+				</div>
+			
+				<div id="myDropdown2" style="display: none">
+					<select class="stil-select1" id="tip" ng-model="nekretnina.tip">
+						<option></option>
+						<option ng-repeat="kategorija in kategorije"
+							ng-if="kategorija.tip == 'izdavanje'" value="{{kategorija.id}}">{{kategorija.name}}</option>
+					</select>
+				</div>
+				
+			</div>
+		</div>
+		
+		<div class="kategorija-nekretnine" style="margin: 1% 0 0 0">
+
+			<div class="header-left-estate">
+				<p>Cena &#9733;</p>
+			</div>
+
+			<div class="eader-left-estate">
+				<input type="text" class="stil-select1" placeholder="Cena vase nekretnine" id="cena"  ng-model="nekretnina.cena">
+			</div>
+		</div>
+
+		<div class="kategorija-nekretnine" style="margin: 1% 0 0 0">
+
+			<div class="osnovne-informacije-nekretnine">
+				<p>Osnovne informacije</p>
+			</div>
+
+			<div class="eader-left-estate">
+				<input type="text" class="stil-select2" placeholder="povrsina" id="povrsina" ng-model="nekretnina.povrsina" />
+				
+				<select class="stil-select2" id="sobnost" ng-model="nekretnina.sobnost">
+					<option value="">--Sobnost--</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="vise od 10">10+</option>
+				</select>
+				
+				<select class="stil-select2" id="stanje_objekta" ng-model="nekretnina.stanje_objekta">
+					<option value="">--Stanje objekta--</option>
+					<option value="novo">Nova gradnja</option>
+					<option value="staro">Stara gradnja</option>
+				</select>
+				
+				<select class="stil-select2" id="grejanje" ng-model="nekretnina.grejanje">
+					<option value="">--Grijanje--</option>
+					<option value="parno">Parno</option>
+					<option value="etazno">Etazno</option>
+					<option value="kaljeva">Kaljeva</option>
+					<option value="na_struju">Na struju</option>
+					<option value="podno">Podno</option>
+					<option value="kombinovano">Kombinovano</option>
+					<option value="gas">Gas</option>
+					<option value="ostalo">Ostalo</option>
+				</select>
+				
+				<select class="stil-select2" id="spratova" placeholder="spratova" ng-model="nekretnina.spratova">
+					<option value="">--Spratova--</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="vise od 5">5+</option>
+				</select>
+				
+				<input type="text" class="stil-select2" id="sprat" placeholder="sprat" ng-model="nekretnina.sprat" />
+			</div>
+		</div>
+
+
+		
+
+
+		<div class="kategorija-nekretnine" style="margin: 1% 0 0 0">
+
+			<div class="header-left-estate">
+				<p>Naziv oglasa &#9733;</p>
+			</div>
+
+			<div class="eader-left-estate1">
+				<input type="text" class="stil-select3" name="naziv_nekretnine" placeholder="naziv nekretnine, mozete naknadno menjati" ng-model="nekretnina.naziv_nekretnine">
+			</div>
+		</div>
+
+		
+
+		<div class="kategorija-nekretnine" style="margin: 1% 0 0 0">
+
+			<div class="header-left-estate">
+				<p>Kratak opis oglsaa</p>
+			</div>
+
+			<div >
+				<textarea  rows="10" cols="100" name="opis" ng-model="nekretnina.opis"></textarea>
+			</div>
+		</div>
+
+		
+
+		<div class="nekretnine-dugm" style="margin: 2% 0 0 0">
+		
+			<input type="submit" class="btnAddOglas" value="Dalje &#62;" />
+			
+			
+		</div>
+	
+	</form>
+</div>
+
+
+<script>
+	function myFunction(select) {
+		console.log(select);
+		if (select.value == 1) {
+			document.getElementById("myDropdown1").style.display = "";
+			document.getElementById("myDropdown2").style.display = "none";
+		} else if (select.value == 2) {
+			document.getElementById("myDropdown2").style.display = "";
+			document.getElementById("myDropdown1").style.display = "none";
+		}
+
+	}
+
+	// Close the dropdown if the user clicks outside of it
+	window.onclick = function(event) {
+		if (!event.target.matches('.dropbtn')) {
+
+			var dropdowns = document.getElementsByClassName("dropdown-content");
+			var i;
+			for (i = 0; i < dropdowns.length; i++) {
+				var openDropdown = dropdowns[i];
+				if (openDropdown.classList.contains('show')) {
+					openDropdown.classList.remove('show');
+				}
+			}
+		}
+	}
+</script>

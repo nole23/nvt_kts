@@ -9,6 +9,8 @@ angular.module('nekretnineClientApp')
 	   '$log', '_', 'NekretnineResource', 
 	   function($scope, $uibModal, $routeParams, $log, _, NekretnineResource) {
 		
+		$scope.nekretnina = {};
+		
 		$scope.getIn=function(id){
 		    
 		    NekretnineResource.getObjave().then(function(items) {
@@ -17,6 +19,10 @@ angular.module('nekretnineClientApp')
 				window.location = "#/nekretnine/prodaja/"+id;
 		    })
 		 }
+		
+		$scope.addNekretnina = function() {
+			console.log('as '+JSON.stringify($scope.nekretnina));
+		}
 		
 		$scope.order_id = $routeParams.idNekretnina;
 		console.log('jbg '+$routeParams.idNekretnina);

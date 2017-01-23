@@ -1,0 +1,119 @@
+<div class="add-estate">
+	<div ng-controller="AddEstatCtrl">
+		<div class="kategorija-nekretnine" style="margin: 1% 0 1% 0">
+		
+			<div style="width: 100%; margin: 0 0 0 0; text-align: center; color: green; font-size: 20px">
+				<p>Dodati tehnicke opremljenosti za nekretninu</p>
+			</div>
+		
+		</div>
+		<div class="kategorija-nekretnine" style="margin: 1% 0 1% 0"  ng-if="messageErrorAddOpremljenost == true">
+
+			<div class="header-left-estate" style="width: 100%; color: red; margin: 0 0 0 30%;">
+				<p>Nismo mogli da sacuvamo greska na serveru probajte za koji minut</p>
+			</div>
+
+		</div>
+		<form ng-submit="addOpremljenost()">
+			<div class="kategorija-nekretnine" style="margin: 1% 0 0 0" >
+			
+				<div class="osnovne-informacije-nekretnine1">
+					<p>
+						Dodatne informacije <br />koje poseduje nekretnina
+					</p>
+				</div>
+			
+				<div class="eader-left-estate">
+					<div class="checkbox-nekretnine">
+						<p>Tarasa</p>
+						<input type="checkbox" name="tarasa" value="tarasa" ng-model="opremljenost.rarasa">
+					</div>
+			
+					<div class="checkbox-nekretnine">
+						<p>Telefon</p>
+						<input type="checkbox" name="telefon" value="telefon" ng-model="opremljenost.telefon">
+					</div>
+			
+					<div class="checkbox-nekretnine">
+						<p>TelefonGarazap</p>
+						<input type="checkbox" name="garaza" value="garaza" ng-model="opremljenost.garaza">
+					</div>
+			
+					<div class="checkbox-nekretnine">
+						<p>Kablovska</p>
+						<input type="checkbox" name="kablovska" value=kablovska ng-model="opremljenost.kablovsa">
+					</div>
+			
+					<div class="checkbox-nekretnine">
+						<p>Pogled na more</p>
+						<input type="checkbox" id="pogled_na_more" value="pogled_na_more" ng-model="opremljenost.pogled_na_more">
+					</div>
+			
+					<div class="checkbox-nekretnine">
+						<p>Podru,</p>
+						<input type="checkbox" name="podrum" value="podrum" ng-model="opremljenost.podrum">
+					</div>
+			
+					<div class="checkbox-nekretnine">
+						<p>Kamin</p>
+						<input type="checkbox" name="kamin" value="kamin" ng-model="opremljenost.kamin">
+					</div>
+			
+					<div class="checkbox-nekretnine">
+						<p>Bazen</p>
+						<input type="checkbox" name="bazen" value="bazen" ng-model="opremljenost.bazen">
+					</div>
+			
+					<div class="checkbox-nekretnine">
+						<p>Internet</p>
+						<input type="checkbox" name="internet" value="internet" ng-model="opremljenost.internet">
+					</div>
+			
+					<div class="checkbox-nekretnine">
+						<p>Tavan</p>
+						<input type="checkbox" name="tavan" value="tavan" ng-model="opremljenost.tavan">
+					</div>
+			
+					<div class="checkbox-nekretnine">
+						<p>Klima</p>
+						<input type="checkbox" name="klima" value="klima" ng-model="opremljenost.klima">
+					</div>
+			
+					<div class="checkbox-nekretnine">
+						<p>Pogled na grad</p>
+						<input type="checkbox" name="pogled_na_grad" value="pogled_na_grad" ng-model="opremljenost.pogled_na_grad" >
+					</div>
+			
+					<div class="checkbox-nekretnine">
+						<p>Lift</p>
+						<input type="checkbox" name="lift" value="lift" ng-model="opremljenost.lift">
+					</div>
+			
+					<div class="checkbox-nekretnine">
+						<p>Struja</p>
+						<input type="checkbox" name="struja" value="struja" ng-model="opremljenost.struja" checked>
+					</div>
+			
+					<div class="checkbox-nekretnine">
+						<p>Voda</p>
+						<input type="checkbox" name="voda" value="voda" ng-model="opremljenost.voda" checked>
+					</div>
+			
+					<div class="checkbox-nekretnine">
+						<p>Kanalizacija</p>
+						<input type="checkbox" name="kanalizacija" value="kanalizacija" ng-model="opremljenost.kanalizacija" checked>
+					</div>
+			
+					<div class="checkbox-nekretnine">
+						<p>Gas</p>
+						<input type="checkbox" name="gas" value="gas" ng-model="opremljenost.gas">
+					</div>
+				</div>
+			</div>
+			
+			<div class="nekretnine-dugm" style="margin: 2% 0 0 0">
+				<input type="submit" class="btnAddOglas" value="Dalje &#62;" />
+			</div>
+		</form>
+	</div>
+</div>

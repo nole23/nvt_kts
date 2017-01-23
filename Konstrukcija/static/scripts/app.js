@@ -70,6 +70,51 @@ angular
             })
             .when('/add/estate', {
             	templateUrl: 'views/add_estate.html',
+            	controller: 'KategorijeCtrl',
+                controllerAs: 'kategorije',
+            	resolve: {
+                    app: function($q, $localStorage, $location) {
+                        
+                        if ($localStorage.currentUser == null) {
+                        	alert('prvo se ulogujte');
+                        	$localStorage.message = 'ulogij'
+                            $location.path('/login');
+                        };
+                    }
+                }
+            })
+            .when('/add/estate/equipment/:id', {
+            	templateUrl: 'views/estate_opremljenost.html',
+            	controller: 'AddEquipmentCtrl',
+                controllerAs: 'opremljenost',
+            	resolve: {
+                    app: function($q, $localStorage, $location) {
+                        
+                        if ($localStorage.currentUser == null) {
+                        	alert('prvo se ulogujte');
+                        	$localStorage.message = 'ulogij'
+                            $location.path('/login');
+                        };
+                    }
+                }
+            })
+            .when('/add/estate/location/:id', {
+            	templateUrl: 'views/location_estate.html',
+            	controller: 'AddLocationEstateCtrl',
+            	resolve: {
+                    app: function($q, $localStorage, $location) {
+                        
+                        if ($localStorage.currentUser == null) {
+                        	alert('prvo se ulogujte');
+                        	$localStorage.message = 'ulogij'
+                            $location.path('/login');
+                        };
+                    }
+                }
+            })
+            .when('/add/estate/publish/:id', {
+            	templateUrl: 'views/publish_estate.html',
+            	controller: 'PublishEstateCtrl',
             	resolve: {
                     app: function($q, $localStorage, $location) {
                         

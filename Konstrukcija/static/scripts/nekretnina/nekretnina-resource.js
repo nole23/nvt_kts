@@ -37,6 +37,8 @@ angular.module('nekretnineClientApp')
 		});
 	}
 	
+
+	
 	
 	return retVal;
     }]);

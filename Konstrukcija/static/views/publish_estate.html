@@ -1,0 +1,33 @@
+<div class="add-estate">
+	<div ng-controller="PublishEstateCtrl">
+		<div class="kategorija-nekretnine" style="margin: 1% 0 1% 0">
+		
+			<div style="width: 100%; margin: 0 0 0 0; text-align: center; color: green; font-size: 20px">
+				<p>Objaviti oglas!</p>
+			</div>
+		
+		</div>
+		<div class="kategorija-nekretnine" style="margin: 1% 0 1% 0"  ng-if="messageErrorObjava == true">
+
+			<div class="header-left-estate" style="width: 100%; color: red; margin: 0 0 0 30%;">
+				<p>Nismo mogli da sacuvamo greska na serveru probajte za koji minut</p>
+			</div>
+
+		</div>
+		<form ng-submit="publishEstate()">
+			
+			<div class="kategorija-nekretnine" style="margin: 1% 0 0 0">
+				<div class="header-left-estate">
+					<p>Datum isteka</p>
+				</div>
+				<div class="eader-left-estate1">
+					<input type="date" class="stil-select2" name="datum_isteka" ng-model="datum.datum_isteka">
+				</div>
+			</div>
+			
+			<div class="nekretnine-dugm" style="margin: 2% 0 0 0">
+				<input type="submit" class="btnAddOglas" value="Objavite oglas" />
+			</div>
+		</form>
+	</div>
+</div>
