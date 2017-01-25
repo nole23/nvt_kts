@@ -4,40 +4,49 @@
 	
 	
 		<ul class="navbar">
+			
 			<li><a href="" onclick="myFunction(1)" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='korisnik'">Moj nalog</a></li>
 			<li><a href="" onclick="myFunction(2)" ng-if="korisnik.zaposleniDTO[0] != null">Kompanija</a></li>
 			
 			
-			<li><a href="" onclick="myFunction(4)" ng-if="korisnik.zaposleniDTO[0] != null">Objave ($scope.objava.length)</a></li>
-			
-			<li><a href="" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='korisnik'">Moji podaci</a>
+			<li><a ng-if="korisnik.zaposleniDTO[0] != null" >Oglasi kompanije</a>
+				<ul>
+					<li><a ng-controller="KompanijaOglasiCtrl" href="#/add/estate/company/{{korisnik.zaposleniDTO[0].kompanijaDTO.id}}" ng-click="azuriranjeLicnih(korisnik)" >Dodati novi oglas kompaniji</a></li>
+					
+				</ul> 
+			</li>
+			<li><a href="" ng-if="korisnik.zaposleniDTO[0] == null">Moji podaci</a>
 				<ul>
 					<li><a href="" ng-click="azuriranjeLicnih(korisnik)" >Promena podataka</a></li>
 					<li><a href="" ng-click="azuriranjeAdrese(korisnik.adresaDTO)" ng-if="korisnik.adresaDTO != null">Promena adrese</a></li>
 					<li><a href="" ng-click="dodatiAdrese()" ng-if="korisnik.adresaDTO == null">Dodati adresu</a></li>
-					<li><a href="" ng-click="azuriranjeEmaila(korisnik)">Promena lozinke</a></li>
-					<li><a href="" onclick="myFunction(9)">Promena emaila</a></li>
+					<li><a href="" ng-click="azuriranjeEmaila(korisnik)">Promena emaila</a></li>
+					<li><a href="" ng-click="azuriranjeSifre()">Promena sifre</a></li>
 				</ul>         
 			</li>
-			<li><a href="" ng-if="korisnik.zaposleniDTO[0] != null">Podaci kompanije</a>
+			<li><a href="" ng-if="korisnik.zaposleniDTO[0] != null">Podaci</a>
 				<ul>
-					<li><a href="" onclick="myFunction(10)">Promena podataka</a></li>
-					<li><a href="" onclick="myFunction(11)">Promena adrese</a></li>
-					<li><a href="" onclick="myFunction(12)">Dodati adresu</a></li>
-					<li><a href="" onclick="myFunction(13)">Promena lozinke</a></li>
-					<li><a href="" onclick="myFunction(14)">Promena emaila</a></li>
+					<li><a href="" ng-if="korisnik.zaposleniDTO[0].uloga == 'gazda'" ng-controller="KompanijaCtrl" ng-click="azuriranjeKompanije(korisnik.zaposleniDTO[0].kompanijaDTO)">Podaci kompanije</a></li>
+					<li><a href="" ng-if="korisnik.zaposleniDTO[0].uloga == 'gazda'" ng-controller="KompanijaCtrl" ng-click="azuriranjeAdreseKompanije(korisnik.zaposleniDTO[0].kompanijaDTO.adresaDTO)">Adresa kompanije</a></li>
+					<li ng-if="korisnik.zaposleniDTO[0] != null">---------------------------</li>
+					<li><a href="" ng-click="azuriranjeLicnih(korisnik)">Licni podaci</a></li>
+					<li><a href="" ng-click="azuriranjeAdrese(korisnik.adresaDTO)" ng-if="korisnik.adresaDTO != null">Promena adrese</a></li>
+					<li><a href="" ng-click="dodatiAdrese()" ng-if="korisnik.adresaDTO == null">Dodati adresu</a></li>
+					<li><a href="" ng-click="azuriranjeEmaila(korisnik)">Promena emaila</a></li>
+					<li><a href="" ng-click="azuriranjeSifre()">Promena sifre</a></li>
 				</ul>         
 			</li>
 			
 			<li><a href="">Uloge</a>
 				<ul>
-					<li><a href="" onclick="myFunction(15)" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='korisnik'">Kreiranje kompanije</a></li>
-					<li><a href="" onclick="myFunction(16)" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='korisnik'">Kontaktiranje administratora</a></li>
+					<li><a href="" onclick="myFunction(3)" ng-if="korisnik.zaposleniDTO[0].uloga != 'gazda'">Kreiranje kompanije</a></li>
+					<!-- <li><a href="" onclick="myFunction(16)" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='korisnik'">Kontaktiranje administratora</a></li> -->
 					
-					<li><a href="" onclick="myFunction(17)" ng-if="korisnik.zaposleniDTO[0] != null">Dodavanje novog zaposlenog</a></li>
+					<li><a href="" onclick="myFunction(4)" ng-if="korisnik.zaposleniDTO[0].uloga == 'gazda'" ">Dodavanje novog zaposlenog</a></li>
+					<li><a href="" onclick="myFunction(5)" ng-if="korisnik.zaposleniDTO[0] != null">Svi zaposleni</a></li>
 				</ul>         
 			</li>
-			<li><a href="">Odjavi se</a></li>
+			<li><a href ng-click="logout()">Odjavi se</a></li>
 		</ul>
 		
 	
@@ -67,7 +76,7 @@
 			
 			<!-- Ukoliko nema ni jednog oglasa  -->
 			<div class="container1-body" ng-show="poruka == false">
-				<p>Postovani korisnice jos uvek nemate postavljen oglas zasto ne bi ste postavili oglas danas</p>
+				<p>Postovani &#9733{{korisnik.fname}}&#9733 jos uvek nemate postavljen oglas zasto ne bi ste postavili oglas danas</p>
 				<a class="btnAddOglas" href="#/add/estate">Dodaj oglas</a>
 			</div>
 			
@@ -109,36 +118,238 @@
 	</div>
 	
 	
+	<!-- Pregled svih oglasa kompanije kao i dodavanje novog oglasa -->
 	<div id="myDropdown2" style="display: none">
 		<div class="account-container">
-			<p>Radi li </p>
+			<p>Kompanija &#9733{{korisnik.zaposleniDTO[0].kompanijaDTO.nazivKomapnije}}&#9733</p>
 		</div>
 		
+		<div class="account-body" style="margin: 0" ng-controller="KompanijaOglasiCtrl">
+			<div class="body-header">
+				<p>Oglasi kompanije ( {{oglasi.length}} )</p>
+			</div>
+			
+			<div class="container1-body" ng-show="oglasi.length == 0">
+				<p>Postovani! Ovde mozete dodati oglas za kompaniju &#9733{{korisnik.zaposleniDTO[0].kompanijaDTO.nazivKomapnije}}&#9733</p>
+				<a class="btnAddOglas" href="#/add/estate/company/{{korisnik.zaposleniDTO[0].kompanijaDTO.id}}">Dodajte oglas kompaniji</a>
+			</div>
+			
+			<!-- Ukoliko imate objavljenih oglasa -->
+			<div class="container1-body" ng-show="oglasi.length != 0">
+				<p>Svi vasi oglasi </p>
+
+
+
+
+				<div ng-repeat="oglas in oglasi">
+					<div class="container1-body-estate"  ng-if="oglas.nekretninaDTO.objavioDTO[0].kompanijaDTO">
+						<div class="estate-image">
+							<img src="/" />
+							
+						</div>
+						
+						<div class="oglas">
+							<a class="btnMain" ng-controller="OglasiCtrl" ng-click='nekretninaJedna(oglas.nekretninaDTO.id)' href>{{oglas.nekretninaDTO.lokacijaDTO.grad}}, {{oglas.nekretninaDTO.lokacijaDTO.grad}}</a>
+							<p style="margin: 10% 0 0 0;">Kategorija: {{oglas.nekretninaDTO.kategorijaDTO.name}} za {{oglas.nekretninaDTO.kategorijaDTO.tip}}</p>
+							
+							<p>{{oglas.nekretninaDTO.opis}}
+						</div>
+						
+						<div class="oglas-komande" >
+							<div class="cena">
+								{{oglas.nekretninaDTO.cena}} DIN
+							</div>
+							<div class="dugmici-azuriranj">
+								<!-- <a href ng-click='obnoviti(nekretnina)'>Obnovi</a><br/> -->
+								<a href ng-controller="KorisnikNekretninaCtrl" ng-click='tehnickaOpremljenost(oglas.nekretninaDTO.tehnickaOpremljenostDTO)'>Tehnicka opremljenost</a><br/>
+								<!-- <a href ng-controller="KorisnikNekretninaCtrl" ng-click='azuriranje(nekretnina.lokacijaDTO.id)' >GPS pozicija</a><br/> -->
+								<a href ng-controller="OglasiCtrl" ng-click='deleteNekretnina(oglas.nekretninaDTO.id)'>Izbrisite</a><br/>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		</div>
 		
 	</div>
 	
 	
 	
+	
+	<!-- Zahtev za kreiranje nove kompanije -->
 	<div id="myDropdown3" style="display: none">
 		<div class="account-container">
-			<p>Radi li </p>
+			<p>Kreiranje kompanije</p>
 		</div>
 		
-		
+		<div class="account-body" style="margin: 0" ng-controller="KompanijaCtrl">
+			<div class="body-header">
+				<p>Da bi ste registrovali kompaniju morate popuniti formu ispod!</p>
+				<p style="font-size: 15px; margin: 0 0 0 2%; padding: 0">&#9733 Molimo vas unesite tacane podatke za kontakt, kako bi vas nasi administratori kontaktirali, radi potpune registracije</p>
+				<p style="font-size: 15px; margin: 0 0 0 2%; padding: 0">&#9733 Strogo je zabranjeno unositi netacne podatke!</p>
+				<p style="font-size: 15px; margin: 0 0 0 2%; padding: 0">&#9733 Ukoliko ne dostavite potrebnu dokumentaciju u periodu probne verzije kompanije, uzimamo pravo da Vam ugasimo profil!</p>
+				<p style="font-size: 15px; margin: 0 0 0 2%; padding: 0">&#9733 Za dodatna pitanja kontaktirajte nas na <a href>email</a></p>
+			</div>
+			
+			<div class="container1-body">
+				<div class="forma-firma" >
+					
+					<div class="message-login" style="margin: 5% 0 0 0" controller="KompanijaCtrl" ng-if="messageKompani == 'nisteDodali'">
+						<h3>Vec ste vlasnik jedne komapnije, ne mozete da imate dve kompanije registrovane. </h3>
+					</div>
+					<div class="message-login" style="margin: 5% 0 0 0" ng-if="messageAddKompani == 'proslo'">
+						<h3>Uspesno ste kreirali kompaniju 10 = {{value}}</h3>
+					</div>
+					<form >
+						<input type="text" placeholder="Naziv firme" ng-model="kompanija.nazivKomapnije"/>
+						<input type="text" placeholder="Link ka sajtu" ng-model="kompanija.link"/>
+						
+						<button style="margin: 1% 0 1% 0; float: right;" class="btnAddOglas" ng-click="createCompany()">Posaljite zahtev</button >
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
+	
+	
+	
+	
+	
+	
+	<!-- Dodavanje novog zaposlenog -->
+	
+	<div class="message-login" style="margin: 10% 0 0 0" ng-show="messageAdd == true">
+		<h3>Korisnik je zaposlen!</h3>
+	</div>
+	<div class="message-login1" style="margin: 10% 0 0 0" ng-show="messageNotAdd == true">
+		<h3>Korisnik je vec zaposlen! Nemojte pokusavati ponovo da ga zaposlite!</h3>
+	</div>
+	<div id="myDropdown4" style="display: none">
+		<div class="account-container">
+			<p>Pronaci korisnika</p>
+		</div>
+		
+		<div class="account-body" style="margin: 0">
+			<div class="body-header">
+				<p>Pronadjite korisnika pomocu emaila ili korisnickog imena i dodajte ga kao zaposlenog!</p>
+				
+			</div>
+			
+			<div class="container1-body">
+				<div class="forma-firma1" >
+					<input type="text" placeholder="Unesite email ili korisnicko ime" ng-model="search.$"/>
+				</div>
+				
+				
+			</div>
+			
+			<div class="container1-body1" >
+				<div ng-repeat="user in users | filter:search">
+					<div class="korisnik">
+						<h3>{{user.fname}} {{user.lname}} </h3>
+						<input type="hidden" value="{{user.email}}" />
+						<input type="hidden" value="{{user.username}}" />
+						<a href style="margin: 10% 0 0 0; float: right;" class="btnAddOglas" ng-click="addZaposlenog(user.id)">Dodati</a >
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	<!-- Pregled svih zaposlenih u jednom firmi -->
+	<div class="message-login" style="margin: 10% 0 0 0" ng-if="messageRemove == true">
+		<h3>Uklonili ste zaposlenog iz liste</h3>
+	</div>
+	<div id="myDropdown5" style="display: none">
+		<div class="account-container">
+			<p>Kompanija &#9733{{korisnik.zaposleniDTO[0].kompanijaDTO.nazivKomapnije}}&#9733</p>
+		</div>
+		
+		<div class="account-body" style="margin: 0" ng-controller="KompanijaZaposleniCtrl">
+			<div class="body-header">
+				<p>Zaposleni ( {{zaposleni.length}} ) </p>
+			</div>
+				
+			<div ng-repeat="zaposlen in zaposleni">
+				<div class="container1-body-estate" >
+					<div class="estate-image">
+						<img src="/" />
+					</div>
+					
+					<div class="oglas">
+						<a class="btnMain" href>{{zaposlen.korisnikDTO.fname}} {{zaposlen.korisnikDTO.lname}}</a><br/>
+						<p style="margin: 10% 0 0 0;">Adresa: {{zaposlen.korisnikDTO.adresaDTO.drzava}}, {{zaposlen.korisnikDTO.adresaDTO.grad}}</p>
+						<p>Vi ste <spam  ng-if="zaposlen.korisnikDTO.zaposleniDTO[0].uloga == 'gazda'" >Vlasnik</spam> <spam ng-if="zaposlen.korisnikDTO.zaposleniDTO[0].uloga != 'gazda'" >Radnik</spam><br/>Zelimo Vam uspesan dan!
+					</div>
+					
+					<div class="oglas-komande" >
+						<div class="cena">
+							
+						</div>
+						<div style="text-align: center; margin-top: 30%;">
+							<!-- <a href ng-click='obnoviti(nekretnina)'>Obnovi</a><br/> -->
+							<a href  ng-if="zaposlen.korisnikDTO.zaposleniDTO[0].uloga != 'gazda'" ng-click='deleteZaposlenog(zaposlen)'>Otkaz zaposlenom</a><br/>
+							<a href ng-if="zaposlen.korisnikDTO.zaposleniDTO[0].uloga == 'gazda'">Vlasniku kompanije nije moguce dati otkaz</a><br/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
 	
 </div>
 
 <script>
 function myFunction(id) {
-	var div = 'myDropdown'+id;
-	document.getElementById(div).style.display ="";
-	for(i=1; i<16; i++) {
-		if(i != id){
-			var div1 = 'myDropdown'+i
-			document.getElementById(div1).style.display ="none";
-		}
-		
+	//var div = 'myDropdown'+id;
+	//document.getElementById(div).style.display ="";
+	//for(i=1; i<18; i++) {
+	//	if(i != id){
+	//		var div1 = 'myDropdown'+i
+	//		document.getElementById(div1).style.display ="none";
+	//	}
+	//	
+	//}
+	
+	if(id == 1) {
+		document.getElementById("myDropdown1").style.display ="";
+		document.getElementById("myDropdown2").style.display ="none";
+		document.getElementById("myDropdown3").style.display ="none";
+		document.getElementById("myDropdown4").style.display ="none";
+		document.getElementById("myDropdown5").style.display ="none";
+	} else if(id == 2){
+		document.getElementById("myDropdown1").style.display ="none";
+		document.getElementById("myDropdown2").style.display ="";
+		document.getElementById("myDropdown3").style.display ="none";
+		document.getElementById("myDropdown4").style.display ="none";
+		document.getElementById("myDropdown5").style.display ="none";
+	} else if(id == 3){
+		document.getElementById("myDropdown1").style.display ="none";
+		document.getElementById("myDropdown2").style.display ="none";
+		document.getElementById("myDropdown3").style.display ="";
+		document.getElementById("myDropdown4").style.display ="none";
+		document.getElementById("myDropdown5").style.display ="none";
+	} else if(id == 4){
+		document.getElementById("myDropdown1").style.display ="none";
+		document.getElementById("myDropdown2").style.display ="none";
+		document.getElementById("myDropdown3").style.display ="none";
+		document.getElementById("myDropdown4").style.display ="";
+		document.getElementById("myDropdown5").style.display ="none";
+	} else if(id == 5){
+		document.getElementById("myDropdown1").style.display ="none";
+		document.getElementById("myDropdown2").style.display ="none";
+		document.getElementById("myDropdown3").style.display ="none";
+		document.getElementById("myDropdown4").style.display ="none";
+		document.getElementById("myDropdown5").style.display ="";
 	}
 	
 }

@@ -1,0 +1,26 @@
+
+	<div class="modal-account">
+	  <h3>Azurirajte podatke kompanije</h3>
+	</div>
+	<div class="modal-form">
+	  <form>
+	  
+	    Naziv kompanije:<br/>
+	    <input type="text" id="nazivKompanije"  ng-model="korisnik.zaposleniDTO[0].kompanijaDTO.nazivKomapnije"/>
+	    <div class="poruka-mode" ng-if="nesto">
+	    	
+	    </div>
+	
+		Link ka sajtu:<br/>
+	    <input type="text" id="link" ng-model="korisnik.zaposleniDTO[0].kompanijaDTO.link"/><br/>
+		<div class="poruka-mode" ng-if="mesageIsti == true">
+	    	
+	    </div>
+
+	  </form>
+	  
+	</div>
+	<div class="modal-comand">
+	  <button class="btnAddOglas" type="button" ng-click="ok()">OK</button>
+	  <button class="btnAddOglas" type="button" ng-click="cancel()">Cancel</button>
+	</div>
