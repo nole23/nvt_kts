@@ -11,6 +11,8 @@ angular.module('nekretnineClientApp')
 		var korisnici = [];
 		var korisnik = [];
 		var nekretnine = [];
+		var users = [];
+		var poruka = [];
 		var retVal = {};
 		
 		retVal.getKorisnici = function() {
@@ -44,6 +46,7 @@ angular.module('nekretnineClientApp')
 		retVal.getKorisnik = function(token) {
 			return Restangular.one('users/profile').get().then(function(entries) {
 				korisnik = entries;
+				
 				return korisnik;
 			})
 		};
@@ -70,6 +73,22 @@ angular.module('nekretnineClientApp')
 		retVal.updatePassword = function(pass) {
 			return Restangular.all('users/updat/password').post(pass);
 		}
+		
+		retVal.getAllUsers = function() {
+			return Restangular.all('users/all/users').getList().then(function(entries) {
+				users = entries;
+				return users;
+			});
+		}
+		
+		retVal.addZaposlenog = function(id, callBack) {
+			var link = 'kompanija/kompanija/'+id;
+			return Restangular.one(link).get().then(function(success) {
+				//console.log(success.success);
+				callBack(success)
+			});
+		}
+		
 		return retVal;
 		
 	}]);

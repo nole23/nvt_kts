@@ -1,25 +1,52 @@
 'use strict';
 
 angular.module('nekretnineClientApp')
-	.controller('AcauntCtrl', ['$scope', '$uibModal', '$routeParams',
+	.controller('AcauntCtrl', ['$scope', '$uibModal', '$window', '$timeout', '$routeParams', 
 	   '$log', '_', 'KorisniciResource', 
-	   function($scope, $uibModal, $routeParams, $log, _, KorisniciResource) {
+	   function($scope, $uibModal, $window, $timeout, $routeParams, $log, _, KorisniciResource) {
 		
 		var korisnikId = [];
 		
 		$scope.order_id = $routeParams.idKorisnik;
-		console.log('jbg '+$routeParams.idKorisnik);
 		KorisniciResource.getKorisnik($routeParams.idKorisnik).then(function(items) {
 			$scope.korisnik = items;
 			korisnikId = items;
 			console.log(items);
 		})
 		
+		$scope.addZaposlenog = function(id) {
+			KorisniciResource.addZaposlenog(id, callBack);
+		}
 		
+		function callBack(success) {
+			if(success.success == 'uspesno') {
+				$scope.messageAdd = true;
+			    $timeout(function(){
+			        $scope.messageAdd = false;
+			        $window.location.reload();
+			    }, 8000);
+				
+				
+			} else if(success.error == 'neuspenos') {
+
+				$scope.messageNotAdd = true;
+			    $timeout(function(){
+			        $scope.messageNotAdd = false;
+			        $window.location.reload();
+			    }, 8000);
+				
+			}
+			
+		}
 		
 		KorisniciResource.getObjava($scope.korisnik).then(function(items) {
 			$scope.objava = items;
 		})
+		
+		KorisniciResource.getAllUsers().then(function (items) {
+			$scope.users = items;
+			
+		});
 		
 		$scope.azuriranjeAdrese = function(resource) {
 			
@@ -75,6 +102,20 @@ angular.module('nekretnineClientApp')
 		$scope.azuriranjeSifre = function(resource) {
 			
 			var modalInstance = $uibModal.open({
+				templateUrl: 'views/modals/mail.html',
+				controller: 'EmailModalCtrl',
+				scope: $scope,
+				resolve: {
+					resource: function() {
+						return resource;
+					}
+				}
+			});
+		}
+		
+		$scope.azuriranjeSifre = function(resource) {
+			
+			var modalInstance = $uibModal.open({
 				templateUrl: 'views/modals/sifre.html',
 				controller: 'SifraModalCtrl',
 				scope: $scope,
@@ -107,7 +148,6 @@ angular.module('nekretnineClientApp')
 		
 		
 	}])
-	
 	.controller('AdresModalCtrl', ['$scope', '$uibModalInstance', 'resource', '$log', '_', 'KorisniciResource', 
 	    function($scope, $uibModalInstance, resource, $log, _, KorisniciResource) {
 		
@@ -128,6 +168,8 @@ angular.module('nekretnineClientApp')
 	
 	.controller('AdresAddModalCtrl', ['$scope', '$uibModalInstance', '$window', '$log', '_', 'KorisniciResource', 
 	    function($scope, $uibModalInstance, $window, $log, _, KorisniciResource) {
+		
+		
 		$scope.ok = function() {
 			//$scope.adres = {};
 			console.log($scope.adres);
@@ -136,6 +178,9 @@ angular.module('nekretnineClientApp')
 			window.location = "#/account/"+$scope.adres.drzava;
 	    };
 		
+	    $scope.cancel = function() {
+	          $uibModalInstance.dismiss('cancel');
+	     };
 	}])
 	
 	.controller('EmailModalCtrl', ['$scope', '$uibModalInstance', 'resource', '$rootScope', '_', 'KorisniciResource', 
@@ -164,11 +209,37 @@ angular.module('nekretnineClientApp')
 		$scope.resource = resource;
 		
 		$scope.ok = function() {
-			KorisniciResource.updatePassword($scope.resource);
-	          $uibModalInstance.close('ok');
-	          alert('Proverite vas email')
-	          $scope.message = "proverite vas email kako bi verifikovali email"
-	          $rootScope.logout();
+			
+			//console.log($scope.sifra); 
+			
+			if($scope.sifra.stara != $scope.sifra.ponovo){
+				if(!$scope.sifra.ponovo < 6) {
+					if($scope.sifra.nova == $scope.sifra.ponovo) {
+						if(!$scope.sifra.nova == '' || !$scope.sifra.ponovo == '') {
+							
+							var korisnik = {
+									password: $scope.sifra.nova
+							};
+							KorisniciResource.updatePassword(korisnik);
+							$uibModalInstance.close('ok');
+							alert('Proverite vas email')
+							$scope.message = "proverite vas email kako bi verifikovali email"
+							$rootScope.logout();
+							
+						} else {
+							$scope.mesagePrazno = true;
+						}
+					} else {
+						$scope.mesageRazliciti = true;
+					}
+				} else {
+					$scope.mesageVelicina = true;
+				}
+			} else {
+				$scope.mesageIsti = true;
+			}
+			/*
+	          */
 	     };
 		
 		$scope.cancel = function() {

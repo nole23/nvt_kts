@@ -5,8 +5,6 @@ import java.util.List;
 import org.jvnet.hk2.annotations.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.konstrukcija.dto.OglasDTO;
-import com.konstrukcija.model.Nekretnina;
 import com.konstrukcija.model.Oglas;
 import com.konstrukcija.repository.OglasRepository;
 

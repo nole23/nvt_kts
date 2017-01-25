@@ -13,17 +13,15 @@ public class ObjavioDTO {
 	public ObjavioDTO(Long id, KorisnikDTO korisnikDTO, KompanijaDTO kompanijaDTO) {
 		super();
 		this.id = id;
-		if(kompanijaDTO == null)
-			this.korisnikDTO = korisnikDTO;
-		if(korisnikDTO == null)
-			this.kompanijaDTO = kompanijaDTO;
+		this.korisnikDTO = korisnikDTO;
+		this.kompanijaDTO = kompanijaDTO;
 	}
 	
 	public ObjavioDTO(Objavio objavio) {
 		this.id = objavio.getId();
-		if(kompanijaDTO == null)
+		if(objavio.getKorisnik() != null)
 			this.korisnikDTO = new KorisnikDTO(objavio.getKorisnik());
-		if(korisnikDTO == null)
+		if(objavio.getKompanija() != null)
 			this.kompanijaDTO = new KompanijaDTO(objavio.getKompanija());
 	}
 

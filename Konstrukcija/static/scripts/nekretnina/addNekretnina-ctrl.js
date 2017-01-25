@@ -50,9 +50,16 @@ angular.module('nekretnineClientApp')
 			var idKompanija = $scope.nekretnina.komapnija;
 			
 			if(!$scope.nekretnina.komapnija) {
-				var idKompanija = null;
-				var idKorisnik = "nesto";
-				RegistrationResouce.addNewEstate(idKategorija, $scope.nekretnina, idKompanija, idKorisnik, callBack);
+				
+				if($routeParams.idKompanija == null) {
+					var idKompanija = null;
+					var idKorisnik = "nesto";
+					RegistrationResouce.addNewEstate(idKategorija, $scope.nekretnina, idKompanija, idKorisnik, callBack);
+				} else {
+					var idKompanija = $routeParams.idKompanija;
+					var idKorisnik = null;
+					RegistrationResouce.addNewEstate(idKategorija, $scope.nekretnina, idKompanija, idKorisnik, callBack);
+				}
 			}
 		}
 		

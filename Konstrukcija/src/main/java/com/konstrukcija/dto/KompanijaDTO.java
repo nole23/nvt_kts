@@ -1,6 +1,10 @@
 package com.konstrukcija.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.konstrukcija.model.Kompanija;
+import com.konstrukcija.model.Objavio;
 
 public class KompanijaDTO {
 
@@ -8,22 +12,31 @@ public class KompanijaDTO {
 	private String nazivKomapnije;
 	private String link;
 	private AdresaDTO adresaDTO;
+	private Set<ObjavioDTO> objavioDTO;
 	
 public KompanijaDTO() {}
 	
-	public KompanijaDTO(Long id, String nazivKomapnije, String link, AdresaDTO adresaDTO) {
+	public KompanijaDTO(Long id, String nazivKomapnije, String link, AdresaDTO adresaDTO, Set<ObjavioDTO> objavioDTO) {
 		super();
 		this.id = id;
 		this.nazivKomapnije = nazivKomapnije;
 		this.link = link;
 		this.adresaDTO = adresaDTO;
+		this.objavioDTO = objavioDTO;
 	}
 	
 	public KompanijaDTO(Kompanija kompanija) {
 		this.id = kompanija.getId();
 		this.nazivKomapnije = kompanija.getNazivKomapnije();
 		this.link = kompanija.getLink();
-		this.adresaDTO = new AdresaDTO(kompanija.getAdresa());
+		if(adresaDTO != null)
+			this.adresaDTO = new AdresaDTO(kompanija.getAdresa());
+		if(objavioDTO != null){
+			this.objavioDTO = new HashSet<ObjavioDTO>();
+			for(Objavio o: kompanija.getObjavio()) {
+				this.objavioDTO.add(new ObjavioDTO(o));
+			}
+		}
 	}
 
 	public Long getId() {
@@ -58,9 +71,13 @@ public KompanijaDTO() {}
 		this.adresaDTO = adresaDTO;
 	}
 
-	@Override
-	public String toString() {
-		return "KompanijaDTO [id=" + id + ", nazivKomapnije=" + nazivKomapnije
-				+ ", link=" + link + ", adresaDTO=" + adresaDTO + "]";
+	public Set<ObjavioDTO> getObjavioDTO() {
+		return objavioDTO;
 	}
+
+	public void setObjavioDTO(Set<ObjavioDTO> objavioDTO) {
+		this.objavioDTO = objavioDTO;
+	}
+
+	
 }
