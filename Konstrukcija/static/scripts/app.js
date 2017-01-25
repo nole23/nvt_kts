@@ -44,6 +44,16 @@ angular
             	controller: 'NekretnineCtrl',
             	controllerAs: 'jedNekretnina'
             })
+            .when('/prodaja/:name', {
+                templateUrl: 'views/kategorija_prikaz.html',
+                controller: 'OglasProdajaCtrl',
+                controllerAs: 'prodaja'
+            })
+            .when('/izdavanje/:name', {
+                templateUrl: 'views/kategorija_izdavanje.html',
+                controller: 'OglasIzdavanjeaCtrl',
+                controllerAs: 'prodaja'
+            })
             .when('/izdavanje', {
                 templateUrl: 'views/izdavanje.html',
                 controller: 'OglasiCtrl',

@@ -32,6 +32,11 @@ angular.module('nekretnineClientApp')
 		};
 		
 		
+		retVal.findBayName = function(tip, name) {
+			var link = '';
+		}
+		
+		
 		return retVal;
 		
 	}]);

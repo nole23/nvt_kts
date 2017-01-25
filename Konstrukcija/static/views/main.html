@@ -36,7 +36,7 @@
 				
 				<div ng-repeat="kategorija in kategorije">
 					<div ng-if="kategorija.tip == 'prodaja'">
-						<a class="btnMain1" href="" ng-click=>{{kategorija.name}} </a></br>
+						<a class="btnMain1" href="#/prodaja/{{kategorija.name}}">{{kategorija.name}} </a></br>
 					</div>
 				</div>
 				
@@ -49,7 +49,7 @@
 				</div>
 				<div ng-repeat="kategorija in kategorije">
 					<div ng-if="kategorija.tip == 'izdavanje'">
-						<a class="btnMain1" href="">{{kategorija.name}}</a></br>
+						<a class="btnMain1" href="#/izdavanje/{{kategorija.name}}">{{kategorija.name}}</a></br>
 					</div>
 				</div>
 			</div>
