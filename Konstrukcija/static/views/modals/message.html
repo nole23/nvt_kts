@@ -1,0 +1,19 @@
+<div class="modal-account">
+  <h3>Ostavite komentar za ovaj oglas</h3>
+</div>
+<div class="modal-form">
+  <form>
+  
+    Porika:<br/>
+    <textarea  rows="20" cols="80" name="poruka" value="poruka" ng-model="jedNekretnina.poruka"></textarea>
+    <div class="poruka-mode">
+    <input type="hidden" ng-model="jedNekretnina.id" />
+    </div>
+    
+  </form>
+  
+</div>
+<div class="modal-comand">
+  <button class="btnAddOglas" type="button" ng-click="ok()">Ok</button>
+  <button class="btnAddOglas" type="button" ng-click="cancel()">Cancel</button>
+ </div>

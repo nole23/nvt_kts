@@ -171,4 +171,31 @@ angular.module('nekretnineClientApp')
 		}
 		
 	}])
+	.controller('OcenaNekretnineCtrl', ['$scope', '$uibModal', '$window', '$timeout', '$routeParams',
+	   '$log', '_', 'NekretnineResource', 
+	   function($scope, $uibModal, $window, $timeout, $routeParams, $log, _, NekretnineResource) {
+		
+		$scope.ocene = function() {
+			var id = $scope.ocena;
+			var values = id.split("&");
+			var ocena = values[0];
+			var idOglas = values[1];
+			
+			NekretnineResource.ocenitiOglas(ocena, idOglas).then(function(success) {
+				console.log(success);
+				if(success.success == 'ocenili') {
+					$scope.messageOcenili= true;
+				    $timeout(function(){
+				        $scope.messageOcenili = false;
+				    }, 8000);
+				} else {
+					$scope.messageNeOcenili= true;
+				    $timeout(function(){
+				        $scope.messageNeOcenili = false;
+				    }, 8000);
+				}
+			})
+		}
+		
+	}])
 	

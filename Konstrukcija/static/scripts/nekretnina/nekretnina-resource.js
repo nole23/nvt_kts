@@ -9,6 +9,7 @@ angular.module('nekretnineClientApp')
 	var objave = [];
 	var nekretnineKorisnika = [];
 	var jedNekretnina = [];
+	var poruka = [];
 	var retVal = {};
 	
 	retVal.getObjave = function() {
@@ -53,6 +54,25 @@ angular.module('nekretnineClientApp')
 	retVal.updateTehnicka = function(resource, id) {
 		
 		return Restangular.all("lokacija/tehnicka/"+id).post(resource);
+	}
+	
+	retVal.ocenitiOglas = function(ocena1, oglas) {
+		var link = 'oglas/ocena/'+oglas;
+		var ocena1 = {
+				ocena: ocena1
+		};
+		return Restangular.all(link).post(ocena1).then(function(success) {
+			poruka = success;
+			return poruka;
+		})
+	}
+	
+	retVal.prijavaOglasa = function(id) {
+		var link = 'oglas/prijava/'+id;
+		return Restangular.one(link).get().then(function(success) {
+			poruka = success;
+			return poruka;
+		});
 	}
 	
 	return retVal;

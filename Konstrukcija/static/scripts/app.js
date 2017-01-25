@@ -45,7 +45,6 @@ angular
             	controllerAs: 'jedNekretnina'
             })
             .when('/izdavanje', {
-            	
                 templateUrl: 'views/izdavanje.html',
                 controller: 'OglasiCtrl',
                 controllerAs: 'izdavanje'

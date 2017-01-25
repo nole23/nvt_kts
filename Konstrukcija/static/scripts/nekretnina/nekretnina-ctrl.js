@@ -5,9 +5,9 @@
 'use strict';
 
 angular.module('nekretnineClientApp')
-	.controller('NekretnineCtrl', ['$scope', '$uibModal', '$routeParams',
+	.controller('NekretnineCtrl', ['$scope', '$uibModal', '$timeout', '$routeParams',
 	   '$log', '_', 'NekretnineResource', 
-	   function($scope, $uibModal, $routeParams, $log, _, NekretnineResource) {
+	   function($scope, $uibModal, $timeout, $routeParams, $log, _, NekretnineResource) {
 		
 		$scope.nekretnina = {};
 		
@@ -25,11 +25,67 @@ angular.module('nekretnineClientApp')
 		}
 		
 		$scope.order_id = $routeParams.idNekretnina;
-		console.log('jbg '+$routeParams.idNekretnina);
+		
+		/**
+		 * Ispis svih nekretnina
+		 */
 		NekretnineResource.getNekretnina($routeParams.idNekretnina).then(function(items) {
 			$scope.jedNekretnina = items;
-			console.log('test sa necim '+items.nekretninaDTO.objavioDTO[0].korisnikDTO.fname);
 		})
+		
+		/**
+		 * Prijavljivanje nevalidnog oglasa
+		 */
+		$scope.prijava = function(id) {
+			NekretnineResource.prijavaOglasa(id).then(function(success) {
+				if(success.success == 'prijavljen') {
+					$scope.messageOglasNevalidan = true;
+					$timeout(function(){
+				        $scope.messageOglasNevalidan = false;
+				    }, 8000);
+				} 
+					
+			});
+		}
+		
+		/**
+		 * Dodati poruku za datu nekretninu
+		 */
+		$scope.poruka = function(resource) {
+			if(!resource){
+				resource = {
+						poruka: ''
+				};
+			}
+			var modalInstance = $uibModal.open({
+				templateUrl: 'views/modals/message.html',
+				controller: 'MessageModalCtrl',
+				scope: $scope,
+				resolve: {
+					resource: function() {
+						return resource;
+					}
+				}
+			});
+		}
+		
+	}])
 	
+	.controller('MessageModalCtrl', ['$scope', '$uibModalInstance', 'resource', '$log', '_', 'NekretnineResource', 
+	    function($scope, $uibModalInstance, resource, $log, _, NekretnineResource) {
+		
+		$scope.resource = resource;
+		console.log($scope.jedNekretnina);
+		
+		$scope.ok = function() {
+			/*NekretnineResource.sendMessage($scope.resource);
+	          $uibModalInstance.close('ok');
+	        };*/
+		};
+		
+		$scope.cancel = function() {
+	          $uibModalInstance.dismiss('cancel');
+	        };
+		
 		
 	}])

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.KomentarDTO;
+import com.konstrukcija.dto.MessageDTO;
 import com.konstrukcija.dto.OcenaDTO;
 import com.konstrukcija.dto.OglasDTO;
 import com.konstrukcija.model.Komentar;
@@ -143,15 +144,16 @@ public class OglasController {
 	 * @return 
 	 */
 	@RequestMapping(value = "/ocena/{idOglas}", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<String> getOcenaOglas(@PathVariable Long idOglas, @RequestBody OcenaDTO ocenaDTO) {
+	public ResponseEntity<MessageDTO> getOcenaOglas(@PathVariable Long idOglas, @RequestBody OcenaDTO ocenaDTO) {
 		
+		MessageDTO messageDTO = new MessageDTO();
 		Ocena ocena = new Ocena();
 		ocena.setOcena(ocenaDTO.getOcena());
 		ocena.setOglas(oglasRepository.findOne(idOglas));
 		
 		ocena = ocenaService.save(ocena);
-		
-		return new ResponseEntity<>(HttpStatus.OK);
+		messageDTO.setSuccess("ocenili");
+		return new ResponseEntity<>(messageDTO, HttpStatus.OK);
 	}
 	
 	/**
@@ -196,11 +198,12 @@ public class OglasController {
 	 * @param idKorisnik korisnik koji prijavljuje oglas
 	 * @return cuva se u bazu i stize notifikacija adminu da obrise oglas
 	 */
-	@RequestMapping(value = "/prijava/{idOglas}/{idKorisnik}", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<String> getPrijavaOglasa(@PathVariable Long idOglas, @PathVariable Long idKorisnik) {
+	@RequestMapping(value = "/prijava/{idOglas}", method = RequestMethod.GET)
+	public ResponseEntity<MessageDTO> getPrijavaOglasa(@PathVariable Long idOglas, Principal principal) {
 		
+		MessageDTO messageDTO = new MessageDTO();
 		Oglas oglas = oglasRepository.findOne(idOglas);
-		Korisnik korisnik = korisnikService.findOne(idKorisnik);
+		Korisnik korisnik = korisnikService.findByUsername(principal.getName());
 		PrijavaOglasa prijavaOglasa = new PrijavaOglasa();
 		
 		prijavaOglasa.setKorisnik(korisnik);
@@ -209,7 +212,8 @@ public class OglasController {
 		
 		prijavaOglasaRepository.save(prijavaOglasa);
 		
-		return new ResponseEntity<>(HttpStatus.OK);
+		messageDTO.setSuccess("prijavljen");
+		return new ResponseEntity<>(messageDTO, HttpStatus.OK);
 	}
 	
 }
