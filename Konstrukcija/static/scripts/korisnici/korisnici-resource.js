@@ -89,6 +89,23 @@ angular.module('nekretnineClientApp')
 			});
 		}
 		
+		
+		
+		retVal.addAdmina = function(id, callBack) {
+			var link = 'admin/add/admin/'+id;
+			return Restangular.one(link).get().then(function(success) {
+				//console.log(success.success);
+				callBack(success)
+			});
+		}
+		
+		retVal.getAllNevalidni = function() {
+			return Restangular.all('admin/prijavljena/nekretnina').getList().then(function(entries) {
+				users = entries;
+				return users;
+			});
+		}
+		
 		return retVal;
 		
 	}]);

@@ -6,16 +6,16 @@
 		<ul class="navbar">
 			
 			<li><a href="" onclick="myFunction(1)" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='korisnik'">Moj nalog</a></li>
-			<li><a href="" onclick="myFunction(2)" ng-if="korisnik.zaposleniDTO[0] != null">Kompanija</a></li>
+			<li><a href="" onclick="myFunction(2)" ng-if="korisnik.zaposleniDTO[0] != null && getCurrentUserRole()&&getCurrentUserRole()=='korisnik'">Kompanija</a></li>
 			
 			
-			<li><a ng-if="korisnik.zaposleniDTO[0] != null" >Oglasi kompanije</a>
+			<li><a ng-if="korisnik.zaposleniDTO[0] != null && getCurrentUserRole()&&getCurrentUserRole()=='korisnik'" >Oglasi kompanije</a>
 				<ul>
 					<li><a ng-controller="KompanijaOglasiCtrl" href="#/add/estate/company/{{korisnik.zaposleniDTO[0].kompanijaDTO.id}}" ng-click="azuriranjeLicnih(korisnik)" >Dodati novi oglas kompaniji</a></li>
 					
 				</ul> 
 			</li>
-			<li><a href="" ng-if="korisnik.zaposleniDTO[0] == null">Moji podaci</a>
+			<li><a href="" ng-if="korisnik.zaposleniDTO[0] == null && getCurrentUserRole()&&getCurrentUserRole()=='korisnik'">Moji podaci</a>
 				<ul>
 					<li><a href="" ng-click="azuriranjeLicnih(korisnik)" >Promena podataka</a></li>
 					<li><a href="" ng-click="azuriranjeAdrese(korisnik.adresaDTO)" ng-if="korisnik.adresaDTO != null">Promena adrese</a></li>
@@ -24,7 +24,7 @@
 					<li><a href="" ng-click="azuriranjeSifre()">Promena sifre</a></li>
 				</ul>         
 			</li>
-			<li><a href="" ng-if="korisnik.zaposleniDTO[0] != null">Podaci</a>
+			<li><a href="" ng-if="korisnik.zaposleniDTO[0] != null && getCurrentUserRole()&&getCurrentUserRole()=='korisnik'">Podaci</a>
 				<ul>
 					<li><a href="" ng-if="korisnik.zaposleniDTO[0].uloga == 'gazda'" ng-controller="KompanijaCtrl" ng-click="azuriranjeKompanije(korisnik.zaposleniDTO[0].kompanijaDTO)">Podaci kompanije</a></li>
 					<li><a href="" ng-if="korisnik.zaposleniDTO[0].uloga == 'gazda'" ng-controller="KompanijaCtrl" ng-click="azuriranjeAdreseKompanije(korisnik.zaposleniDTO[0].kompanijaDTO.adresaDTO)">Adresa kompanije</a></li>
@@ -37,7 +37,7 @@
 				</ul>         
 			</li>
 			
-			<li><a href="">Uloge</a>
+			<li ng-if="getCurrentUserRole()&&getCurrentUserRole()=='korisnik'"><a href="">Uloge</a>
 				<ul>
 					<li><a href="" onclick="myFunction(3)" ng-if="korisnik.zaposleniDTO[0].uloga != 'gazda'">Kreiranje kompanije</a></li>
 					<!-- <li><a href="" onclick="myFunction(16)" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='korisnik'">Kontaktiranje administratora</a></li> -->
@@ -46,11 +46,139 @@
 					<li><a href="" onclick="myFunction(5)" ng-if="korisnik.zaposleniDTO[0] != null">Svi zaposleni</a></li>
 				</ul>         
 			</li>
+			
+			<!---------------------------------------- Samo admin moze da vidi ove komande ---------------------------------------------------->
+			<li><a href="" onclick="myFunction(6)" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='admin'">Moj nalog</a></li>
+			<li><a href="" onclick="myFunction(7)" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='admin'">Kompanija</a></li>
+			<li ng-if="getCurrentUserRole()&&getCurrentUserRole()=='admin'"><a href="">Administratura</a>
+				<ul>
+					<li><a href="" onclick="myFunction(8)">Dodati admina</a></li>
+					<li><a href="" onclick="myFunction(9)" >Izbrisati admina</a></li>
+				</ul>         
+			</li>
+			<li><a href="" onclick="myFunction(10)" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='admin'">Nevalidni oglasi</a></li>
 			<li><a href ng-click="logout()">Odjavi se</a></li>
 		</ul>
 		
 	
 	</div>
+	
+	
+	
+	
+	
+	<!-- ------------------------------------------------Administratorski deo------------------------------------------------------- -->
+	
+	<!-- Pocetna stranica prilikom logovanja -->
+	<div id="myDropdown6" ng-controller="KorisnikNekretninaCtrl" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='admin'">
+		<div class="account-container">
+			<p>Moj nalog</p>
+		</div>
+		
+		<div class="account-body" style="margin: 0" >
+			<div class="body-header">
+				<p>Upravo ste prijavljeni kao administrator sajta!</p>
+			</div>
+
+		</div>
+	</div>
+	
+		<!-- Zahtev za kreiranje nove kompanije -->
+	<div id="myDropdown7" style="display: none">
+		<div class="account-container">
+			<p>Prihvatanje kompanije kao validne</p>
+		</div>
+		
+		<div class="account-body" style="margin: 0"">
+			<div class="body-header">
+				
+				<p style="font-size: 15px; margin: 0 0 0 2%; padding: 0">&#9733 Finkcija je jos uvek u fazi izrade. Molimo vas sacekajte. Hvala na strpljenju</p>
+
+			</div>
+		</div>
+	</div>
+	
+	<div id="myDropdown9" style="display: none">
+		<div class="account-container">
+			<p>Izbisati admina</p>
+		</div>
+		
+		<div class="account-body" style="margin: 0"">
+			<div class="body-header">
+				
+				<p style="font-size: 15px; margin: 0 0 0 2%; padding: 0">&#9733 Trenutno se izradjuje ova funkcija. Molimo vas budete strpljivi. Hvala</p>
+
+			</div>
+		</div>
+	</div>
+	
+	<div id="myDropdown8" style="display: none">
+		<div class="account-container">
+			<p>Pronaci korisnika</p>
+		</div>
+		
+		<div class="account-body" style="margin: 0">
+			<div class="body-header">
+				<p>Pronadjite korisnika pomocu emaila ili korisnickog imena i proglasite ga adminom!</p>
+				
+			</div>
+			
+			<div class="container1-body">
+				<div class="forma-firma1" >
+					<input type="text" placeholder="Unesite email ili korisnicko ime" ng-model="search.$"/>
+				</div>
+				
+				
+			</div>
+			
+			<div class="container1-body1" >
+				<div ng-repeat="user in users | filter:search">
+					<div class="korisnik">
+						<h3>{{user.fname}} {{user.lname}} </h3>
+						<input type="hidden" value="{{user.email}}" />
+						<input type="hidden" value="{{user.username}}" />
+						<a href style="margin: 10% 0 0 0; float: right;" class="btnAddOglas" ng-click="addAdmin(user.id)">Admin</a >
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<div id="myDropdown10" style="display: none">
+		<div class="account-container">
+			<p>Ispis svih nevalidnih oglasa</p>
+		</div>
+		
+		<div class="account-body" style="margin: 0">
+			<div class="body-header">
+				<p>Ovde se nalaze svi nevalidni oglasi!</p>
+				
+			</div>
+			
+			
+			<div class="container1-body1" >
+				<div ng-repeat="nevalidni in nevalidni">
+					<div class="korisnik">
+						<h3>{{nevalidni.oglasDTO.nekretninaDTO.naziv_nekretnine}} {{nevalidni.oglasDTO.nekretninaDTO.cena}} </h3>
+						<a href style="margin: 10% 0 0 0; float: right;" class="btnAddOglas" ng-click="brisanjeNekretnine(nevalidni.oglasDTO.nekretninaDTO.id)">Brisanje</a >
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	<!-- Poruka da je oglas obrisan -->
@@ -60,11 +188,9 @@
 	<div ng-controller="OglasiCtrl" class="message-login" style="margin: 10% 0 0 0" ng-if="messageUpdatTehnicka == true">
 		<h3>Obrisali ste nekretninu</h3>
 	</div>
-	
-	
-	
+
 	<!-- Pocetna stranica prilikom logovanja -->
-	<div id="myDropdown1" ng-controller="KorisnikNekretninaCtrl">
+	<div id="myDropdown1" ng-controller="KorisnikNekretninaCtrl" ng-if="getCurrentUserRole()&&getCurrentUserRole()=='korisnik'">
 		<div class="account-container">
 			<p>Moj nalog</p>
 		</div>
@@ -264,7 +390,7 @@
 	
 	
 	<!-- Pregled svih zaposlenih u jednom firmi -->
-	<div class="message-login" style="margin: 10% 0 0 0" ng-if="messageRemove == true">
+	<div ng-controller="OglasiCtrl" class="message-login" style="margin: 10% 0 0 0" ng-if="messageRemove == true">
 		<h3>Uklonili ste zaposlenog iz liste</h3>
 	</div>
 	<div id="myDropdown5" style="display: none">
@@ -350,6 +476,36 @@ function myFunction(id) {
 		document.getElementById("myDropdown3").style.display ="none";
 		document.getElementById("myDropdown4").style.display ="none";
 		document.getElementById("myDropdown5").style.display ="";
+	} else if(id == 6) {
+		document.getElementById("myDropdown6").style.display ="";
+		document.getElementById("myDropdown7").style.display ="none";
+		document.getElementById("myDropdown8").style.display ="none";
+		document.getElementById("myDropdown9").style.display ="none";
+		document.getElementById("myDropdown10").style.display ="none";
+	} else if(id == 7){
+		document.getElementById("myDropdown6").style.display ="none";
+		document.getElementById("myDropdown7").style.display ="";
+		document.getElementById("myDropdown8").style.display ="none";
+		document.getElementById("myDropdown9").style.display ="none";
+		document.getElementById("myDropdown10").style.display ="none";
+	} else if(id == 8){
+		document.getElementById("myDropdown6").style.display ="none";
+		document.getElementById("myDropdown7").style.display ="none";
+		document.getElementById("myDropdown8").style.display ="";
+		document.getElementById("myDropdown9").style.display ="none";
+		document.getElementById("myDropdown10").style.display ="none";
+	} else if(id == 9){
+		document.getElementById("myDropdown6").style.display ="none";
+		document.getElementById("myDropdown7").style.display ="none";
+		document.getElementById("myDropdown8").style.display ="none";
+		document.getElementById("myDropdown9").style.display ="";
+		document.getElementById("myDropdown10").style.display ="none";
+	} else if(id == 10){
+		document.getElementById("myDropdown6").style.display ="none";
+		document.getElementById("myDropdown7").style.display ="none";
+		document.getElementById("myDropdown8").style.display ="none";
+		document.getElementById("myDropdown9").style.display ="none";
+		document.getElementById("myDropdown10").style.display ="";
 	}
 	
 }

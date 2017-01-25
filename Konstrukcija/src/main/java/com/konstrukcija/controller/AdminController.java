@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.konstrukcija.dto.KategorijaDTO;
 import com.konstrukcija.dto.KorisnikDTO;
 import com.konstrukcija.dto.MessageDTO;
+import com.konstrukcija.dto.PrijavaOglasaDTO;
 import com.konstrukcija.model.Admin;
 import com.konstrukcija.model.Kategorija;
 import com.konstrukcija.model.Korisnik;
@@ -23,12 +24,14 @@ import com.konstrukcija.model.Lokacija;
 import com.konstrukcija.model.Nekretnina;
 import com.konstrukcija.model.Objavio;
 import com.konstrukcija.model.Oglas;
+import com.konstrukcija.model.PrijavaOglasa;
 import com.konstrukcija.model.TehnickaOpremljenost;
 import com.konstrukcija.model.UserAuthority;
 import com.konstrukcija.repository.AdminRepository;
 import com.konstrukcija.repository.KategorijaRepository;
 import com.konstrukcija.repository.ObjavioRepository;
 import com.konstrukcija.repository.OglasRepository;
+import com.konstrukcija.repository.PrijavaOglasaRepository;
 import com.konstrukcija.repository.UserAuthorityRepository;
 import com.konstrukcija.service.KorisnikService;
 import com.konstrukcija.service.LokacijaService;
@@ -69,6 +72,9 @@ public class AdminController {
 	
 	@Autowired
 	private AdminRepository adminRepository;
+	
+	@Autowired
+	private PrijavaOglasaRepository prijavljenOglasRepository;
 	
 	@RequestMapping(value = "/add/admin/{idKorisnik}}", method = RequestMethod.GET)
 	public ResponseEntity<MessageDTO> addAdmin(Principal principal, @PathVariable Long idKorisnik) {
@@ -118,16 +124,16 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value = "/prijavljena/nekretnina", method = RequestMethod.GET)
-	public ResponseEntity<List<KategorijaDTO>> getPrijavljenaNekretnina(Principal principal) {
+	public ResponseEntity<List<PrijavaOglasaDTO>> getPrijavljenaNekretnina(Principal principal) {
 		
-		List<Kategorija> kategorija = kategorijaService.findAll();
+		List<PrijavaOglasa> prijavljenOglas = prijavljenOglasRepository.findAll();
 		
-		List<KategorijaDTO> kategorijaDTO = new ArrayList<>();
-		for(Kategorija k: kategorija) {
-			kategorijaDTO.add(new KategorijaDTO(k));
+		List<PrijavaOglasaDTO> prijavaOglasaDTO = new ArrayList<>();
+		for(PrijavaOglasa o: prijavljenOglas) {
+			prijavaOglasaDTO.add(new PrijavaOglasaDTO(o));
 		}
 		
-		return new ResponseEntity<>(kategorijaDTO,HttpStatus.OK);
+		return new ResponseEntity<>(prijavaOglasaDTO,HttpStatus.OK);
 	}
 	
 	/**

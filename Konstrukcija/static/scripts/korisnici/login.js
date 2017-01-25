@@ -36,9 +36,11 @@ angular.module('nekretnineClientApp') // ... omitted code
 			} else if(success.error == null) {
 				$log.info('success!');
 				console.log(success.rola);
-				$scope.messageLogin = success.rola;
+				
 				window.location = '#/account';
-				$scope.messageLogin = 'hahahah';
+				
+				
+				
 			}
 		}
 	 

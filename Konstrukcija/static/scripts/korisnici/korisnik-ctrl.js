@@ -18,6 +18,10 @@ angular.module('nekretnineClientApp')
 			KorisniciResource.addZaposlenog(id, callBack);
 		}
 		
+		$scope.addAdmin = function(id) {
+			KorisniciResource.addAdmina(id, callBack);
+		}
+		
 		function callBack(success) {
 			if(success.success == 'uspesno') {
 				$scope.messageAdd = true;
@@ -45,6 +49,11 @@ angular.module('nekretnineClientApp')
 		
 		KorisniciResource.getAllUsers().then(function (items) {
 			$scope.users = items;
+			
+		});
+		
+		KorisniciResource.getAllNevalidni().then(function (items) {
+			$scope.nevalidni = items;
 			
 		});
 		

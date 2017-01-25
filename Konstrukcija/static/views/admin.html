@@ -1,0 +1,244 @@
+
+<div class="account">
+	<div id="wrap">
+	
+	
+		<ul class="navbar">
+			
+			<li><a href="" onclick="myFunction(1)" >Moj nalog</a></li>
+			<li><a href="" onclick="myFunction(2)" >Kompanija</a></li>
+			<li><a href="" onclick="myFunction(3)" >Nevalidni oglasi</a></li>
+			<li><a href="" onclick="myFunction(4)" >Korisnici</a></li>
+			<li><a href="" onclick="myFunction(5)" >Admini</a></li>
+			<li><a href ng-click="logout()">Odjavi se</a></li>
+		</ul>
+		
+	
+	</div>
+	
+	
+	
+	<!-- Pocetna stranica admina prilikom logovanja -->
+	<div id="myDropdown1" ng-controller="KorisnikNekretninaCtrl">
+		<div class="account-container">
+			<p>Moj nalog</p>
+		</div>
+		
+		<div class="account-body" style="margin: 0" >
+			<div class="body-header">
+				<p>Administratorski panel</p>
+			</div>
+			
+			<!-- Ukoliko nema ni jednog oglasa  -->
+			<div class="container1-body" ng-show="poruka == false">
+				<p>Mozete dodavati admine|menadzere</p>
+				<p>Mozete brisati admine|menadzere</p>
+				<p>Pratite ispravnost ponasanja</p>
+				
+			</div>
+					
+		</div>
+	</div>
+	
+	
+	<!-- Pregled svih oglasa kompanije kao i dodavanje novog oglasa -->
+	<div id="myDropdown2" style="display: none">
+		<div class="account-container">
+			<p>Ova funkcija je jos uvjek u izgradnji. Hvala na razumjevanju</p>
+		</div>
+		
+		<div class="account-body" style="margin: 0" ng-controller="KompanijaOglasiCtrl">
+			
+		
+		</div>
+		
+	</div>
+	
+	
+	
+	
+	<!-- Zahtev za kreiranje nove kompanije -->
+	<div id="myDropdown3" style="display: none">
+		<div class="account-container">
+			<p>Kreiranje kompanije</p>
+		</div>
+		
+		<div class="account-body" style="margin: 0" ng-controller="KompanijaCtrl">
+			<div class="body-header">
+				<p>Da bi ste registrovali kompaniju morate popuniti formu ispod!</p>
+				<p style="font-size: 15px; margin: 0 0 0 2%; padding: 0">&#9733 Molimo vas unesite tacane podatke za kontakt, kako bi vas nasi administratori kontaktirali, radi potpune registracije</p>
+				<p style="font-size: 15px; margin: 0 0 0 2%; padding: 0">&#9733 Strogo je zabranjeno unositi netacne podatke!</p>
+				<p style="font-size: 15px; margin: 0 0 0 2%; padding: 0">&#9733 Ukoliko ne dostavite potrebnu dokumentaciju u periodu probne verzije kompanije, uzimamo pravo da Vam ugasimo profil!</p>
+				<p style="font-size: 15px; margin: 0 0 0 2%; padding: 0">&#9733 Za dodatna pitanja kontaktirajte nas na <a href>email</a></p>
+			</div>
+			
+			<div class="container1-body">
+				<div class="forma-firma" >
+					
+					<div class="message-login" style="margin: 5% 0 0 0" controller="KompanijaCtrl" ng-if="messageKompani == 'nisteDodali'">
+						<h3>Vec ste vlasnik jedne komapnije, ne mozete da imate dve kompanije registrovane. </h3>
+					</div>
+					<div class="message-login" style="margin: 5% 0 0 0" ng-if="messageAddKompani == 'proslo'">
+						<h3>Uspesno ste kreirali kompaniju 10 = {{value}}</h3>
+					</div>
+					<form >
+						<input type="text" placeholder="Naziv firme" ng-model="kompanija.nazivKomapnije"/>
+						<input type="text" placeholder="Link ka sajtu" ng-model="kompanija.link"/>
+						
+						<button style="margin: 1% 0 1% 0; float: right;" class="btnAddOglas" ng-click="createCompany()">Posaljite zahtev</button >
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	<!-- Dodavanje novog zaposlenog -->
+
+	<div id="myDropdown4" style="display: none">
+		<div class="account-container">
+			<p>Pronaci korisnika</p>
+		</div>
+		
+		<div class="account-body" style="margin: 0">
+			<div class="body-header">
+				<p>Pronadjite korisnika pomocu emaila ili korisnickog imena i proglasite ga administratorom!</p>
+				
+			</div>
+			
+			<div class="container1-body">
+				<div class="forma-firma1" >
+					<input type="text" placeholder="Unesite email ili korisnicko ime" ng-model="search.$"/>
+				</div>
+				
+				
+			</div>
+			
+			<div class="container1-body1" >
+				<div ng-repeat="user in users | filter:search">
+					<div class="korisnik">
+						<h3>{{user.fname}} {{user.lname}} </h3>
+						<input type="hidden" value="{{user.email}}" />
+						<input type="hidden" value="{{user.username}}" />
+						<a href style="margin: 10% 0 0 0; float: right;" class="btnAddOglas" ng-click="addAdmin(user.id)">Dodati</a >
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	<!-- Pregled svih zaposlenih u jednom firmi -->
+	<div class="message-login" style="margin: 10% 0 0 0" ng-if="messageRemove == true">
+		<h3>Uklonili ste zaposlenog iz liste</h3>
+	</div>
+	<div id="myDropdown5" style="display: none">
+		<div class="account-container">
+			<p>Kompanija &#9733{{korisnik.zaposleniDTO[0].kompanijaDTO.nazivKomapnije}}&#9733</p>
+		</div>
+		
+		<div class="account-body" style="margin: 0" ng-controller="KompanijaZaposleniCtrl">
+			<div class="body-header">
+				<p>Zaposleni ( {{zaposleni.length}} ) </p>
+			</div>
+				
+			<div ng-repeat="zaposlen in zaposleni">
+				<div class="container1-body-estate" >
+					<div class="estate-image">
+						<img src="/" />
+					</div>
+					
+					<div class="oglas">
+						<a class="btnMain" href>{{zaposlen.korisnikDTO.fname}} {{zaposlen.korisnikDTO.lname}}</a><br/>
+						<p style="margin: 10% 0 0 0;">Adresa: {{zaposlen.korisnikDTO.adresaDTO.drzava}}, {{zaposlen.korisnikDTO.adresaDTO.grad}}</p>
+						<p>Vi ste <spam  ng-if="zaposlen.korisnikDTO.zaposleniDTO[0].uloga == 'gazda'" >Vlasnik</spam> <spam ng-if="zaposlen.korisnikDTO.zaposleniDTO[0].uloga != 'gazda'" >Radnik</spam><br/>Zelimo Vam uspesan dan!
+					</div>
+					
+					<div class="oglas-komande" >
+						<div class="cena">
+							
+						</div>
+						<div style="text-align: center; margin-top: 30%;">
+							<!-- <a href ng-click='obnoviti(nekretnina)'>Obnovi</a><br/> -->
+							<a href  ng-if="zaposlen.korisnikDTO.zaposleniDTO[0].uloga != 'gazda'" ng-click='deleteZaposlenog(zaposlen)'>Otkaz zaposlenom</a><br/>
+							<a href ng-if="zaposlen.korisnikDTO.zaposleniDTO[0].uloga == 'gazda'">Vlasniku kompanije nije moguce dati otkaz</a><br/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+</div>
+
+<script>
+function myFunction(id) {
+	//var div = 'myDropdown'+id;
+	//document.getElementById(div).style.display ="";
+	//for(i=1; i<18; i++) {
+	//	if(i != id){
+	//		var div1 = 'myDropdown'+i
+	//		document.getElementById(div1).style.display ="none";
+	//	}
+	//	
+	//}
+	
+	if(id == 1) {
+		document.getElementById("myDropdown1").style.display ="";
+		document.getElementById("myDropdown2").style.display ="none";
+		document.getElementById("myDropdown3").style.display ="none";
+		document.getElementById("myDropdown4").style.display ="none";
+		document.getElementById("myDropdown5").style.display ="none";
+	} else if(id == 2){
+		document.getElementById("myDropdown1").style.display ="none";
+		document.getElementById("myDropdown2").style.display ="";
+		document.getElementById("myDropdown3").style.display ="none";
+		document.getElementById("myDropdown4").style.display ="none";
+		document.getElementById("myDropdown5").style.display ="none";
+	} else if(id == 3){
+		document.getElementById("myDropdown1").style.display ="none";
+		document.getElementById("myDropdown2").style.display ="none";
+		document.getElementById("myDropdown3").style.display ="";
+		document.getElementById("myDropdown4").style.display ="none";
+		document.getElementById("myDropdown5").style.display ="none";
+	} else if(id == 4){
+		document.getElementById("myDropdown1").style.display ="none";
+		document.getElementById("myDropdown2").style.display ="none";
+		document.getElementById("myDropdown3").style.display ="none";
+		document.getElementById("myDropdown4").style.display ="";
+		document.getElementById("myDropdown5").style.display ="none";
+	} else if(id == 5){
+		document.getElementById("myDropdown1").style.display ="none";
+		document.getElementById("myDropdown2").style.display ="none";
+		document.getElementById("myDropdown3").style.display ="none";
+		document.getElementById("myDropdown4").style.display ="none";
+		document.getElementById("myDropdown5").style.display ="";
+	}
+	
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
