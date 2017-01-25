@@ -8,6 +8,7 @@ angular.module('nekretnineClientApp')
 		
 		var kategorije = [];
 		var nekretnine = [];
+		var poruka = [];
 		var retVal = {};
 		
 		retVal.getAllKategorija = function() {
@@ -23,6 +24,13 @@ angular.module('nekretnineClientApp')
 				return nekretnine;
 			});
 		};
+		
+		retVal.getAddKategorija = function(kategorija) {
+			return Restangular.all('admin/add/kategorija').post(kategorija).then(function(success) {
+				poruka = success;
+				return poruka;
+			})
+		}
 		
 		return retVal;
 		

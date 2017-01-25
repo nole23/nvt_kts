@@ -79,6 +79,22 @@
 			<div class="body-header">
 				<p>Upravo ste prijavljeni kao administrator sajta!</p>
 			</div>
+			
+			<div style="margin: 5% 0 0 0;">
+				<h3 style="margin: 0 0 1% 5%;">pregled svih kategorija</h3>
+				<div class="eader-left-estate">
+					<select class="stil-select1" id="tip" ng-controller="KategorijeCtrl">
+						<option>Prodaja</option>
+						<option ng-repeat="kategorija in kategorije" ng-if="kategorija.tip == 'prodaja'">{{kategorija.name}}</option>
+					</select>
+					
+					<select class="stil-select1" id="tip" ng-controller="KategorijeCtrl">
+						<option>Izdavanje</option>
+						<option ng-repeat="kategorija in kategorije" ng-if="kategorija.tip == 'prodaja'">{{kategorija.name}}</option>
+					</select>
+				</div>
+				
+			</div>
 
 		</div>
 	</div>
@@ -179,7 +195,7 @@
 	
 	
 	
-	
+<!-- ------------------------------------------------KORISNIK VIDI-------------------------------------------------- -->	
 	
 	<!-- Poruka da je oglas obrisan -->
 	<div ng-controller="OglasiCtrl" class="message-login" style="margin: 10% 0 0 0" ng-if="messageDelete == true">
