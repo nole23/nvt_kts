@@ -19,6 +19,8 @@ public class Zaposleni {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Kompanija kompanija;
+	
+	private String uloga;
 
 	public Long getId() {
 		return id;
@@ -44,9 +46,11 @@ public class Zaposleni {
 		this.kompanija = kompanija;
 	}
 
-	@Override
-	public String toString() {
-		return "Zaposleni [id=" + id + ", korisnik=" + korisnik
-				+ ", kompanija=" + kompanija + "]";
+	public String getUloga() {
+		return uloga;
+	}
+
+	public void setUloga(String uloga) {
+		this.uloga = uloga;
 	}
 }

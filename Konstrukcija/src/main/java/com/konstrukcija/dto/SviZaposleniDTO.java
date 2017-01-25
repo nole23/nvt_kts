@@ -2,16 +2,16 @@ package com.konstrukcija.dto;
 
 import com.konstrukcija.model.Zaposleni;
 
-public class ZaposleniDTO {
-
+public class SviZaposleniDTO {
+	
 	private Long id;
 	private KorisnikDTO korisnikDTO;
 	private KompanijaDTO kompanijaDTO;
 	private String uloga;
 	
-	public ZaposleniDTO() {}
+	public SviZaposleniDTO() {}
 	
-	public ZaposleniDTO(Long id, KorisnikDTO korisnikDTO, KompanijaDTO kompanijaDTO, String uloga) {
+	public SviZaposleniDTO(Long id, KorisnikDTO korisnikDTO, KompanijaDTO kompanijaDTO, String uloga) {
 		super();
 		this.id = id;
 		this.kompanijaDTO = kompanijaDTO;
@@ -19,13 +19,11 @@ public class ZaposleniDTO {
 		this.uloga = uloga;
 	}
 	
-	public ZaposleniDTO(Zaposleni zaposleni) {
+	public SviZaposleniDTO(Zaposleni zaposleni) {
 		this.id = zaposleni.getId();
 		this.uloga = zaposleni.getUloga();
-		if(zaposleni.getKompanija() != null)
-			this.kompanijaDTO = new KompanijaDTO(zaposleni.getKompanija());
-		if(zaposleni.getKorisnik() == null)
-			this.korisnikDTO = new KorisnikDTO(zaposleni.getKorisnik());
+		this.kompanijaDTO = new KompanijaDTO(zaposleni.getKompanija());
+		this.korisnikDTO = new KorisnikDTO(zaposleni.getKorisnik());
 		
 	}
 

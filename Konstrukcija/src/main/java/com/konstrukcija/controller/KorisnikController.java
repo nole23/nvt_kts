@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.konstrukcija.dto.AdresaDTO;
+import com.konstrukcija.dto.KorisniciListaDTO;
 import com.konstrukcija.dto.KorisnikDTO;
 import com.konstrukcija.dto.LoginDTO;
 import com.konstrukcija.dto.MessageDTO;
@@ -89,6 +90,18 @@ public class KorisnikController {
 		return new ResponseEntity<>(korisnikDTO, HttpStatus.OK);
 	}
 	
+	
+	@RequestMapping(value="/all/users",method = RequestMethod.GET)
+	public ResponseEntity<List<KorisniciListaDTO>> getKorisnikAll() {
+		List<Korisnik> korisnik = korisnikServer.findAll();
+		
+		List<KorisniciListaDTO> korisnikDTO = new ArrayList<>();
+		for(Korisnik k : korisnik) {
+			if(k.isActive() == true)
+				korisnikDTO.add(new KorisniciListaDTO(k));
+		}
+		return new ResponseEntity<>(korisnikDTO, HttpStatus.OK);
+	}
 
 	/**
 	 * 

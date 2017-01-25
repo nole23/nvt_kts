@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.konstrukcija.model.Korisnik;
-import com.konstrukcija.model.Objavio;
 import com.konstrukcija.model.Zaposleni;
 
 public class KorisnikDTO {
@@ -38,9 +37,11 @@ public class KorisnikDTO {
 		this.username = korisnik.getUsername();
 		if(korisnik.getAdresa() != null)
 			this.adresaDTO = new AdresaDTO(korisnik.getAdresa());
-		this.zaposleniDTO = new HashSet<ZaposleniDTO>();
-		for(Zaposleni z: korisnik.getZaposleni()) {
-			this.zaposleniDTO.add(new ZaposleniDTO(z));
+		if(korisnik.getZaposleni() != null) {
+			this.zaposleniDTO = new HashSet<ZaposleniDTO>();
+			for(Zaposleni z: korisnik.getZaposleni()) {
+				this.zaposleniDTO.add(new ZaposleniDTO(z));
+			}
 		}
 		
 	}

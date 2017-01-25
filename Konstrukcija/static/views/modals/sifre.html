@@ -1,16 +1,44 @@
-<div class="modal-account">
-  <h3>Izmenite sifru</h3>
-</div>
-<div class="modal-form">
-  <form>
-  
-    Sifra:<br/>
-    <input type="text" id="email" class="" ng-model="korisnik.password"/><br/>
 
-  </form>
-  
-</div>
-<div class="modal-comand">
-  <button class="" type="button" ng-click="ok()">OK</button>
-  <button class="" type="button" ng-click="cancel()">Cancel</button>
- </div>
+	<div class="modal-account">
+	  <h3>Izmenite sifru</h3>
+	</div>
+	<div class="modal-form">
+	  <form>
+	  
+	    Stara sifra:<br/>
+	    <input type="password" id="stara" class="enjoy-css" ng-model="sifra.stara"/>
+	    <div class="poruka-mode" ng-if="nesto">
+	    	nevalja
+	    </div>
+	
+		Nova sifra:<br/>
+	    <input type="password"  placeholder="Sifra" id="nova" ng-model="sifra.nova" min="6"/><br/>
+		<div class="poruka-mode" ng-if="mesageIsti == true">
+	    	Ne moze se nova sifra poklapati sa starom!
+	    </div>
+	    <div class="poruka-mode" ng-if="mesageVelicina == true">
+	    	Sifra mora da ima vise od 6 karaktera!
+	    </div>
+	    <div class="poruka-mode" ng-if="mesageRazliciti == true">
+	    	Ne poklapaju se sifre!
+	    </div>
+	    <div class="poruka-mode" ng-if="mesagePrazno == true">
+	    	Ne moze prazno polje!
+	    </div>
+	    
+		Ponovite sifru:<br/>
+	    <input type="password" placeholder="Ponoviti sifru" id="ponovo" ng-model="sifra.ponovo"/><br/>
+		<div class="poruka-mode" ng-if="mesageRazliciti == true">
+	    	Ne poklapaju se sifre!
+	    </div>
+	    <div class="poruka-mode" ng-if="mesagePrazno == true">
+	    	Ne moze prazno polje!
+	    </div>
+	    
+	  </form>
+	  
+	</div>
+	<div class="modal-comand">
+	  <button class="btnAddOglas" type="button" ng-click="ok()">OK</button>
+	  <button class="btnAddOglas" type="button" ng-click="cancel()">Cancel</button>
+	</div>
