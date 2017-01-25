@@ -27,5 +27,6 @@ import com.konstrukcija.test.service.NekretninaServiceTest;
 	NekretnincConrollerTest.class,
 	OglasControllerTest.class,
 	AzuriranjeControllerTest.class,
-	OthersControllerTest.class})
+	OthersControllerTest.class, 
+	AdminControllerTest.class})
 public class AppTest {}
