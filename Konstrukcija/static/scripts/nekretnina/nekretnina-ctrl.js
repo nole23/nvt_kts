@@ -24,8 +24,8 @@ angular.module('nekretnineClientApp')
 			console.log('as '+JSON.stringify($scope.nekretnina));
 		}
 		
-		$scope.order_id = $routeParams.idNekretnina;
-		
+		//$scope.order_id = $routeParams.idNekretnina;
+		console.log($routeParams.idNekretnina)
 		/**
 		 * Ispis svih nekretnina
 		 */

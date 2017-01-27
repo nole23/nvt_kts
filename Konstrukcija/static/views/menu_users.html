@@ -11,7 +11,7 @@
 			
 			<li><a ng-if="korisnik.zaposleniDTO[0] != null && getCurrentUserRole()&&getCurrentUserRole()=='korisnik'" >Oglasi kompanije</a>
 				<ul>
-					<li><a ng-controller="KompanijaOglasiCtrl" href="#/add/estate/company/{{korisnik.zaposleniDTO[0].kompanijaDTO.id}}" ng-click="azuriranjeLicnih(korisnik)" >Dodati novi oglas kompaniji</a></li>
+					<li><a ng-controller="KompanijaOglasiCtrl" href="#/add/estate/company/{{korisnik.zaposleniDTO[0].kompanijaDTO.id}}" >Dodati novi oglas kompaniji</a></li>
 					
 				</ul> 
 			</li>
